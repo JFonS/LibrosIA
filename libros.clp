@@ -104,34 +104,34 @@
 	)            
 	(slot momento 			      ;;;momento del dia en el que el lector lee
 		(type STRING) 
-		(allowed strings "manyana" "tarde" "noche" "desconocido") 
+		(allowed-strings "manyana" "tarde" "noche" "desconocido") 
 		(default "desconocido")
 	)
   (slot frecuencia          ;;;frecuencia con la que el lector lee
     (type STRING) 
-    (allowed strings "a diario" "ocasionalmente" "cuando pueda" "desconocido") 
+    (allowed-strings "a diario" "ocasionalmente" "cuando pueda" "desconocido") 
     (default "desconocido")
   )
 	(slot lugar 			        ;;;lugar en el que el lector suele leer
 		(type STRING) 
-		(allowed strings "transporte" "cama" "escritorio" "banyo" "desconocido") 
+		(allowed-strings "transporte" "cama" "escritorio" "banyo" "desconocido") 
 		(default "desconocido")
 	)														
 )
 
 ;;; Template para las preferencias del lector
-(deftemplate MAIN::preferencias
+(deftemplate MAIN::Preferencias
   (multislot generos-favoritos (type INSTANCE))     ;;;conjunto de generos favoritos
   (multislot autores-favoritos (type INSTANCE))     ;;;conjunto de autores favoritos
   (multislot libros-leidos (type INSTANCE))         ;;;conjunto de libros leido
   (slot gustan-libros-populares                     ;;;si le gustan los libros populares
     (type STRING)
-    (allowed strings "si" "no" "desconocido")
+    (allowed-strings "si" "no" "desconocido")
     (default "desconocido")
   )
   (slot gustan-autores-extranjeros                   ;;;si le gustan los autores extranjero
     (type STRING)
-    (allowed strings "si" "no" "desconocido")
+    (allowed-strings "si" "no" "desconocido")
     (default "desconocido")
   )
 )
@@ -145,6 +145,7 @@
   (printout t ":                Sistema de recomendacion de libros                :" crlf)
   (printout t "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::" crlf)
   (printout t crlf)   
-  (printout t "¡Bienvenido al sistema ###! A continuación se le formularán una serie de preguntas para poder recomendarle libros." crlf)
+  (printout t "Bienvenido al sistema ***" crlf)
+  (printout t "A continuacion se le formularan una serie de preguntas para poder recomendarle libros." crlf)
   (printout t crlf)
 )
