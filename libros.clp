@@ -87,31 +87,41 @@
     ?lista
 )
 
+
+;;; Declaracion de modulos ----------------------------
+
+;;; Modulo principal de utilidades, indicamos que exportamos todo
+(defmodule MAIN (export ?ALL))
+
+;;; Modulo de recopilacion de los datos del lector
+(defmodule preguntas-lector (import MAIN ?ALL) (export ?ALL))
+
+
 ;;; Declaracion de templates --------------------------
 
 ;;;Template para los datos de nuestro lector
 (deftemplate MAIN::Lector
 	(slot nombre 			       ;;;nombre lector
 		(type STRING)
-	)                         
-	(slot tiempo 			       ;;;minuts per dia
-		(type INTEGER)
-		(default -1)
-	)          
-	(slot edad  			        ;;;edad lector
-		(type INTEGER)
-		(default -1)
-	)            
-	(slot momento 			      ;;;momento del dia en el que el lector lee
-		(type STRING) 
-		(allowed-strings "manyana" "tarde" "noche" "desconocido") 
-		(default "desconocido")
 	)
+  (slot edad               ;;;edad lector
+    (type INTEGER)
+    (default -1)
+  )                               
+	(slot tiempo_disp	       ;;;minutos por dia
+		(type INTEGER)
+		(default -1)
+	)  
   (slot frecuencia          ;;;frecuencia con la que el lector lee
     (type STRING) 
     (allowed-strings "a diario" "ocasionalmente" "cuando pueda" "desconocido") 
     (default "desconocido")
-  )
+  )              
+	(slot momento 	         ;;;momento del dia en el que el lector lee
+		(type STRING) 
+		(allowed-strings "manyana" "tarde" "noche" "desconocido") 
+		(default "desconocido")
+	)
 	(slot lugar 			        ;;;lugar en el que el lector suele leer
 		(type STRING) 
 		(allowed-strings "transporte" "cama" "escritorio" "banyo" "desconocido") 
@@ -148,4 +158,31 @@
   (printout t "Bienvenido al sistema ***" crlf)
   (printout t "A continuacion se le formularan una serie de preguntas para poder recomendarle libros." crlf)
   (printout t crlf)
+  (focus preguntas-lector)
+)
+
+;;; Modulo recopilacion
+
+(defrule preguntas-lector::establecer-nombre "Establece el nombre del lector, es la primera pregunta"
+  (not (Lector))
+  =>
+  (bind ?nombre (pregunta-general "¿Como se llama? "))
+  (assert (Lector (nombre ?nombre)))
+)
+
+(defrule preguntas-lector::establecer-edad "Establece la edad del lector"
+  ?u <- (Lector (edad ?edad))
+  (Lector (edad -1))
+  =>
+  (bind ?edad (pregunta-numerica "¿Que edad tiene? " 3 100))
+  (modify ?u (edad ?edad))
+)
+
+(defrule preguntas-lector::establecer-tiempo_disp "Establece el tiempo del que dispone el lector para leer"
+  ?u <- (Lector (tiempo_disp ?tiempo))
+  (not (Lector (edad -1)))
+  (Lector (tiempo_disp -1))
+  =>
+  (bind ?tiempo (pregunta-numerica "¿Cuanto tiempo disponible tiene para leer (en minutos por dia)? " 1 1440))
+  (modify ?u (tiempo_disp ?tiempo))
 )
