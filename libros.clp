@@ -96,6 +96,12 @@
 ;;; Modulo de recopilacion de los datos del lector
 (defmodule preguntas-lector (import MAIN ?ALL) (export ?ALL))
 
+;;; Modulo de recomendacion de los libros
+(defmodule recomendacion-libros (import MAIN ?ALL) (export ?ALL))
+
+;;; Modulo de salida de las 3 recomendaciones de libros
+(defmodule salida-recomendaciones (import recomendacion-libros ?ALL) (import MAIN ?ALL) (export ?ALL))
+
 
 ;;; Declaracion de templates --------------------------
 
@@ -146,8 +152,8 @@
   )
 )
 
-;;; Declaracion de reglas y hechos ---------------------
 
+;;; Declaracion de reglas y hechos ---------------------
 (defrule MAIN::initialRule "Regla inicial"
   (declare (salience 10))
   =>
@@ -160,8 +166,6 @@
   (printout t crlf)
   (focus preguntas-lector)
 )
-
-;;; Modulo recopilacion
 
 (defrule preguntas-lector::establecer-nombre "Establece el nombre del lector, es la primera pregunta"
   (not (Lector))
@@ -185,4 +189,88 @@
   =>
   (bind ?tiempo (pregunta-numerica "¿Cuanto tiempo disponible tiene para leer (en minutos por dia)? " 1 1440))
   (modify ?u (tiempo_disp ?tiempo))
+)
+
+(defrule preguntas-lector::establecer-frecuencia "Establece la frecuencia con la que lee el lector"
+  ?u <- (Lector (frecuencia ?frecuencia))
+  (not (Lector (tiempo_disp -1)))
+  (Lector (frecuencia "desconocido"))
+  =>
+  (bind ?frecuencia (pregunta-opciones "Con que frecuencia suele leer? " "a diario" "ocasionalmente" "cuando pueda" "desconocido"))
+  (modify ?u (frecuencia ?frecuencia))
+)
+
+(defrule preguntas-lector::establecer-momento "Establece el momento que suele usar el lector para leer"
+  ?u <- (Lector (momento ?momento))
+  (not (Lector (frecuencia "desconocido")))
+  (Lector (momento "desconocido"))
+  =>
+  (bind ?momento (pregunta-opciones "¿En que momento del dia suele leer? " "manyana" "tarde" "noche"))
+  (modify ?u (momento ?momento))
+)
+
+(defrule preguntas-lector::establecer-lugar "Establece el lugar donde suele leer el lector"
+  ?u <- (Lector (lugar ?lugar))
+  (not (Lector (momento "desconocido")))
+  (Lector (lugar "desconocido"))
+  =>
+  (bind ?lugar (pregunta-opciones "¿Donde suele leer el lector? " "transporte" "cama" "escritorio" "banyo"))
+  (modify ?u (lugar ?lugar))
+   (focus recomendacion-libros)
+)
+
+;;;Modulo recomendacion libros
+
+;;;tio viejo
+(defrule recomendacion-libros::regla "Regla inicial"
+  (Lector (edad ?edad))
+  (test (> ?edad 40))
+  =>
+  (assert (tio-viejo))
+  (focus salida-recomendaciones)
+)
+
+;;;tio joven
+(defrule recomendacion-libros::reglaa "Regla inicial"
+  (Lector (edad ?edad))
+  (test (< ?edad 40))
+  (test (> ?edad 20))
+  =>
+  (assert (tio-joven))
+  (focus salida-recomendaciones)
+)
+
+;;;ninyo
+(defrule recomendacion-libros::reglaaa "Regla inicial"
+  (Lector (edad ?edad))
+  (test (< ?edad 20))
+  =>
+  (assert (tio-ninyo))
+  (focus salida-recomendaciones)
+)
+
+;;;Modulo salida
+
+(defrule recomendacion-libros::regla1b "Regla inicial"
+  (tio-viejo)
+  (not (salida-finalizada))
+  =>
+  (assert (salida-finalizada TRUE))
+  (printout t "Bieho" crlf)
+)
+
+(defrule recomendacion-libros::reglab1b "Regla inicial"
+  (tio-joven)
+  (not (salida-finalizada TRUE))
+  =>
+  (assert (salida-finalizada))
+  (printout t "Jovenassoooo" crlf)
+)
+
+(defrule recomendacion-libros::regl1abbb "Regla inicial"
+  (tio-ninyo)
+  (not (salida-finalizada))
+  =>
+  (assert (salida-finalizada TRUE))
+  (printout t "Ninyo" crlf)
 )
