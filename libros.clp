@@ -96,11 +96,11 @@
 ;;; Modulo de recopilacion de los datos del lector
 (defmodule preguntas-lector (import MAIN ?ALL) (export ?ALL))
 
-;;; Modulo de recomendacion de los libros
-(defmodule recomendacion-libros (import MAIN ?ALL) (export ?ALL))
+;;; Modulo de abstraccion del problema
+(defmodule abstraccion-problema (import MAIN ?ALL) (export ?ALL))
 
 ;;; Modulo de salida de las 3 recomendaciones de libros
-(defmodule salida-recomendaciones (import recomendacion-libros ?ALL) (import MAIN ?ALL) (export ?ALL))
+(defmodule salida-recomendaciones (import abstraccion-problema ?ALL) (import MAIN ?ALL) (export ?ALL))
 
 
 ;;; Declaracion de templates --------------------------
@@ -174,6 +174,7 @@
   (assert (Lector (nombre ?nombre)))
 )
 
+;;;Edad: Ninyo, Adolescente, AdultoMenor, AdultoMayor, Anciano
 (defrule preguntas-lector::establecer-edad "Establece la edad del lector"
   ?u <- (Lector (edad ?edad))
   (Lector (edad -1))
@@ -196,7 +197,7 @@
   (not (Lector (tiempo_disp -1)))
   (Lector (frecuencia "desconocido"))
   =>
-  (bind ?frecuencia (pregunta-opciones "Con que frecuencia suele leer? " "a diario" "ocasionalmente" "cuando pueda" "desconocido"))
+  (bind ?frecuencia (pregunta-opciones "Con que frecuencia suele leer? " diario ocasionalmente cuandopueda))
   (modify ?u (frecuencia ?frecuencia))
 )
 
@@ -205,7 +206,7 @@
   (not (Lector (frecuencia "desconocido")))
   (Lector (momento "desconocido"))
   =>
-  (bind ?momento (pregunta-opciones "¿En que momento del dia suele leer? " "manyana" "tarde" "noche"))
+  (bind ?momento (pregunta-opciones "¿En que momento del dia suele leer? " manyana tarde noche))
   (modify ?u (momento ?momento))
 )
 
@@ -214,63 +215,70 @@
   (not (Lector (momento "desconocido")))
   (Lector (lugar "desconocido"))
   =>
-  (bind ?lugar (pregunta-opciones "¿Donde suele leer el lector? " "transporte" "cama" "escritorio" "banyo"))
+  (bind ?lugar (pregunta-opciones "¿Donde suele leer el lector? " transporte cama escritorio banyo))
   (modify ?u (lugar ?lugar))
-   (focus recomendacion-libros)
+  (focus abstraccion-problema)
 )
 
-;;;Modulo recomendacion libros
+;;;Modulo abstraccion problema 
 
-;;;tio viejo
-(defrule recomendacion-libros::regla "Regla inicial"
+;;;Abstraccion edad
+(defrule abstraccion-problema::abstraccion-edad "Abstrae la edad"
   (Lector (edad ?edad))
-  (test (> ?edad 40))
   =>
-  (assert (tio-viejo))
-  (focus salida-recomendaciones)
-)
-
-;;;tio joven
-(defrule recomendacion-libros::reglaa "Regla inicial"
-  (Lector (edad ?edad))
-  (test (< ?edad 40))
-  (test (> ?edad 20))
-  =>
-  (assert (tio-joven))
-  (focus salida-recomendaciones)
-)
-
-;;;ninyo
-(defrule recomendacion-libros::reglaaa "Regla inicial"
-  (Lector (edad ?edad))
-  (test (< ?edad 20))
-  =>
-  (assert (tio-ninyo))
+  (if (< ?edad 10) then (assert (Edad-Ninyo))
+   else (if (< ?edad 18) then (assert (Edad-Adolescente))
+    else (if (< ?edad 30) then (assert (Edad-AdultoMenor))
+      else (if (< ?edad 50) then (assert (Edad-AdultoMayor))
+        else (assert (Edad-Anciano))
+        )
+      )
+    )
+  )
   (focus salida-recomendaciones)
 )
 
 ;;;Modulo salida
 
-(defrule recomendacion-libros::regla1b "Regla inicial"
-  (tio-viejo)
-  (not (salida-finalizada))
+(defrule salida-recomendaciones::recomienda-edad-0 "Regla recomendadora"
+  ?h <- (Edad-Ninyo)
   =>
-  (assert (salida-finalizada TRUE))
-  (printout t "Bieho" crlf)
-)
-
-(defrule recomendacion-libros::reglab1b "Regla inicial"
-  (tio-joven)
-  (not (salida-finalizada TRUE))
-  =>
-  (assert (salida-finalizada))
-  (printout t "Jovenassoooo" crlf)
-)
-
-(defrule recomendacion-libros::regl1abbb "Regla inicial"
-  (tio-ninyo)
-  (not (salida-finalizada))
-  =>
-  (assert (salida-finalizada TRUE))
   (printout t "Ninyo" crlf)
+  (retract ?h)
 )
+
+
+(defrule salida-recomendaciones::recomienda-edad-1 "Regla recomendadora"
+  ?h <- (Edad-Adolescente)
+  =>
+  (printout t "Adolescente" crlf)
+  (retract ?h)
+)
+
+
+(defrule salida-recomendaciones::recomienda-edad-2 "Regla recomendadora"
+  ?h <- (Edad-AdultoMenor)
+  =>
+  (printout t "Adulto Menor" crlf)
+  (retract ?h)
+)
+
+
+(defrule salida-recomendaciones::recomienda-edad-3 "Regla recomendadora"
+  ?h <- (Edad-AdultoMayor)
+  =>
+  (printout t "Adulto Mayor" crlf)
+  (retract ?h)
+)
+
+
+(defrule salida-recomendaciones::recomienda-edad-4 "Regla recomendadora"
+  ?h <- (Edad-Anciano)
+  =>
+  (printout t "Anciano" crlf)
+  (retract ?h)
+)
+
+
+
+
