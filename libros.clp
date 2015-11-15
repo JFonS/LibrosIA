@@ -226,11 +226,11 @@
 (defrule abstraccion-problema::abstraccion-edad "Abstrae la edad"
   (Lector (edad ?edad))
   =>
-  (if (< ?edad 10) then (assert (Edad-Ninyo))
-   else (if (< ?edad 18) then (assert (Edad-Adolescente))
-    else (if (< ?edad 30) then (assert (Edad-AdultoMenor))
-      else (if (< ?edad 50) then (assert (Edad-AdultoMayor))
-        else (assert (Edad-Anciano))
+  (if (< ?edad 10) then (assert (edad ninyo))
+   else (if (< ?edad 18) then (assert (edad adolescente))
+    else (if (< ?edad 30) then (assert (edad joven))
+      else (if (< ?edad 50) then (assert (edad adulto))
+        else (assert (edad anciano))
         )
       )
     )
@@ -240,45 +240,17 @@
 
 ;;;Modulo salida
 
-(defrule salida-recomendaciones::recomienda-edad-0 "Regla recomendadora"
-  ?h <- (Edad-Ninyo)
+(defrule salida-recomendaciones::recomienda-edad "Regla recomendadora"
+  ?h <- (edad ?edad)
   =>
-  (printout t "Ninyo" crlf)
+  (if (eq ?edad ninyo) then (printout t "Ninyo" crlf)
+    else (if (eq ?edad adolescente) then (printout t "Adolescente" crlf)
+      else (if (eq ?edad joven) then (printout t "Joven" crlf)
+        else (if (eq ?edad adulto) then (printout t "Adulto" crlf)
+          else (if (eq ?edad anciano) then (printout t "Anciano" crlf))
+        )
+      )
+    )
+  )
   (retract ?h)
 )
-
-
-(defrule salida-recomendaciones::recomienda-edad-1 "Regla recomendadora"
-  ?h <- (Edad-Adolescente)
-  =>
-  (printout t "Adolescente" crlf)
-  (retract ?h)
-)
-
-
-(defrule salida-recomendaciones::recomienda-edad-2 "Regla recomendadora"
-  ?h <- (Edad-AdultoMenor)
-  =>
-  (printout t "Adulto Menor" crlf)
-  (retract ?h)
-)
-
-
-(defrule salida-recomendaciones::recomienda-edad-3 "Regla recomendadora"
-  ?h <- (Edad-AdultoMayor)
-  =>
-  (printout t "Adulto Mayor" crlf)
-  (retract ?h)
-)
-
-
-(defrule salida-recomendaciones::recomienda-edad-4 "Regla recomendadora"
-  ?h <- (Edad-Anciano)
-  =>
-  (printout t "Anciano" crlf)
-  (retract ?h)
-)
-
-
-
-
