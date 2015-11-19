@@ -61,7 +61,8 @@
             (printout t ?linea crlf)
     )
     (bind ?respuesta (pregunta-numerica "Escoge una opción:" 1 (length$ ?valores-posibles)))
-	?respuesta
+	(bind ?resultado (nth$ ?respuesta $?valores-posibles))
+  ?resultado
 )
 
 ;;; Funcion para hacer una pregunta multi-respuesta con indices
@@ -197,7 +198,7 @@
   (not (Lector (tiempo_disp -1)))
   (Lector (frecuencia "desconocido"))
   =>
-  (bind ?frecuencia (pregunta-opciones "Con que frecuencia suele leer? " diario ocasionalmente cuandopueda))
+  (bind ?frecuencia (pregunta-indice "Con que frecuencia suele leer? " diario ocasionalmente cuandopueda))
   (modify ?u (frecuencia ?frecuencia))
 )
 
@@ -206,7 +207,7 @@
   (not (Lector (frecuencia "desconocido")))
   (Lector (momento "desconocido"))
   =>
-  (bind ?momento (pregunta-opciones "¿En que momento del dia suele leer? " manyana tarde noche))
+  (bind ?momento (pregunta-indice "¿En que momento del dia suele leer? " manyana tarde noche))
   (modify ?u (momento ?momento))
 )
 
@@ -215,7 +216,7 @@
   (not (Lector (momento "desconocido")))
   (Lector (lugar "desconocido"))
   =>
-  (bind ?lugar (pregunta-opciones "¿Donde suele leer el lector? " transporte cama escritorio banyo))
+  (bind ?lugar (pregunta-indice "¿Donde suele leer el lector? " transporte cama escritorio banyo))
   (modify ?u (lugar ?lugar))
   (focus abstraccion-problema)
 )
