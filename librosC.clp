@@ -1,4 +1,4 @@
-; Tue Nov 10 12:20:39 CET 2015
+; Thu Nov 19 15:42:52 CET 2015
 ; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
@@ -25,6 +25,11 @@
 		(type STRING)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
+	(single-slot valoracion
+;+		(comment "Nota del 0 al 10")
+		(type FLOAT)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
 	(single-slot frecuencia
 		(type SYMBOL)
 		(allowed-values Diariamente Ocasionalmente Esporadicamente)
@@ -33,6 +38,10 @@
 	(single-slot lectura_facil
 		(type SYMBOL)
 		(allowed-values FALSE TRUE)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot longitud
+		(type INTEGER)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot momento
@@ -70,18 +79,37 @@
 		(allowed-values FALSE TRUE)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
+	(multislot generos_preferidos
+		(type INSTANCE)
+;+		(allowed-classes Genero)
+		(create-accessor read-write))
 	(single-slot edad
 		(type INTEGER)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(multislot generos_preferidos
-		(type INSTANCE)
-;+		(allowed-classes Genero)
+	(single-slot dificultad
+		(type SYMBOL)
+		(allowed-values facil asequible denso)
+;+		(cardinality 0 1)
 		(create-accessor read-write)))
 
 (defclass Libro
 	(is-a USER)
 	(role concrete)
+	(single-slot longitud
+		(type INTEGER)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot valoracion
+;+		(comment "Nota del 0 al 10")
+		(type FLOAT)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot dificultad
+		(type SYMBOL)
+		(allowed-values facil asequible denso)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
 	(multislot autor
 		(type INSTANCE)
 ;+		(allowed-classes Autor)
@@ -115,17 +143,13 @@
 		(allowed-values FALSE TRUE)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot lugar
-		(type SYMBOL)
-		(allowed-values Transporte Casa Cama)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
 	(multislot autores_preferidos
 		(type INSTANCE)
 ;+		(allowed-classes Autor)
 		(create-accessor read-write))
-	(single-slot tiempo_disponible
-		(type INTEGER)
+	(single-slot lugar
+		(type SYMBOL)
+		(allowed-values Transporte Casa Cama)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot momento
@@ -136,6 +160,10 @@
 	(single-slot confia_criticas
 		(type SYMBOL)
 		(allowed-values FALSE TRUE)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot tiempo_disponible
+		(type INTEGER)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(multislot generos_preferidos
@@ -168,48 +196,8 @@
 
 (defclass Genero
 	(is-a USER)
-	(role abstract))
-
-(defclass Narrativa
-	(is-a Genero)
-	(role concrete))
-
-(defclass Narrativa+clasica
-	(is-a Narrativa)
-	(role concrete))
-
-(defclass Narrativa+contemporanea
-	(is-a Narrativa)
-	(role concrete))
-
-(defclass Policiaca
-	(is-a Genero)
-	(role concrete))
-
-(defclass Terror
-	(is-a Genero)
-	(role concrete))
-
-(defclass Fantasia
-	(is-a Genero)
-	(role concrete))
-
-(defclass Fantasia+medieval
-	(is-a Fantasia)
-	(role concrete))
-
-(defclass Ciencia+ficcion
-	(is-a Genero)
-	(role concrete))
-
-(defclass Romantica
-	(is-a Genero)
-	(role concrete))
-
-(defclass Historica
-	(is-a Genero)
-	(role concrete))
-
-(defclass Oeste
-	(is-a Genero)
-	(role concrete))
+	(role concrete)
+	(single-slot nombre
+		(type STRING)
+;+		(cardinality 0 1)
+		(create-accessor read-write)))

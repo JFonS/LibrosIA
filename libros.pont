@@ -1,17 +1,22 @@
-; Sun Nov 15 20:27:08 CET 2015
+; Thu Nov 19 15:45:59 CET 2015
 ; 
-;+ (version "3.4.8")
-;+ (build "Build 629")
+;+ (version "3.5")
+;+ (build "Build 663")
 
 
 (defclass %3ACLIPS_TOP_LEVEL_SLOT_CLASS "Fake class to save top-level slot information"
 	(is-a USER)
 	(role abstract)
-	(single-slot edad
+	(single-slot lugar
+		(type SYMBOL)
+		(allowed-values Transporte Casa Cama)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot tiempo_disponible
 		(type INTEGER)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot confia_criticas
+	(single-slot gustan_populares
 		(type SYMBOL)
 		(allowed-values FALSE TRUE)
 ;+		(cardinality 0 1)
@@ -19,15 +24,6 @@
 	(single-slot titulo
 		(type STRING)
 ;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot lectura_facil
-		(type SYMBOL)
-		(allowed-values FALSE TRUE)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(multislot autores_preferidos
-		(type INSTANCE)
-;+		(allowed-classes Autor)
 		(create-accessor read-write))
 	(single-slot valoracion
 ;+		(comment "Nota del 0 al 10")
@@ -39,25 +35,7 @@
 		(allowed-values Diariamente Ocasionalmente Esporadicamente)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot dificultad
-		(type SYMBOL)
-		(allowed-values facil asequible denso)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot momento
-		(type SYMBOL)
-		(allowed-values Manana Tarde Noche)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(multislot genero
-		(type INSTANCE)
-;+		(allowed-classes Genero)
-		(create-accessor read-write))
-	(multislot autor
-		(type INSTANCE)
-;+		(allowed-classes Autor)
-		(create-accessor read-write))
-	(single-slot autores_extranjeros
+	(single-slot lectura_facil
 		(type SYMBOL)
 		(allowed-values FALSE TRUE)
 ;+		(cardinality 0 1)
@@ -66,44 +44,58 @@
 		(type INTEGER)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot gustan_populares
+	(single-slot momento
+		(type SYMBOL)
+		(allowed-values Manana Tarde Noche)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(multislot autor
+		(type INSTANCE)
+;+		(allowed-classes Autor)
+		(create-accessor read-write))
+	(multislot genero
+		(type INSTANCE)
+;+		(allowed-classes Genero)
+		(create-accessor read-write))
+	(multislot estilo
+		(type INSTANCE)
+;+		(allowed-classes Genero)
+		(create-accessor read-write))
+	(multislot autores_preferidos
+		(type INSTANCE)
+;+		(allowed-classes Autor)
+		(create-accessor read-write))
+	(single-slot nombre
+		(type STRING)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot autores_extranjeros
 		(type SYMBOL)
 		(allowed-values FALSE TRUE)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot tiempo_disponible
-		(type INTEGER)
+	(single-slot confia_criticas
+		(type SYMBOL)
+		(allowed-values FALSE TRUE)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(multislot generos_preferidos
 		(type INSTANCE)
 ;+		(allowed-classes Genero)
 		(create-accessor read-write))
-	(single-slot lugar
-		(type SYMBOL)
-		(allowed-values Transporte Casa Cama)
+	(single-slot edad
+		(type INTEGER)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(multislot estilo
-		(type INSTANCE)
-;+		(allowed-classes Genero)
-		(create-accessor read-write))
-	(single-slot nombre
-		(type STRING)
+	(single-slot dificultad
+		(type SYMBOL)
+		(allowed-values facil asequible denso)
 ;+		(cardinality 0 1)
 		(create-accessor read-write)))
 
 (defclass Libro
 	(is-a USER)
 	(role concrete)
-	(multislot autor
-		(type INSTANCE)
-;+		(allowed-classes Autor)
-		(create-accessor read-write))
-	(single-slot titulo
-		(type STRING)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
 	(single-slot longitud
 		(type INTEGER)
 ;+		(cardinality 0 1)
@@ -116,6 +108,14 @@
 	(single-slot dificultad
 		(type SYMBOL)
 		(allowed-values facil asequible denso)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(multislot autor
+		(type INSTANCE)
+;+		(allowed-classes Autor)
+		(create-accessor read-write))
+	(single-slot titulo
+		(type STRING)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(multislot genero
@@ -126,28 +126,19 @@
 (defclass Persona
 	(is-a USER)
 	(role abstract)
-	(single-slot edad
-		(type INTEGER)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
 	(single-slot nombre
 		(type STRING)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot edad
+		(type INTEGER)
 ;+		(cardinality 0 1)
 		(create-accessor read-write)))
 
 (defclass Lector
 	(is-a Persona)
 	(role concrete)
-	(single-slot tiempo_disponible
-		(type INTEGER)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot lugar
-		(type SYMBOL)
-		(allowed-values Transporte Casa Cama)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot autores_extranjeros
+	(single-slot gustan_populares
 		(type SYMBOL)
 		(allowed-values FALSE TRUE)
 ;+		(cardinality 0 1)
@@ -156,18 +147,9 @@
 		(type INSTANCE)
 ;+		(allowed-classes Autor)
 		(create-accessor read-write))
-	(single-slot frecuencia
+	(single-slot lugar
 		(type SYMBOL)
-		(allowed-values Diariamente Ocasionalmente Esporadicamente)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(multislot generos_preferidos
-		(type INSTANCE)
-;+		(allowed-classes Genero)
-		(create-accessor read-write))
-	(single-slot confia_criticas
-		(type SYMBOL)
-		(allowed-values FALSE TRUE)
+		(allowed-values Transporte Casa Cama)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot momento
@@ -175,7 +157,25 @@
 		(allowed-values Manana Tarde Noche)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot gustan_populares
+	(single-slot confia_criticas
+		(type SYMBOL)
+		(allowed-values FALSE TRUE)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot tiempo_disponible
+		(type INTEGER)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(multislot generos_preferidos
+		(type INSTANCE)
+;+		(allowed-classes Genero)
+		(create-accessor read-write))
+	(single-slot frecuencia
+		(type SYMBOL)
+		(allowed-values Diariamente Ocasionalmente Esporadicamente)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot autores_extranjeros
 		(type SYMBOL)
 		(allowed-values FALSE TRUE)
 ;+		(cardinality 0 1)
@@ -184,14 +184,14 @@
 (defclass Autor
 	(is-a Persona)
 	(role concrete)
-	(multislot estilo
-		(type INSTANCE)
-;+		(allowed-classes Genero)
-		(create-accessor read-write))
 	(single-slot lectura_facil
 		(type SYMBOL)
 		(allowed-values FALSE TRUE)
 ;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(multislot estilo
+		(type INSTANCE)
+;+		(allowed-classes Genero)
 		(create-accessor read-write)))
 
 (defclass Genero

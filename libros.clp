@@ -1,3 +1,270 @@
+;;; ONTOLOGIA --------------------------------------------------------
+
+(defclass %3ACLIPS_TOP_LEVEL_SLOT_CLASS "Fake class to save top-level slot information"
+  (is-a USER)
+  (role abstract)
+  (single-slot lugar
+    (type SYMBOL)
+    (allowed-values Transporte Casa Cama)
+;+    (cardinality 0 1)
+    (create-accessor read-write))
+  (single-slot tiempo_disponible
+    (type INTEGER)
+;+    (cardinality 0 1)
+    (create-accessor read-write))
+  (single-slot gustan_populares
+    (type SYMBOL)
+    (allowed-values FALSE TRUE)
+;+    (cardinality 0 1)
+    (create-accessor read-write))
+  (single-slot titulo
+    (type STRING)
+;+    (cardinality 0 1)
+    (create-accessor read-write))
+  (single-slot valoracion
+;+    (comment "Nota del 0 al 10")
+    (type FLOAT)
+;+    (cardinality 0 1)
+    (create-accessor read-write))
+  (single-slot frecuencia
+    (type SYMBOL)
+    (allowed-values Diariamente Ocasionalmente Esporadicamente)
+;+    (cardinality 0 1)
+    (create-accessor read-write))
+  (single-slot lectura_facil
+    (type SYMBOL)
+    (allowed-values FALSE TRUE)
+;+    (cardinality 0 1)
+    (create-accessor read-write))
+  (single-slot longitud
+    (type INTEGER)
+;+    (cardinality 0 1)
+    (create-accessor read-write))
+  (single-slot momento
+    (type SYMBOL)
+    (allowed-values Manana Tarde Noche)
+;+    (cardinality 0 1)
+    (create-accessor read-write))
+  (multislot autor
+    (type INSTANCE)
+;+    (allowed-classes Autor)
+    (create-accessor read-write))
+  (multislot genero
+    (type INSTANCE)
+;+    (allowed-classes Genero)
+    (create-accessor read-write))
+  (multislot estilo
+    (type INSTANCE)
+;+    (allowed-classes Genero)
+    (create-accessor read-write))
+  (multislot autores_preferidos
+    (type INSTANCE)
+;+    (allowed-classes Autor)
+    (create-accessor read-write))
+  (single-slot nombre
+    (type STRING)
+;+    (cardinality 0 1)
+    (create-accessor read-write))
+  (single-slot autores_extranjeros
+    (type SYMBOL)
+    (allowed-values FALSE TRUE)
+;+    (cardinality 0 1)
+    (create-accessor read-write))
+  (single-slot confia_criticas
+    (type SYMBOL)
+    (allowed-values FALSE TRUE)
+;+    (cardinality 0 1)
+    (create-accessor read-write))
+  (multislot generos_preferidos
+    (type INSTANCE)
+;+    (allowed-classes Genero)
+    (create-accessor read-write))
+  (single-slot edad
+    (type INTEGER)
+;+    (cardinality 0 1)
+    (create-accessor read-write))
+  (single-slot dificultad
+    (type SYMBOL)
+    (allowed-values facil asequible denso)
+;+    (cardinality 0 1)
+    (create-accessor read-write)))
+
+(defclass Libro
+  (is-a USER)
+  (role concrete)
+  (single-slot longitud
+    (type INTEGER)
+;+    (cardinality 0 1)
+    (create-accessor read-write))
+  (single-slot valoracion
+;+    (comment "Nota del 0 al 10")
+    (type FLOAT)
+;+    (cardinality 0 1)
+    (create-accessor read-write))
+  (single-slot dificultad
+    (type SYMBOL)
+    (allowed-values facil asequible denso)
+;+    (cardinality 0 1)
+    (create-accessor read-write))
+  (multislot autor
+    (type INSTANCE)
+;+    (allowed-classes Autor)
+    (create-accessor read-write))
+  (single-slot titulo
+    (type STRING)
+;+    (cardinality 0 1)
+    (create-accessor read-write))
+  (multislot genero
+    (type INSTANCE)
+;+    (allowed-classes Genero)
+    (create-accessor read-write)))
+
+(defclass Persona
+  (is-a USER)
+  (role abstract)
+  (single-slot nombre
+    (type STRING)
+;+    (cardinality 0 1)
+    (create-accessor read-write))
+  (single-slot edad
+    (type INTEGER)
+;+    (cardinality 0 1)
+    (create-accessor read-write)))
+
+(defclass Lector
+  (is-a Persona)
+  (role concrete)
+  (single-slot gustan_populares
+    (type SYMBOL)
+    (allowed-values FALSE TRUE)
+;+    (cardinality 0 1)
+    (create-accessor read-write))
+  (multislot autores_preferidos
+    (type INSTANCE)
+;+    (allowed-classes Autor)
+    (create-accessor read-write))
+  (single-slot lugar
+    (type SYMBOL)
+    (allowed-values Transporte Casa Cama)
+;+    (cardinality 0 1)
+    (create-accessor read-write))
+  (single-slot momento
+    (type SYMBOL)
+    (allowed-values Manana Tarde Noche)
+;+    (cardinality 0 1)
+    (create-accessor read-write))
+  (single-slot confia_criticas
+    (type SYMBOL)
+    (allowed-values FALSE TRUE)
+;+    (cardinality 0 1)
+    (create-accessor read-write))
+  (single-slot tiempo_disponible
+    (type INTEGER)
+;+    (cardinality 0 1)
+    (create-accessor read-write))
+  (multislot generos_preferidos
+    (type INSTANCE)
+;+    (allowed-classes Genero)
+    (create-accessor read-write))
+  (single-slot frecuencia
+    (type SYMBOL)
+    (allowed-values Diariamente Ocasionalmente Esporadicamente)
+;+    (cardinality 0 1)
+    (create-accessor read-write))
+  (single-slot autores_extranjeros
+    (type SYMBOL)
+    (allowed-values FALSE TRUE)
+;+    (cardinality 0 1)
+    (create-accessor read-write)))
+
+(defclass Autor
+  (is-a Persona)
+  (role concrete)
+  (single-slot lectura_facil
+    (type SYMBOL)
+    (allowed-values FALSE TRUE)
+;+    (cardinality 0 1)
+    (create-accessor read-write))
+  (multislot estilo
+    (type INSTANCE)
+;+    (allowed-classes Genero)
+    (create-accessor read-write)))
+
+(defclass Genero
+  (is-a USER)
+  (role concrete)
+  (single-slot nombre
+    (type STRING)
+;+    (cardinality 0 1)
+    (create-accessor read-write)))
+
+;;; INSTANCIAS -------------------------------------------------------
+(definstances instances
+([libros_Class10] of  Genero
+
+  (nombre "romantico"))
+
+([libros_Class11] of  Genero
+
+  (nombre "terror"))
+
+([libros_Class12] of  Genero
+
+  (nombre "aventura"))
+
+([libros_Class13] of  Genero
+
+  (nombre "comic"))
+
+([libros_Class14] of  Genero
+
+  (nombre "ficcion"))
+
+([libros_Class15] of  Genero
+
+  (nombre "salud"))
+
+([libros_Class16] of  Libro
+
+  (autor [libros_Class17])
+  (dificultad facil)
+  (genero [libros_Class3])
+  (longitud 464)
+  (titulo "Ready Player One")
+  (valoracion 9.5))
+
+([libros_Class17] of  Autor
+
+  (edad 43)
+  (estilo [libros_Class3])
+  (lectura_facil TRUE)
+  (nombre "Ernest Cline"))
+
+([libros_Class3] of  Genero
+
+  (nombre "ciencia_ficcion"))
+
+([libros_Class4] of  Genero
+
+  (nombre "fantasia"))
+
+([libros_Class5] of  Genero
+
+  (nombre "historia"))
+
+([libros_Class6] of  Genero
+
+  (nombre "narrativa"))
+
+([libros_Class7] of  Genero
+
+  (nombre "oeste"))
+
+([libros_Class9] of  Genero
+
+  (nombre "policiaco"))
+)
+
 ;;; Declaracion de funciones para preguntar --------------------------
 
 ;;; Funcion para hacer una pregunta con respuesta cualquiera
@@ -95,13 +362,30 @@
 (defmodule MAIN (export ?ALL))
 
 ;;; Modulo de recopilacion de los datos del lector
-(defmodule preguntas-lector (import MAIN ?ALL) (export ?ALL))
+(defmodule preguntas-lector 
+  (import MAIN ?ALL) 
+  (export ?ALL)
+)
+
+;;; Modulo de recopilacion de las preferencias del lector
+(defmodule preguntas-prefs 
+  (import MAIN ?ALL)
+  (import preguntas-lector deftemplate ?ALL) 
+  (export ?ALL)
+)
 
 ;;; Modulo de abstraccion del problema
-(defmodule abstraccion-problema (import MAIN ?ALL) (export ?ALL))
+(defmodule abstraccion-problema 
+  (import MAIN ?ALL) 
+  (export ?ALL)
+)
 
 ;;; Modulo de salida de las 3 recomendaciones de libros
-(defmodule salida-recomendaciones (import abstraccion-problema ?ALL) (import MAIN ?ALL) (export ?ALL))
+(defmodule salida-recomendaciones 
+  (import abstraccion-problema ?ALL) 
+  (import MAIN ?ALL)
+   (export ?ALL)
+)
 
 
 ;;; Declaracion de templates --------------------------
@@ -137,7 +421,7 @@
 )
 
 ;;; Template para las preferencias del lector
-(deftemplate MAIN::Preferencias
+(deftemplate MAIN::preferencias
   (multislot generos-favoritos (type INSTANCE))     ;;;conjunto de generos favoritos
   (multislot autores-favoritos (type INSTANCE))     ;;;conjunto de autores favoritos
   (multislot libros-leidos (type INSTANCE))         ;;;conjunto de libros leido
@@ -198,7 +482,7 @@
   (not (Lector (tiempo_disp -1)))
   (Lector (frecuencia "desconocido"))
   =>
-  (bind ?frecuencia (pregunta-indice "Con que frecuencia suele leer? " diario ocasionalmente cuandopueda))
+  (bind ?frecuencia (pregunta-indice "Con que frecuencia suele leer?" "a diario" "ocasionalmente" "cuando pueda"))
   (modify ?u (frecuencia ?frecuencia))
 )
 
@@ -207,7 +491,7 @@
   (not (Lector (frecuencia "desconocido")))
   (Lector (momento "desconocido"))
   =>
-  (bind ?momento (pregunta-indice "¿En que momento del dia suele leer? " manyana tarde noche))
+  (bind ?momento (pregunta-indice "¿En que momento del dia suele leer?" manyana tarde noche))
   (modify ?u (momento ?momento))
 )
 
@@ -218,8 +502,45 @@
   =>
   (bind ?lugar (pregunta-indice "¿Donde suele leer el lector? " transporte cama escritorio banyo))
   (modify ?u (lugar ?lugar))
-  (focus abstraccion-problema)
+  (focus preguntas-prefs)
 )
+
+;; Modulo preguntas preferencias
+(deffacts preguntas-prefs::hechos-iniciales "Establece hechos para poder recopilar informacion"
+  (generos-favoritos ask)     ;;;conjunto de generos favoritos
+  (autores-favoritos ask)     ;;;conjunto de autores favoritos
+  (libros-leidos     ask)     ;;;conjunto de libros leido
+  (gustan-libros-populares      ask)
+  (gustan-autores-extranjeros   ask)
+  (preferencias)
+)
+
+(defrule preguntas-prefs::establecer-generos-favortitos "Establece los generos favoritos del lector"
+  ?h <- (generos-favoritos ask)
+  ?pref <- (preferencias)
+  =>
+  (bind $?obj-generos (find-all-instances ((?inst Genero)) TRUE)) 
+  (bind $?nom-generos (create$ ))
+
+  (loop-for-count (?i 1 (length$ $?obj-generos)) do
+    (bind ?curr-obj (nth$ ?i ?obj-generos))
+    (bind ?curr-nom (send ?curr-obj get-nombre))
+    (bind $?nom-generos (insert$ $?nom-generos (+ 1 (length$ $?nom-generos)) ?curr-nom))
+  )
+
+  (bind $?escogidos (pregunta-multi "Escoja sus géneros favoritos: " $?nom-generos))
+  (bind $?respuestas (create$ ))
+  (loop-for-count (?i 1 (length$ $?escogidos)) do
+    (bind ?escogido (nth$ ?i $?escogidos))
+    (bind ?curr-genero (nth$ ?escogido ?obj-generos))
+    (bind $?respuestas(insert$ $?respuestas (+ (length$ $?respuestas) 1) ?curr-genero))
+  )
+  
+  (retract ?h)
+  (assert (genero-favorito TRUE))
+  (modify ?pref (generos-favoritos $?respuestas))
+)
+
 
 ;;;Modulo abstraccion problema 
 
