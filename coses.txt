@@ -1,0 +1,56 @@
+PROBLEMA CONCRETO
+===============================================
+Lector
+-----------
+   nombre 		[null]
+   edad 		[abstraccion]
+   lugar (? no)		[null]
+   frecuencia 		[abstraccion] {"Cuantos dias a la semana puede leer"}
+   tiempo_disp 		[abstraccion] {"En estos dias cuantas horas puede leer"}
+
+Preferencias
+-------------
+   generos_favoritos	[abstraccion]
+   autores_favoritos	[concrecion]
+   libros_favoritos	[concrecion]
+   gustan_populares	[concrecion]
+   gutan_extrangeros	[concrecion]
+
+
+PROBLEMA ABSTRACTO
+===============================================
+edad 	[niño, joven, adulto]
+tiempo  [poco, medio, mucho]
+genero  [
+	 trepidante:
+		[policiaco,
+		 accion,
+		 aventura,
+		 oeste#],
+	 tranquilo:
+		[salud,
+		 historia,
+		 romantico,
+	 	 narrativa],
+	 etereo:
+		[terror,
+		 ficcion,
+		 ciencia_ficcion,
+		 fantasia],
+	 feliz:
+		[romantico,
+		 salud,
+		 fantasia
+       		],
+	 triste:
+		[terror,
+		 policiaco
+		]	
+		 
+SOLUCION ABSTRACTA
+===============================================
+
+
+SOLUCION CONCRETA
+===============================================
+

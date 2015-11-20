@@ -446,7 +446,7 @@
   (printout t ":                Sistema de recomendacion de libros                :" crlf)
   (printout t "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::" crlf)
   (printout t crlf)   
-  (printout t "Bienvenido al sistema ***" crlf)
+  (printout t "Bienvenido al sistema asteriscoasteriscoasterisco" crlf)
   (printout t "A continuacion se le formularan una serie de preguntas para poder recomendarle libros." crlf)
   (printout t crlf)
   (focus preguntas-lector)
