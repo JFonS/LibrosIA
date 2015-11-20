@@ -519,7 +519,7 @@
   ?h <- (generos-favoritos ask)
   ?pref <- (preferencias)
   =>
-  (bind $?obj-generos (find-all-instances ((?inst Genero)) TRUE)) 
+  (bind $?obj-generos (find-all-instances ((?inst Genero)) TRUE) )
   (bind $?nom-generos (create$ ))
 
   (loop-for-count (?i 1 (length$ $?obj-generos)) do
@@ -528,17 +528,51 @@
     (bind $?nom-generos (insert$ $?nom-generos (+ 1 (length$ $?nom-generos)) ?curr-nom))
   )
 
-  (bind $?escogidos (pregunta-multi "Escoja sus géneros favoritos: " $?nom-generos))
   (bind $?respuestas (create$ ))
-  (loop-for-count (?i 1 (length$ $?escogidos)) do
-    (bind ?escogido (nth$ ?i $?escogidos))
-    (bind ?curr-genero (nth$ ?escogido ?obj-generos))
-    (bind $?respuestas(insert$ $?respuestas (+ (length$ $?respuestas) 1) ?curr-genero))
+  (while (eq (length$ $?respuestas) 0) do
+    (bind $?escogidos (pregunta-multi "Escoja sus géneros favoritos: " $?nom-generos))
+
+    (loop-for-count (?i 1 (length$ $?escogidos)) do
+      (bind ?escogido (nth$ ?i $?escogidos))
+      (if (> ?escogido (length$ $?obj-generos)) then (break)) 
+      (bind ?curr-genero (nth$ ?escogido ?obj-generos))
+      (bind $?respuestas(insert$ $?respuestas (+ (length$ $?respuestas) 1) ?curr-genero))
+    )
   )
-  
+
   (retract ?h)
-  (assert (genero-favorito TRUE))
+  (assert (generos-favoritos TRUE))
   (modify ?pref (generos-favoritos $?respuestas))
+)
+
+(defrule preguntas-prefs::establecer-autores-favortitos "Establece los autores favoritos del lector"
+  (generos-favoritos TRUE)
+  ?h <- (autores-favoritos ask)
+  ?pref <- (preferencias)
+  =>
+  (bind $?obj-autores (find-all-instances ((?inst Autor)) TRUE) )
+  (bind $?nom-autores (create$ ))
+
+  (loop-for-count (?i 1 (length$ $?obj-autores)) do
+    (bind ?curr-obj (nth$ ?i ?obj-autores))
+    (bind ?curr-nom (send ?curr-obj get-nombre))
+    (bind $?nom-autores (insert$ $?nom-autores (+ 1 (length$ $?nom-autores)) ?curr-nom))
+  )
+
+  (bind $?respuestas (create$ ))
+  (while (eq (length$ $?respuestas) 0) do
+    (bind $?escogidos (pregunta-multi "Escoja sus autores favoritos: " $?nom-autores))
+    (loop-for-count (?i 1 (length$ $?escogidos)) do
+      (bind ?escogido (nth$ ?i $?escogidos))
+      (if (> ?escogido (length$ $?obj-autores)) then (break)) 
+      (bind ?curr-autor (nth$ ?escogido ?obj-autores))
+      (bind $?respuestas(insert$ $?respuestas (+ (length$ $?respuestas) 1) ?curr-autor))
+    )
+  )
+    
+  (retract ?h)
+  (assert (autores-favoritos TRUE))
+  (modify ?pref (autores-favoritos $?respuestas))
 )
 
 
