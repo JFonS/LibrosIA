@@ -408,6 +408,12 @@
   (export ?ALL)
 )
 
+;;; Modulo de asociacion heuristica
+(defmodule asociacion-heuristica 
+  (import MAIN ?ALL) 
+  (export ?ALL)
+)
+
 ;;; Modulo de salida de las 3 recomendaciones de libros
 (defmodule salida-recomendaciones 
   (import abstraccion-problema ?ALL) 

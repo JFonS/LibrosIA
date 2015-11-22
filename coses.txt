@@ -12,45 +12,50 @@ Preferencias
 -------------
    generos_favoritos	[abstraccion]
    autores_favoritos	[concrecion]
-   libros_favoritos	[concrecion]
-   gustan_populares	[concrecion]
-   gutan_extrangeros	[concrecion]
+   libros_leidos	[concrecion]
+   gustan_populares	[abstraccion]
+   gustan_extrangeros	[concrecion]
+
+
+ABSTRACCION
+===============================================
+(minutos/semana)
+si (tiempo_disp*frecuencia < 5*60) entonces tiempo = poco
+si (tiempo_disp*frecuencia < 10*60) entonces tiempo = medio
+si (tiempo_disp*frecuencia > 10*60) entonces tiempo = mucho
 
 
 PROBLEMA ABSTRACTO
 ===============================================
 edad 	[niño, joven, adulto]
 tiempo  [poco, medio, mucho]
-genero  [
-	 trepidante:
-		[policiaco,
-		 accion,
-		 aventura,
-		 oeste#],
-	 tranquilo:
-		[salud,
-		 historia,
-		 romantico,
-	 	 narrativa],
-	 etereo:
-		[terror,
-		 ficcion,
-		 ciencia_ficcion,
-		 fantasia],
-	 feliz:
-		[romantico,
-		 salud,
-		 fantasia
-       		],
-	 triste:
-		[terror,
-		 policiaco
-		]	
-		 
+genero  [romantico, terror, aventura, comic, ficcion,
+ 	salud, ciencia_ficcion, fantasia, historia, 
+ 	narrativa, oeste, policiaco]
+alternativo [si, no]
+
+
+ASOCIACION HEURISTICA
+===============================================
+si (tiempo = medio o mucho) y (genero = {comic,ciencia_ficcion,ficcion,fantasia}) entonces friki
+si (edad = joven) y (alternativo = si) entonces hipster
+si (edad = adulto) y (tiempo = mucho) y (genero = {salud,historia,oeste}) y (alternativo = no) entonces jubilado
+si (edad = joven) y (genero = {romantico,terror,fantasia}) entonces quinceañera
+si (edad = {niño,joven}) y (genero = {aventura,oeste,policiaco}) entonces aventurero
+si (edad = adulto) y (genero = {romantico,salud,narrativa}) y (alternativo = no) entonces maruja
+
+
 SOLUCION ABSTRACTA
 ===============================================
+friki
+hipster
+jubilado
+quinceañera
+aventurero
+maruja
 
 
 SOLUCION CONCRETA
 ===============================================
+
 
