@@ -1,4 +1,19 @@
-;;; ONTOLOGIA --------------------------------------------------------
+;;-------------------------------------------------------------------------------------------------------------
+;;-------------------------------------------------------------------------------------------------------------
+;;
+;;                PRACTICA 2 IA: SBC
+;;
+;; Alumnos: Joan Fons
+;;          Victor Anton
+;;          Oscar Mañas 
+;; Cuatrimestre: 2015-16 Q1
+;;
+;;-------------------------------------------------------------------------------------------------------------
+;;-------------------------------------------------------------------------------------------------------------
+
+;;-------------------------------------------------------------------------------------------------------------
+;;                    ONTOLOGIA
+;;-------------------------------------------------------------------------------------------------------------
 
 (defclass %3ACLIPS_TOP_LEVEL_SLOT_CLASS "Fake class to save top-level slot information"
   (is-a USER)
@@ -106,7 +121,7 @@
     (allowed-values facil asequible denso)
 ;+    (cardinality 0 1)
     (create-accessor read-write))
-  (multislot autor
+  (single-slot autor
     (type INSTANCE)
 ;+    (allowed-classes Autor)
     (create-accessor read-write))
@@ -198,7 +213,11 @@
 ;+    (cardinality 0 1)
     (create-accessor read-write)))
 
-;;; INSTANCIAS -------------------------------------------------------
+
+;;-------------------------------------------------------------------------------------------------------------
+;;                    INSTANCIAS
+;;-------------------------------------------------------------------------------------------------------------
+
 (definstances instances
 ([libros_Class10] of  Genero
 
@@ -265,11 +284,16 @@
   (nombre "policiaco"))
 )
 
+;;; Fin del codigo generado con Protege ---------------   
+;;; ---------------------------------------------------
+
+
 ;;; Declaracion de funciones para preguntar --------------------------
 
 ;;; Funcion para hacer una pregunta con respuesta cualquiera
 (deffunction pregunta-general (?pregunta)
-    (format t "%s " ?pregunta)
+  (printout t crlf)
+  (format t "%s " ?pregunta)
 	(bind ?respuesta (read))
 	(while (not (lexemep ?respuesta)) do
 		(format t "%s " ?pregunta)
@@ -280,6 +304,7 @@
 
 ;;; Funcion para hacer una pregunta general con una serie de respuestas admitidas
 (deffunction MAIN::pregunta-opciones (?question $?allowed-values)
+   (printout t crlf)
    (format t "%s "?question)
    (progn$ (?curr-value $?allowed-values)
 		(format t "[%s]" ?curr-value)
@@ -310,6 +335,7 @@
 
 ;;; Funcion para hacer una pregunta con respuesta numerica unica
 (deffunction MAIN::pregunta-numerica (?pregunta ?rangini ?rangfi)
+  (printout t crlf)
 	(format t "%s [%d, %d] " ?pregunta ?rangini ?rangfi)
 	(bind ?respuesta (read))
 	(while (not(and(>= ?respuesta ?rangini)(<= ?respuesta ?rangfi))) do
@@ -322,25 +348,27 @@
 ;;; Funcion para hacer pregunta con indice de respuestas posibles
 (deffunction MAIN::pregunta-indice (?pregunta $?valores-posibles)
     (bind ?linea (format nil "%s" ?pregunta))
+    (printout t crlf)
     (printout t ?linea crlf)
     (progn$ (?var ?valores-posibles) 
             (bind ?linea (format nil "  %d. %s" ?var-index ?var))
             (printout t ?linea crlf)
     )
-    (bind ?respuesta (pregunta-numerica "Escoge una opción:" 1 (length$ ?valores-posibles)))
-	(bind ?resultado (nth$ ?respuesta $?valores-posibles))
-  ?resultado
+    (bind ?indice (pregunta-numerica "Escoja una opcion:" 1 (length$ ?valores-posibles)))
+  	(bind ?respuesta (nth$ ?indice $?valores-posibles))
+    ?respuesta
 )
 
 ;;; Funcion para hacer una pregunta multi-respuesta con indices
 (deffunction pregunta-multi (?pregunta $?valores-posibles)
     (bind ?linea (format nil "%s" ?pregunta))
+    (printout t crlf)
     (printout t ?linea crlf)
     (progn$ (?var ?valores-posibles) 
             (bind ?linea (format nil "  %d. %s" ?var-index ?var))
             (printout t ?linea crlf)
     )
-    (format t "%s" "Indica los números separados por un espacio: ")
+    (format t "%s" "Indique los numeros separados por un espacio: ")
     (bind ?resp (readline))
     (bind ?numeros (str-explode ?resp))
     (bind $?lista (create$ ))
@@ -438,13 +466,14 @@
 )
 
 
-;;; Declaracion de reglas y hechos ---------------------
+;;; Declaracion de reglas y hechos --------------------
+
 (defrule MAIN::initialRule "Regla inicial"
   (declare (salience 10))
   =>
-  (printout t "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::" crlf)
-  (printout t ":                Sistema de recomendacion de libros                :" crlf)
-  (printout t "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::" crlf)
+  (printout t "====================================================================" crlf)
+  (printout t "=                Sistema de recomendacion de libros                =" crlf)
+  (printout t "====================================================================" crlf)
   (printout t crlf)   
   (printout t "Bienvenido al sistema asteriscoasteriscoasterisco" crlf)
   (printout t "A continuacion se le formularan una serie de preguntas para poder recomendarle libros." crlf)
@@ -455,7 +484,7 @@
 (defrule preguntas-lector::establecer-nombre "Establece el nombre del lector, es la primera pregunta"
   (not (Lector))
   =>
-  (bind ?nombre (pregunta-general "¿Como se llama? "))
+  (bind ?nombre (pregunta-general "Como se llama? "))
   (assert (Lector (nombre ?nombre)))
 )
 
@@ -464,7 +493,7 @@
   ?u <- (Lector (edad ?edad))
   (Lector (edad -1))
   =>
-  (bind ?edad (pregunta-numerica "¿Que edad tiene? " 3 100))
+  (bind ?edad (pregunta-numerica "Que edad tiene? " 3 100))
   (modify ?u (edad ?edad))
 )
 
@@ -473,7 +502,7 @@
   (not (Lector (edad -1)))
   (Lector (tiempo_disp -1))
   =>
-  (bind ?tiempo (pregunta-numerica "¿Cuanto tiempo disponible tiene para leer (en minutos por dia)? " 1 1440))
+  (bind ?tiempo (pregunta-numerica "Cuanto tiempo disponible tiene para leer (en minutos por dia)? " 1 1440))
   (modify ?u (tiempo_disp ?tiempo))
 )
 
@@ -491,7 +520,7 @@
   (not (Lector (frecuencia "desconocido")))
   (Lector (momento "desconocido"))
   =>
-  (bind ?momento (pregunta-indice "¿En que momento del dia suele leer?" manyana tarde noche))
+  (bind ?momento (pregunta-indice "En que momento del dia suele leer?" manyana tarde noche))
   (modify ?u (momento ?momento))
 )
 
@@ -500,12 +529,14 @@
   (not (Lector (momento "desconocido")))
   (Lector (lugar "desconocido"))
   =>
-  (bind ?lugar (pregunta-indice "¿Donde suele leer el lector? " transporte cama escritorio banyo))
+  (bind ?lugar (pregunta-indice "Donde suele leer?" transporte cama escritorio banyo))
   (modify ?u (lugar ?lugar))
   (focus preguntas-prefs)
 )
 
-;; Modulo preguntas preferencias
+
+;;; Modulo preguntas preferencias ---------------------
+
 (deffacts preguntas-prefs::hechos-iniciales "Establece hechos para poder recopilar informacion"
   (generos-favoritos ask)     ;;;conjunto de generos favoritos
   (autores-favoritos ask)     ;;;conjunto de autores favoritos
@@ -530,7 +561,7 @@
 
   (bind $?respuestas (create$ ))
   (while (eq (length$ $?respuestas) 0) do
-    (bind $?escogidos (pregunta-multi "Escoja sus géneros favoritos: " $?nom-generos))
+    (bind $?escogidos (pregunta-multi "Escoja sus generos favoritos: " $?nom-generos))
 
     (loop-for-count (?i 1 (length$ $?escogidos)) do
       (bind ?escogido (nth$ ?i $?escogidos))
@@ -545,10 +576,10 @@
   (modify ?pref (generos-favoritos $?respuestas))
 )
 
-(defrule preguntas-prefs::establecer-autores-favortitos "Establece los autores favoritos del lector"
-  (generos-favoritos TRUE)
+(defrule preguntas-prefs::establecer-autores-favoritos "Establece los autores favoritos del lector"
   ?h <- (autores-favoritos ask)
   ?pref <- (preferencias)
+  (generos-favoritos TRUE)
   =>
   (bind $?obj-autores (find-all-instances ((?inst Autor)) TRUE) )
   (bind $?nom-autores (create$ ))
@@ -565,7 +596,7 @@
     (loop-for-count (?i 1 (length$ $?escogidos)) do
       (bind ?escogido (nth$ ?i $?escogidos))
       (if (> ?escogido (length$ $?obj-autores)) then (break)) 
-      (bind ?curr-autor (nth$ ?escogido ?obj-autores))
+      (bind ?curr-autor (nth$ ?escogido $?obj-autores))
       (bind $?respuestas(insert$ $?respuestas (+ (length$ $?respuestas) 1) ?curr-autor))
     )
   )
@@ -575,8 +606,62 @@
   (modify ?pref (autores-favoritos $?respuestas))
 )
 
+(defrule preguntas-prefs::establecer-libros-leidos "Establece los libros leidos por el lector"
+  ?h <- (libros-leidos ask)
+  ?pref <- (preferencias)
+  (autores-favoritos TRUE)
+  =>
+  (bind $?obj-libros (find-all-instances ((?inst Libro)) TRUE))
+  (bind $?tit-aut-libros (create$))
 
-;;;Modulo abstraccion problema 
+  (loop-for-count (?i 1 (length$ $?obj-libros)) do
+    (bind ?curr-obj (nth$ ?i ?obj-libros))
+    (bind ?curr-tit (send ?curr-obj get-titulo))
+    (bind ?curr-aut (send ?curr-obj get-autor))
+    (bind ?curr-nom (send ?curr-aut get-nombre))
+    (bind $?tit-aut-libros (insert$ $?tit-aut-libros (+ 1 (length$ $?tit-aut-libros)) (str-cat ?curr-tit " de " ?curr-nom) ))
+  )
+
+  (bind $?respuestas (create$))
+  (bind $?leidos (pregunta-multi "Escoja los libros que ha leido (si no ha leido ninguno, escriba '0'): " $?tit-aut-libros))
+  (loop-for-count (?i 1 (length$ $?leidos)) do
+    (bind ?leido (nth$ ?i $?leidos))
+    (if (<= ?leido (length$ $?obj-libros)) then 
+      (bind ?curr-obj (nth$ ?leido $?obj-libros))
+      (bind $?respuestas(insert$ $?respuestas (+ (length$ $?respuestas) 1) ?curr-obj))
+    )
+  )
+
+  (retract ?h)
+  (assert (libros-leidos TRUE))
+  (modify ?pref (libros-leidos $?respuestas))
+)
+
+(defrule preguntas-prefs::determinar-gustan-populares "Determina si al lector les gustan los libros populares"
+  ?h <- (gustan-libros-populares ask)
+  ?pref <- (preferencias)
+  (libros-leidos TRUE)
+  =>
+  (bind ?respuesta (pregunta-si-no "Le gustan los libros populares?"))
+  (retract ?h)
+  (assert (gustan-libros-populares TRUE))
+  (modify ?pref (gustan-libros-populares $?respuesta))
+)
+
+(defrule preguntas-prefs::determinar-gustan-extranjeros "Determina si al lector les gustan los autores extranjeros"
+  ?h <- (gustan-autores-extranjeros ask)
+  ?pref <- (preferencias)
+  (gustan-libros-populares TRUE)
+  =>
+  (bind ?respuesta (pregunta-si-no "Le gustan los autores extranjeros?"))
+  (retract ?h)
+  (assert (gustan-autores-extranjeros TRUE))
+  (modify ?pref (gustan-autores-extranjeros $?respuesta))
+  (focus abstraccion-problema)
+)
+
+
+;;; Modulo abstraccion problema -----------------------
 
 ;;;Abstraccion edad
 (defrule abstraccion-problema::abstraccion-edad "Abstrae la edad"
@@ -594,11 +679,13 @@
   (focus salida-recomendaciones)
 )
 
-;;;Modulo salida
+
+;;; Modulo salida -------------------------------------
 
 (defrule salida-recomendaciones::recomienda-edad "Regla recomendadora"
   ?h <- (edad ?edad)
   =>
+  (printout t crlf)
   (if (eq ?edad ninyo) then (printout t "Ninyo" crlf)
     else (if (eq ?edad adolescente) then (printout t "Adolescente" crlf)
       else (if (eq ?edad joven) then (printout t "Joven" crlf)
