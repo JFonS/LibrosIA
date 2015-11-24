@@ -1,7 +1,7 @@
-; Mon Nov 23 19:19:29 GMT 2015
+; Tue Nov 24 13:09:36 CET 2015
 ; 
-;+ (version "3.4.8")
-;+ (build "Build 629")
+;+ (version "3.5")
+;+ (build "Build 663")
 
 ([libros_Class10] of  Genero
 
@@ -9,6 +9,7 @@
 
 ([libros_Class10003] of  Libro
 
+	(autor [libros_Class10004])
 	(dificultad facil)
 	(genero
 		[libros_Class12]

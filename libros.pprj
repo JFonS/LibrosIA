@@ -1,7 +1,7 @@
-; Mon Nov 23 19:19:29 GMT 2015
+; Tue Nov 24 13:09:36 CET 2015
 ; 
-;+ (version "3.4.8")
-;+ (build "Build 629")
+;+ (version "3.5")
+;+ (build "Build 663")
 
 ([ANNOTATED_INSTANCE_WIDGET] of  Widget
 
@@ -20,13 +20,13 @@
 ([BROWSER_SLOT_NAMES] of  Property_List
 
 	(properties
-		[libros_ProjectKB_Class10164]
-		[libros_ProjectKB_Class10165]
-		[libros_ProjectKB_Class10166]
-		[libros_ProjectKB_Class10167]
-		[libros_ProjectKB_Class10168]
-		[libros_ProjectKB_Class10169]
-		[libros_ProjectKB_Class10170]))
+		[libros_ProjectKB_Class10094]
+		[libros_ProjectKB_Class10095]
+		[libros_ProjectKB_Class10096]
+		[libros_ProjectKB_Class10097]
+		[libros_ProjectKB_Class10098]
+		[libros_ProjectKB_Class10099]
+		[libros_ProjectKB_Class10100]))
 
 ([CLSES_TAB] of  Widget
 
@@ -66,6 +66,9 @@
 ([INSTANCES_TAB] of  Widget
 
 	(widget_class_name "edu.stanford.smi.protege.widget.InstancesTab"))
+
+([KB_138963_Class0] of  Map
+)
 
 ([KB_503745_Class0] of  String
 
@@ -167,9 +170,6 @@
 	(name "classes_file_name")
 	(string_value "libros.pont"))
 
-([KB_625495_Class0] of  Map
-)
-
 ([LAYOUT_PROPERTIES] of  Property_List
 
 	(name "layout properties")
@@ -179,220 +179,55 @@
 
 	(is_hidden TRUE)
 	(property_list [libros_ProjectKB_Class2])
-	(widget_class_name "TGViztab.TGVizTab"))
+	(widget_class_name "se.liu.ida.JessTab.JessTab"))
 
 ([libros_ProjectKB_Class10] of  Property_List
 )
 
-([libros_ProjectKB_Class10075] of  Widget
+([libros_ProjectKB_Class10094] of  String
 
-	(is_hidden TRUE)
-	(property_list [libros_ProjectKB_Class10076])
-	(widget_class_name "uk.ac.man.ac.mig.coode.individuals.ui.OWLDLIndividualsTab"))
+	(name ":INSTANCE-ANNOTATION")
+	(string_value "%3AANNOTATION-TEXT"))
 
-([libros_ProjectKB_Class10076] of  Property_List
-)
+([libros_ProjectKB_Class10095] of  String
 
-([libros_ProjectKB_Class10077] of  Widget
+	(name "PerfilLector")
+	(string_value "nombre"))
 
-	(is_hidden TRUE)
-	(property_list [libros_ProjectKB_Class10078])
-	(widget_class_name "org.protege.owl.mm.protege3.MappingMasterTab"))
+([libros_ProjectKB_Class10096] of  String
 
-([libros_ProjectKB_Class10078] of  Property_List
-)
+	(name "Autor")
+	(string_value "nombre"))
 
-([libros_ProjectKB_Class10079] of  Widget
+([libros_ProjectKB_Class10097] of  String
 
-	(is_hidden TRUE)
-	(property_list [libros_ProjectKB_Class10080])
-	(widget_class_name "uk.ac.man.cs.mig.coode.owlviz.ui.OWLVizTab"))
+	(name "Genero")
+	(string_value "nombre"))
 
-([libros_ProjectKB_Class10080] of  Property_List
-)
+([libros_ProjectKB_Class10098] of  String
 
-([libros_ProjectKB_Class10086] of  Widget
+	(name ":META-CLASS")
+	(string_value "%3ANAME"))
 
-	(height 60)
-	(is_hidden FALSE)
-	(name "edad")
-	(property_list [libros_ProjectKB_Class10087])
-	(widget_class_name "edu.stanford.smi.protege.widget.IntegerFieldWidget")
-	(width 100)
-	(x 0)
-	(y 120))
+([libros_ProjectKB_Class10099] of  String
 
-([libros_ProjectKB_Class10087] of  Property_List
-)
-
-([libros_ProjectKB_Class10088] of  Widget
-
-	(height 60)
-	(is_hidden FALSE)
-	(name "nombre")
-	(property_list [libros_ProjectKB_Class10089])
-	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
-	(width 200)
-	(x 0)
-	(y 0))
-
-([libros_ProjectKB_Class10089] of  Property_List
-)
-
-([libros_ProjectKB_Class10090] of  Widget
-
-	(height 180)
-	(is_hidden FALSE)
-	(name "estilo")
-	(property_list [libros_ProjectKB_Class10091])
-	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
-	(width 200)
-	(x 200)
-	(y 0))
-
-([libros_ProjectKB_Class10091] of  Property_List
-
-	(properties
-		[libros_ProjectKB_Class10092]
-		[libros_ProjectKB_Class10093]))
-
-([libros_ProjectKB_Class10092] of  Boolean
-
-	(boolean_value FALSE)
-	(name "ButtonDisplayed-View References to Value"))
-
-([libros_ProjectKB_Class10093] of  Boolean
-
-	(boolean_value FALSE)
-	(name "ButtonDisplayed-Delete Instance"))
-
-([libros_ProjectKB_Class10094] of  Widget
-
-	(height 60)
-	(is_hidden FALSE)
-	(name "extranjero")
-	(property_list [libros_ProjectKB_Class10095])
-	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
-	(width 200)
-	(x 0)
-	(y 120))
-
-([libros_ProjectKB_Class10095] of  Property_List
-)
+	(name ":PAL-CONSTRAINT")
+	(string_value "%3APAL-NAME"))
 
 ([libros_ProjectKB_Class101] of  String
 
 	(name "SearchTab_Query"))
 
-([libros_ProjectKB_Class10117] of  Widget
-
-	(height 60)
-	(is_hidden FALSE)
-	(name "libros_Class10005")
-	(property_list [libros_ProjectKB_Class10118])
-	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
-	(width 200)
-	(x 0)
-	(y 0))
-
-([libros_ProjectKB_Class10118] of  Property_List
-)
-
-([libros_ProjectKB_Class10156] of  Widget
-
-	(height 60)
-	(is_hidden FALSE)
-	(name "libros leidos")
-	(property_list [libros_ProjectKB_Class10157])
-	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
-	(width 200)
-	(x 0)
-	(y 240))
-
-([libros_ProjectKB_Class10157] of  Property_List
-)
-
-([libros_ProjectKB_Class10158] of  Widget
-
-	(height 120)
-	(is_hidden FALSE)
-	(name "libros leidos")
-	(property_list [libros_ProjectKB_Class10159])
-	(widget_class_name "edu.stanford.smi.protege.widget.StringListWidget")
-	(width 200)
-	(x 0)
-	(y 240))
-
-([libros_ProjectKB_Class10159] of  Property_List
-)
-
-([libros_ProjectKB_Class10160] of  Widget
-
-	(height 120)
-	(is_hidden FALSE)
-	(name "libros leidos")
-	(property_list [libros_ProjectKB_Class10161])
-	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
-	(width 200)
-	(x 0)
-	(y 240))
-
-([libros_ProjectKB_Class10161] of  Property_List
-
-	(properties
-		[libros_ProjectKB_Class10162]
-		[libros_ProjectKB_Class10163]))
-
-([libros_ProjectKB_Class10162] of  Boolean
-
-	(boolean_value FALSE)
-	(name "ButtonDisplayed-View References to Value"))
-
-([libros_ProjectKB_Class10163] of  Boolean
-
-	(boolean_value FALSE)
-	(name "ButtonDisplayed-Delete Instance"))
-
-([libros_ProjectKB_Class10164] of  String
-
-	(name ":INSTANCE-ANNOTATION")
-	(string_value "%3AANNOTATION-TEXT"))
-
-([libros_ProjectKB_Class10165] of  String
-
-	(name ":META-CLASS")
-	(string_value "%3ANAME"))
-
-([libros_ProjectKB_Class10166] of  String
+([libros_ProjectKB_Class10100] of  String
 
 	(name "Libro")
 	(string_value "titulo"))
-
-([libros_ProjectKB_Class10167] of  String
-
-	(name "Autor")
-	(string_value "nombre"))
-
-([libros_ProjectKB_Class10168] of  String
-
-	(name "Genero")
-	(string_value "nombre"))
-
-([libros_ProjectKB_Class10169] of  String
-
-	(name "PerfilLector")
-	(string_value "nombre"))
-
-([libros_ProjectKB_Class10170] of  String
-
-	(name ":PAL-CONSTRAINT")
-	(string_value "%3APAL-NAME"))
 
 ([libros_ProjectKB_Class11] of  Widget
 
 	(is_hidden TRUE)
 	(property_list [libros_ProjectKB_Class12])
-	(widget_class_name "edu.stanford.smi.protege.keywordsearch.StringSearch"))
+	(widget_class_name "ezpal.EZPalTab"))
 
 ([libros_ProjectKB_Class12] of  Property_List
 )
@@ -401,7 +236,7 @@
 
 	(is_hidden TRUE)
 	(property_list [libros_ProjectKB_Class14])
-	(widget_class_name "edu.stanford.smi.RemoteKBTab.WordNetTab"))
+	(widget_class_name "edu.stanford.smi.protegex.server_changes.prompt.UsersTab"))
 
 ([libros_ProjectKB_Class14] of  Property_List
 )
@@ -410,7 +245,7 @@
 
 	(is_hidden TRUE)
 	(property_list [libros_ProjectKB_Class16])
-	(widget_class_name "edu.stanford.smi.protegex.owl.ui.metadatatab.OWLMetadataTab"))
+	(widget_class_name "ca.uvic.csr.shrimp.jambalaya.JambalayaTab"))
 
 ([libros_ProjectKB_Class16] of  Property_List
 )
@@ -419,7 +254,7 @@
 
 	(is_hidden TRUE)
 	(property_list [libros_ProjectKB_Class18])
-	(widget_class_name "edu.stanford.smi.protegex.changes.ChangesTab"))
+	(widget_class_name "edu.stanford.smi.protege.widget.instance_tree.InstanceTreeTab"))
 
 ([libros_ProjectKB_Class18] of  Property_List
 )
@@ -428,7 +263,7 @@
 
 	(is_hidden TRUE)
 	(property_list [libros_ProjectKB_Class20])
-	(widget_class_name "edu.stanford.smi.protegex.owl.ui.widget.OWLFormsTab"))
+	(widget_class_name "edu.stanford.smi.protegex.widget.pal.PalConstraintsTab"))
 
 ([libros_ProjectKB_Class2] of  Property_List
 )
@@ -440,7 +275,7 @@
 
 	(is_hidden TRUE)
 	(property_list [libros_ProjectKB_Class22])
-	(widget_class_name "ezpal.EZPalTab"))
+	(widget_class_name "uk.ac.man.ac.mig.coode.individuals.ui.OWLDLIndividualsTab"))
 
 ([libros_ProjectKB_Class22] of  Property_List
 )
@@ -449,7 +284,7 @@
 
 	(is_hidden TRUE)
 	(property_list [libros_ProjectKB_Class24])
-	(widget_class_name "edu.stanford.smi.protegex.owl.swrl.ui.tab.SWRLTab"))
+	(widget_class_name "edu.stanford.smi.protege.widget.ClsesAndInstancesTab"))
 
 ([libros_ProjectKB_Class24] of  Property_List
 )
@@ -458,7 +293,7 @@
 
 	(is_hidden TRUE)
 	(property_list [libros_ProjectKB_Class26])
-	(widget_class_name "edu.stanford.smi.protegex.fctab.FacetConstraintsTab"))
+	(widget_class_name "edu.stanford.smi.protegex.evaluation.MetaAnalysis"))
 
 ([libros_ProjectKB_Class26] of  Property_List
 )
@@ -467,7 +302,7 @@
 
 	(is_hidden TRUE)
 	(property_list [libros_ProjectKB_Class28])
-	(widget_class_name "edu.stanford.smi.protegex.changes.changesKBViewTab.ChangesKBViewTab"))
+	(widget_class_name "uk.ac.man.cs.mig.coode.owlviz.ui.OWLVizTab"))
 
 ([libros_ProjectKB_Class28] of  Property_List
 )
@@ -476,13 +311,13 @@
 
 	(is_hidden TRUE)
 	(property_list [libros_ProjectKB_Class30])
-	(widget_class_name "edu.stanford.smi.protegex.xml.tab.XMLTab"))
+	(widget_class_name "edu.stanford.smi.protege.query.LuceneQueryPlugin"))
 
 ([libros_ProjectKB_Class3] of  Widget
 
 	(is_hidden TRUE)
 	(property_list [libros_ProjectKB_Class4])
-	(widget_class_name "dfki.protege.ontoviz_tab.OntovizTab"))
+	(widget_class_name "edu.stanford.smi.protegex.owl.ui.metadatatab.OWLMetadataTab"))
 
 ([libros_ProjectKB_Class30] of  Property_List
 )
@@ -491,7 +326,7 @@
 
 	(is_hidden TRUE)
 	(property_list [libros_ProjectKB_Class32])
-	(widget_class_name "edu.stanford.smi.protegex.prompt.PromptTab"))
+	(widget_class_name "edu.stanford.smi.protegex.owl.ui.cls.OWLClassesTab"))
 
 ([libros_ProjectKB_Class32] of  Property_List
 )
@@ -500,7 +335,7 @@
 
 	(is_hidden TRUE)
 	(property_list [libros_ProjectKB_Class34])
-	(widget_class_name "edu.stanford.smi.protege.widget.KAToolTab"))
+	(widget_class_name "edu.stanford.smi.protegex.owl.ui.individuals.OWLIndividualsTab"))
 
 ([libros_ProjectKB_Class34] of  Property_List
 )
@@ -509,7 +344,7 @@
 
 	(is_hidden TRUE)
 	(property_list [libros_ProjectKB_Class36])
-	(widget_class_name "edu.stanford.smi.protegex.owl.ui.properties.OWLPropertiesTab"))
+	(widget_class_name "org.protege.owl.mm.portability.protege3.MappingMasterTab"))
 
 ([libros_ProjectKB_Class36] of  Property_List
 )
@@ -518,7 +353,7 @@
 
 	(is_hidden TRUE)
 	(property_list [libros_ProjectKB_Class38])
-	(widget_class_name "edu.stanford.smi.protege.widget.ProtegePropertiesTab"))
+	(widget_class_name "edu.stanford.smi.protegex.changeanalysis.ChangeAnalysisTab"))
 
 ([libros_ProjectKB_Class38] of  Property_List
 )
@@ -527,7 +362,7 @@
 
 	(is_hidden TRUE)
 	(property_list [libros_ProjectKB_Class40])
-	(widget_class_name "edu.stanford.smi.protegex.widget.pal.PalConstraintsTab"))
+	(widget_class_name "TGViztab.TGVizTab"))
 
 ([libros_ProjectKB_Class4] of  Property_List
 )
@@ -539,7 +374,7 @@
 
 	(is_hidden TRUE)
 	(property_list [libros_ProjectKB_Class42])
-	(widget_class_name "edu.stanford.smi.protege.widget.instance_tree.KnowledgeTreeTab"))
+	(widget_class_name "edu.stanford.smi.protegex.changes.changesKBViewTab.ChangesKBViewTab"))
 
 ([libros_ProjectKB_Class42] of  Property_List
 )
@@ -548,7 +383,7 @@
 
 	(is_hidden TRUE)
 	(property_list [libros_ProjectKB_Class44])
-	(widget_class_name "edu.stanford.smi.protege.widget.instance_tree.InstanceTreeTab"))
+	(widget_class_name "edu.stanford.smi.protege.widget.KAToolTab"))
 
 ([libros_ProjectKB_Class44] of  Property_List
 )
@@ -557,7 +392,7 @@
 
 	(is_hidden TRUE)
 	(property_list [libros_ProjectKB_Class46])
-	(widget_class_name "edu.stanford.smi.protegex.changes.stats.ChangeStatisticsTab"))
+	(widget_class_name "edu.stanford.smi.protegex.xml.tab.XMLTab"))
 
 ([libros_ProjectKB_Class46] of  Property_List
 )
@@ -566,7 +401,7 @@
 
 	(is_hidden TRUE)
 	(property_list [libros_ProjectKB_Class48])
-	(widget_class_name "se.liu.ida.JessTab.JessTab"))
+	(widget_class_name "edu.stanford.smi.protegex.widget.pal.PalQueriesTab"))
 
 ([libros_ProjectKB_Class48] of  Property_List
 )
@@ -575,13 +410,13 @@
 
 	(is_hidden TRUE)
 	(property_list [libros_ProjectKB_Class50])
-	(widget_class_name "ca.uvic.csr.shrimp.jambalaya.JambalayaTab"))
+	(widget_class_name "edu.stanford.smi.protegex.chatPlugin.ChatTab"))
 
 ([libros_ProjectKB_Class5] of  Widget
 
 	(is_hidden TRUE)
 	(property_list [libros_ProjectKB_Class6])
-	(widget_class_name "script.ProtegeScriptTab"))
+	(widget_class_name "edu.stanford.smi.protegex.owl.ui.properties.OWLPropertiesTab"))
 
 ([libros_ProjectKB_Class50] of  Property_List
 )
@@ -590,7 +425,7 @@
 
 	(is_hidden TRUE)
 	(property_list [libros_ProjectKB_Class52])
-	(widget_class_name "edu.stanford.smi.protege.query.LuceneQueryPlugin"))
+	(widget_class_name "org.protege.owl.axiome.ui.AxiomeTab"))
 
 ([libros_ProjectKB_Class52] of  Property_List
 )
@@ -599,7 +434,7 @@
 
 	(is_hidden TRUE)
 	(property_list [libros_ProjectKB_Class54])
-	(widget_class_name "edu.stanford.smi.protegex.datamaster.DataMasterTab"))
+	(widget_class_name "edu.stanford.smi.protege.keywordsearch.StringSearch"))
 
 ([libros_ProjectKB_Class54] of  Property_List
 )
@@ -608,7 +443,7 @@
 
 	(is_hidden TRUE)
 	(property_list [libros_ProjectKB_Class56])
-	(widget_class_name "edu.stanford.smi.protegex.changeanalysis.ChangeAnalysisTab"))
+	(widget_class_name "edu.stanford.smi.protegex.owl.ui.widget.OWLFormsTab"))
 
 ([libros_ProjectKB_Class56] of  Property_List
 )
@@ -617,7 +452,7 @@
 
 	(is_hidden TRUE)
 	(property_list [libros_ProjectKB_Class58])
-	(widget_class_name "edu.stanford.smi.protegex.owl.ui.individuals.OWLIndividualsTab"))
+	(widget_class_name "script.ProtegeScriptTab"))
 
 ([libros_ProjectKB_Class58] of  Property_List
 )
@@ -626,7 +461,7 @@
 
 	(is_hidden TRUE)
 	(property_list [libros_ProjectKB_Class60])
-	(widget_class_name "uk.ac.man.cs.mig.coode.debugger.test.DebuggerTestTab"))
+	(widget_class_name "edu.stanford.smi.protegex.changes.ChangesTab"))
 
 ([libros_ProjectKB_Class6] of  Property_List
 )
@@ -638,7 +473,7 @@
 
 	(is_hidden TRUE)
 	(property_list [libros_ProjectKB_Class62])
-	(widget_class_name "edu.stanford.smi.protegex.owl.ui.cls.OWLClassesTab"))
+	(widget_class_name "edu.stanford.smi.protegex.owl.swrl.ui.tab.SWRLTab"))
 
 ([libros_ProjectKB_Class62] of  Property_List
 )
@@ -647,7 +482,7 @@
 
 	(is_hidden TRUE)
 	(property_list [libros_ProjectKB_Class64])
-	(widget_class_name "org.protege.owl.axiome.ui.AxiomeTab"))
+	(widget_class_name "edu.stanford.smi.protegex.fctab.FacetConstraintsTab"))
 
 ([libros_ProjectKB_Class64] of  Property_List
 )
@@ -656,7 +491,7 @@
 
 	(is_hidden TRUE)
 	(property_list [libros_ProjectKB_Class66])
-	(widget_class_name "org.algernon.kb.okbc.protege.plugins.AlgernonTab"))
+	(widget_class_name "edu.stanford.smi.protege.widget.instance_tree.KnowledgeTreeTab"))
 
 ([libros_ProjectKB_Class66] of  Property_List
 )
@@ -665,7 +500,7 @@
 
 	(is_hidden TRUE)
 	(property_list [libros_ProjectKB_Class68])
-	(widget_class_name "edu.stanford.smi.protegex.widget.pal.PalQueriesTab"))
+	(widget_class_name "edu.stanford.smi.protegex.datamaster.DataMasterTab"))
 
 ([libros_ProjectKB_Class68] of  Property_List
 )
@@ -674,13 +509,13 @@
 
 	(is_hidden TRUE)
 	(property_list [libros_ProjectKB_Class70])
-	(widget_class_name "edu.stanford.smi.protegex.chatPlugin.ChatTab"))
+	(widget_class_name "dfki.protege.ontoviz_tab.OntovizTab"))
 
 ([libros_ProjectKB_Class7] of  Widget
 
 	(is_hidden TRUE)
 	(property_list [libros_ProjectKB_Class8])
-	(widget_class_name "edu.stanford.smi.protege.widget.ClsesAndInstancesTab"))
+	(widget_class_name "edu.stanford.smi.protege.widget.ProtegePropertiesTab"))
 
 ([libros_ProjectKB_Class70] of  Property_List
 )
@@ -689,7 +524,7 @@
 
 	(is_hidden TRUE)
 	(property_list [libros_ProjectKB_Class72])
-	(widget_class_name "edu.stanford.smi.RemoteKBTab.UMLSTab"))
+	(widget_class_name "edu.stanford.smi.protegex.changes.stats.ChangeStatisticsTab"))
 
 ([libros_ProjectKB_Class72] of  Property_List
 )
@@ -698,7 +533,7 @@
 
 	(is_hidden TRUE)
 	(property_list [libros_ProjectKB_Class74])
-	(widget_class_name "edu.stanford.smi.protegex.server_changes.prompt.UsersTab"))
+	(widget_class_name "edu.stanford.smi.protegex.prompt.PromptTab"))
 
 ([libros_ProjectKB_Class74] of  Property_List
 )
@@ -710,7 +545,7 @@
 
 	(is_hidden TRUE)
 	(property_list [libros_ProjectKB_Class10])
-	(widget_class_name "edu.stanford.smi.protegex.evaluation.MetaAnalysis"))
+	(widget_class_name "uk.ac.man.cs.mig.coode.debugger.test.DebuggerTestTab"))
 
 ([option_instance] of  Options
 
@@ -792,8 +627,8 @@
 		[INSTANCE_ANNOTATION_FORM_WIDGET]
 		[STANDARD_FACET_FORM_WIDGET]
 		[STANDARD_SLOT_FORM_WIDGET]
-		[STANDARD_CLASS_FORM_WIDGET]
-		[PAL_FORM_WIDGET])
+		[PAL_FORM_WIDGET]
+		[STANDARD_CLASS_FORM_WIDGET])
 	(default_cls_metaclass ":STANDARD-CLASS")
 	(default_facet_metaclass ":STANDARD-FACET")
 	(default_instance_widget_class_name "edu.stanford.smi.protege.widget.FormWidget")

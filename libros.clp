@@ -23,6 +23,11 @@
     (allowed-values Transporte Casa Cama)
 ;+    (cardinality 0 1)
     (create-accessor read-write))
+  (multislot libros_perfil
+    (type INSTANCE)
+;+    (allowed-classes Libro)
+    (cardinality 1 ?VARIABLE)
+    (create-accessor read-write))
   (single-slot tiempo_disponible
     (type INTEGER)
 ;+    (cardinality 0 1)
@@ -51,6 +56,12 @@
     (allowed-values FALSE TRUE)
 ;+    (cardinality 0 1)
     (create-accessor read-write))
+  (single-slot extranjero
+;+    (comment "Es un autor extranjero?")
+    (type SYMBOL)
+    (allowed-values FALSE TRUE)
+;+    (cardinality 0 1)
+    (create-accessor read-write))
   (single-slot longitud
     (type INTEGER)
 ;+    (cardinality 0 1)
@@ -60,9 +71,10 @@
     (allowed-values Manana Tarde Noche)
 ;+    (cardinality 0 1)
     (create-accessor read-write))
-  (multislot autor
+  (single-slot autor
     (type INSTANCE)
 ;+    (allowed-classes Autor)
+;+    (cardinality 0 1)
     (create-accessor read-write))
   (multislot genero
     (type INSTANCE)
@@ -116,91 +128,21 @@
     (type FLOAT)
 ;+    (cardinality 0 1)
     (create-accessor read-write))
+  (single-slot autor
+    (type INSTANCE)
+;+    (allowed-classes Autor)
+;+    (cardinality 0 1)
+    (create-accessor read-write))
   (single-slot dificultad
     (type SYMBOL)
     (allowed-values facil asequible denso)
 ;+    (cardinality 0 1)
-    (create-accessor read-write))
-  (single-slot autor
-    (type INSTANCE)
-;+    (allowed-classes Autor)
     (create-accessor read-write))
   (single-slot titulo
     (type STRING)
 ;+    (cardinality 0 1)
     (create-accessor read-write))
   (multislot genero
-    (type INSTANCE)
-;+    (allowed-classes Genero)
-    (create-accessor read-write)))
-
-(defclass Persona
-  (is-a USER)
-  (role abstract)
-  (single-slot nombre
-    (type STRING)
-;+    (cardinality 0 1)
-    (create-accessor read-write))
-  (single-slot edad
-    (type INTEGER)
-;+    (cardinality 0 1)
-    (create-accessor read-write)))
-
-(defclass Lector
-  (is-a Persona)
-  (role concrete)
-  (single-slot gustan_populares
-    (type SYMBOL)
-    (allowed-values FALSE TRUE)
-;+    (cardinality 0 1)
-    (create-accessor read-write))
-  (multislot autores_preferidos
-    (type INSTANCE)
-;+    (allowed-classes Autor)
-    (create-accessor read-write))
-  (single-slot lugar
-    (type SYMBOL)
-    (allowed-values Transporte Casa Cama)
-;+    (cardinality 0 1)
-    (create-accessor read-write))
-  (single-slot momento
-    (type SYMBOL)
-    (allowed-values Manana Tarde Noche)
-;+    (cardinality 0 1)
-    (create-accessor read-write))
-  (single-slot confia_criticas
-    (type SYMBOL)
-    (allowed-values FALSE TRUE)
-;+    (cardinality 0 1)
-    (create-accessor read-write))
-  (single-slot tiempo_disponible
-    (type INTEGER)
-;+    (cardinality 0 1)
-    (create-accessor read-write))
-  (multislot generos_preferidos
-    (type INSTANCE)
-;+    (allowed-classes Genero)
-    (create-accessor read-write))
-  (single-slot frecuencia
-    (type SYMBOL)
-    (allowed-values Diariamente Ocasionalmente Esporadicamente)
-;+    (cardinality 0 1)
-    (create-accessor read-write))
-  (single-slot autores_extranjeros
-    (type SYMBOL)
-    (allowed-values FALSE TRUE)
-;+    (cardinality 0 1)
-    (create-accessor read-write)))
-
-(defclass Autor
-  (is-a Persona)
-  (role concrete)
-  (single-slot lectura_facil
-    (type SYMBOL)
-    (allowed-values FALSE TRUE)
-;+    (cardinality 0 1)
-    (create-accessor read-write))
-  (multislot estilo
     (type INSTANCE)
 ;+    (allowed-classes Genero)
     (create-accessor read-write)))
@@ -213,6 +155,37 @@
 ;+    (cardinality 0 1)
     (create-accessor read-write)))
 
+(defclass Autor
+  (is-a USER)
+  (role concrete)
+  (single-slot extranjero
+;+    (comment "Es un autor extranjero?")
+    (type SYMBOL)
+    (allowed-values FALSE TRUE)
+;+    (cardinality 0 1)
+    (create-accessor read-write))
+  (single-slot nombre
+    (type STRING)
+;+    (cardinality 0 1)
+    (create-accessor read-write))
+  (single-slot lectura_facil
+    (type SYMBOL)
+    (allowed-values FALSE TRUE)
+;+    (cardinality 0 1)
+    (create-accessor read-write)))
+
+(defclass PerfilLector "Perfil de lector"
+  (is-a USER)
+  (role concrete)
+  (single-slot nombre
+    (type STRING)
+;+    (cardinality 0 1)
+    (create-accessor read-write))
+  (multislot libros_perfil
+    (type INSTANCE)
+;+    (allowed-classes Libro)
+    (cardinality 1 ?VARIABLE)
+    (create-accessor read-write)))
 
 ;;-------------------------------------------------------------------------------------------------------------
 ;;                    INSTANCIAS
@@ -222,6 +195,269 @@
 ([libros_Class10] of  Genero
 
   (nombre "romantico"))
+
+([libros_Class10003] of  Libro
+
+  (dificultad facil)
+  (genero
+    [libros_Class12]
+    [libros_Class4]
+    [libros_Class14])
+  (longitud 500)
+  (titulo "Harry Potter y la camara secreta")
+  (valoracion 9.0)
+  (autor [libros_Class10004])
+  )
+
+([libros_Class10004] of  Autor
+
+  (extranjero TRUE)
+  (lectura_facil TRUE)
+  (nombre "J. K. Rowling"))
+
+([libros_Class10006] of  Libro
+
+  (autor [libros_Class10007])
+  (dificultad asequible)
+  (genero
+    [libros_Class9]
+    [libros_Class10008])
+  (longitud 800)
+  (titulo "Los Hombres Que No Amaban A Las Mujeres")
+  (valoracion 8.5))
+
+([libros_Class10007] of  Autor
+
+  (extranjero TRUE)
+  (lectura_facil FALSE)
+  (nombre "Stieg Larsson"))
+
+([libros_Class10008] of  Genero
+
+  (nombre "accion"))
+
+([libros_Class10009] of  Libro
+
+  (autor [libros_Class10007])
+  (dificultad asequible)
+  (genero
+    [libros_Class10008]
+    [libros_Class9])
+  (longitud 900)
+  (titulo "La chica que soñaba con una cerilla y un bidón de gasolina")
+  (valoracion 8.0))
+
+([libros_Class10010] of  Libro
+
+  (autor [libros_Class10011])
+  (dificultad denso)
+  (genero
+    [libros_Class10008]
+    [libros_Class12]
+    [libros_Class7]
+    [libros_Class9])
+  (longitud 1200)
+  (titulo "¡Suelta tu revolver!")
+  (valoracion 7.0))
+
+([libros_Class10011] of  Autor
+
+  (extranjero TRUE)
+  (nombre "Silver Kane"))
+
+([libros_Class10013] of  Libro
+
+  (autor [libros_Class10014])
+  (dificultad facil)
+  (genero [libros_Class15])
+  (longitud 300)
+  (titulo "Saber Cuidarse")
+  (valoracion 5.0))
+
+([libros_Class10014] of  Autor
+
+  (lectura_facil TRUE)
+  (nombre "Mariló Montero"))
+
+([libros_Class10015] of  Libro
+
+  (autor [libros_Class10016])
+  (dificultad facil)
+  (longitud 250)
+  (titulo "The big fat surprise")
+  (valoracion 7.0))
+
+([libros_Class10016] of  Autor
+
+  (extranjero TRUE)
+  (lectura_facil TRUE)
+  (nombre "Nina Teicholz"))
+
+([libros_Class10017] of  Libro
+
+  (autor [libros_Class10018])
+  (dificultad denso)
+  (genero
+    [libros_Class5]
+    [libros_Class6])
+  (longitud 1220)
+  (titulo "Las legiones malditas")
+  (valoracion 9.0))
+
+([libros_Class10018] of  Autor
+
+  (nombre "Santiago Posteguillo"))
+
+([libros_Class10019] of  Libro
+
+  (autor [libros_Class10018])
+  (dificultad denso)
+  (genero
+    [libros_Class5]
+    [libros_Class6])
+  (longitud 1147)
+  (titulo "La traición de Roma")
+  (valoracion 8.0))
+
+([libros_Class10020] of  Libro
+
+  (autor [libros_Class10021])
+  (dificultad facil)
+  (genero
+    [libros_Class12]
+    [libros_Class4])
+  (longitud 30)
+  (titulo "La Caperucita roja")
+  (valoracion 9.0))
+
+([libros_Class10021] of  Autor
+
+  (extranjero TRUE)
+  (lectura_facil TRUE)
+  (nombre "Hermanos Grimm"))
+
+([libros_Class10022] of  Libro
+
+  (autor [libros_Class10021])
+  (dificultad facil)
+  (genero
+    [libros_Class12]
+    [libros_Class4])
+  (longitud 30)
+  (titulo "La Bella Durmiente")
+  (valoracion 9.0))
+
+([libros_Class10023] of  Libro
+
+  (autor [libros_Class10021])
+  (dificultad facil)
+  (genero
+    [libros_Class12]
+    [libros_Class4])
+  (longitud 30)
+  (titulo "Hansel y Gretel")
+  (valoracion 9.0))
+
+([libros_Class10024] of  Libro
+
+  (autor [libros_Class10025])
+  (dificultad asequible)
+  (genero
+    [libros_Class5]
+    [libros_Class6])
+  (longitud 876)
+  (titulo "The Guns of August")
+  (valoracion 9.0))
+
+([libros_Class10025] of  Autor
+
+  (extranjero TRUE)
+  (nombre "Barbara W. Tuchman"))
+
+([libros_Class10030] of  PerfilLector
+
+  (libros_perfil
+    [libros_Class10003]
+    [libros_Class2]
+    [libros_Class16])
+  (nombre "Friki"))
+
+([libros_Class10031] of  PerfilLector
+
+  (libros_perfil
+    [libros_Class16]
+    [libros_Class10009]
+    [libros_Class10006])
+  (nombre "Hipster"))
+
+([libros_Class10032] of  PerfilLector
+
+  (libros_perfil
+    [libros_Class10019]
+    [libros_Class10017]
+    [libros_Class10013]
+    [libros_Class10015]
+    [libros_Class10024]
+    [libros_Class10010])
+  (nombre "Jubilado"))
+
+([libros_Class10033] of  PerfilLector
+
+  (libros_perfil
+    [libros_Class10003]
+    [libros_Class2]
+    [libros_Class10034]
+    [libros_Class10036])
+  (nombre "Quinceañera"))
+
+([libros_Class10034] of  Libro
+
+  (autor [libros_Class10035])
+  (dificultad facil)
+  (genero
+    [libros_Class10008]
+    [libros_Class12]
+    [libros_Class3])
+  (longitud 600)
+  (titulo "Crepúsculo")
+  (valoracion 9.0))
+
+([libros_Class10035] of  Autor
+
+  (extranjero TRUE)
+  (lectura_facil FALSE)
+  (nombre "Stephenie Meyer"))
+
+([libros_Class10036] of  Libro
+
+  (autor [libros_Class10035])
+  (dificultad facil)
+  (genero
+    [libros_Class10008]
+    [libros_Class12]
+    [libros_Class3])
+  (longitud 650)
+  (titulo "Eclipse")
+  (valoracion 8.0))
+
+([libros_Class10037] of  PerfilLector
+
+  (libros_perfil
+    [libros_Class10003]
+    [libros_Class2]
+    [libros_Class10009]
+    [libros_Class10006]
+    [libros_Class16])
+  (nombre "Aventurero"))
+
+([libros_Class10038] of  PerfilLector
+
+  (libros_perfil
+    [libros_Class10020]
+    [libros_Class10006]
+    [libros_Class10013]
+    [libros_Class10015])
+  (nombre "Maruja"))
 
 ([libros_Class11] of  Genero
 
@@ -254,10 +490,20 @@
 
 ([libros_Class17] of  Autor
 
-  (edad 43)
-  (estilo [libros_Class3])
   (lectura_facil TRUE)
   (nombre "Ernest Cline"))
+
+([libros_Class2] of  Libro
+
+  (autor [libros_Class10004])
+  (dificultad facil)
+  (genero
+    [libros_Class12]
+    [libros_Class4]
+    [libros_Class14])
+  (longitud 500)
+  (titulo "Harry Potter y la piedra filosofal")
+  (valoracion 9.0))
 
 ([libros_Class3] of  Genero
 
@@ -282,6 +528,7 @@
 ([libros_Class9] of  Genero
 
   (nombre "policiaco"))
+
 )
 
 ;;; Fin del codigo generado con Protege ---------------   
@@ -414,9 +661,8 @@
   (export ?ALL)
 )
 
-;;; Modulo de salida de las 3 recomendaciones de libros
-(defmodule salida-recomendaciones 
-  (import abstraccion-problema ?ALL) 
+;;; Modulo de refinamiento solucion para dar las recomendaciones  de los 3 libros
+(defmodule refinamiento-solucion 
   (import MAIN ?ALL)
    (export ?ALL)
 )
@@ -437,10 +683,9 @@
 		(type INTEGER)
 		(default -1)
 	)  
-  (slot frecuencia          ;;;frecuencia con la que el lector lee
-    (type STRING) 
-    (allowed-strings "a diario" "ocasionalmente" "cuando pueda" "desconocido") 
-    (default "desconocido")
+  (slot frecuencia          ;;;dias que el lector lee a la semana
+    (type INTEGER) 
+    (default -1)
   )              
 	(slot momento 	         ;;;momento del dia en el que el lector lee
 		(type STRING) 
@@ -503,27 +748,28 @@
   (modify ?u (edad ?edad))
 )
 
-(defrule preguntas-lector::establecer-tiempo_disp "Establece el tiempo del que dispone el lector para leer"
-  ?u <- (Lector (tiempo_disp ?tiempo))
-  (not (Lector (edad -1)))
-  (Lector (tiempo_disp -1))
-  =>
-  (bind ?tiempo (pregunta-numerica "Cuanto tiempo disponible tiene para leer (en minutos por dia)? " 1 1440))
-  (modify ?u (tiempo_disp ?tiempo))
-)
-
 (defrule preguntas-lector::establecer-frecuencia "Establece la frecuencia con la que lee el lector"
   ?u <- (Lector (frecuencia ?frecuencia))
-  (not (Lector (tiempo_disp -1)))
-  (Lector (frecuencia "desconocido"))
+  (not (Lector (edad -1)))
+  (Lector (frecuencia -1))
   =>
-  (bind ?frecuencia (pregunta-indice "Con que frecuencia suele leer?" "a diario" "ocasionalmente" "cuando pueda"))
+  (bind ?frecuencia (pregunta-numerica "Cuantos dias a la semana suele leer?" 1 7))
   (modify ?u (frecuencia ?frecuencia))
 )
 
+(defrule preguntas-lector::establecer-tiempo_disp "Establece el tiempo que el lector lee el dia que lee"
+  ?u <- (Lector (tiempo_disp ?tiempo))
+  (not (Lector (frecuencia -1)))
+  (Lector (tiempo_disp -1))
+  =>
+  (bind ?tiempo (pregunta-numerica "Cuanto minutos lee los dias que lee? " 1 1440))
+  (modify ?u (tiempo_disp ?tiempo))
+)
+
+
 (defrule preguntas-lector::establecer-momento "Establece el momento que suele usar el lector para leer"
   ?u <- (Lector (momento ?momento))
-  (not (Lector (frecuencia "desconocido")))
+  (not (Lector (tiempo_disp -1)))
   (Lector (momento "desconocido"))
   =>
   (bind ?momento (pregunta-indice "En que momento del dia suele leer?" manyana tarde noche))
@@ -625,6 +871,7 @@
     (bind ?curr-tit (send ?curr-obj get-titulo))
     (bind ?curr-aut (send ?curr-obj get-autor))
     (bind ?curr-nom (send ?curr-aut get-nombre))
+
     (bind $?tit-aut-libros (insert$ $?tit-aut-libros (+ 1 (length$ $?tit-aut-libros)) (str-cat ?curr-tit " de " ?curr-nom) ))
   )
 
@@ -672,6 +919,7 @@
 ;;;Abstraccion edad
 (defrule abstraccion-problema::abstraccion-edad "Abstrae la edad"
   (Lector (edad ?edad))
+  (not (edad))
   =>
   (if (< ?edad 10) then (assert (edad ninyo))
    else (if (< ?edad 18) then (assert (edad adolescente))
@@ -682,13 +930,70 @@
       )
     )
   )
-  (focus salida-recomendaciones)
+)
+
+;;;Abstraccion tiempo
+(defrule abstraccion-problema::abstraccion-tiempo "Abstrae el tiempo"
+  (Lector (tiempo_disp ?t) (frecuencia ?f))
+  (edad ?e)
+  (not (tiempo))
+  =>
+  (bind ?tiempo (* ?t ?f) )
+  (if (< ?tiempo 300) then (assert (tiempo poco))
+   else (if (< ?tiempo 600) then (assert (tiempo medio))
+    else (assert (tiempo mucho))
+    )
+   )
+)
+
+;;;Abstraccion generos
+(defrule abstraccion-problema::abstraccion-generos "Abstrae los generos"
+  (preferencias (generos-favoritos $?obj-gen))
+  (tiempo ?t)
+  (not (generos))
+  =>
+  (bind $?generos (create$))
+  (loop-for-count (?i 1 (length$ $?obj-gen)) do
+    (bind ?genero (nth$ ?i $?obj-gen))
+    (bind ?nombre (send ?genero get-nombre))
+    (bind $?generos(insert$ $?generos (+ (length$ $?generos) 1) ?nombre))
+  )
+  (assert (generos $?generos))
+)
+
+;;;Abstraccion alternativo
+(defrule abstraccion-problema::abstraccion-alternativo "Abstrae el hecho de si al lector le gustan los libros populares"
+  (preferencias (gustan-libros-populares ?g))
+  (generos ?e)
+  (not (alternativo))
+  =>
+  (if (eq ?g TRUE) then (assert (alternativo FALSE)) else (assert (alternativo TRUE)))
+  (focus asociacion-heuristica)
 )
 
 
-;;; Modulo salida -------------------------------------
+;;; Modulo asociacion heuristica -------------------------------------
 
-(defrule salida-recomendaciones::recomienda-edad "Regla recomendadora"
+(defrule asociacion-heuristica::recomienda-edad "Regla recomendadora"
+  ?h <- (edad ?edad)
+  =>
+  (printout t crlf)
+  (if (eq ?edad ninyo) then (printout t "Ninyo" crlf)
+    else (if (eq ?edad adolescente) then (printout t "Adolescente" crlf)
+      else (if (eq ?edad joven) then (printout t "Joven" crlf)
+        else (if (eq ?edad adulto) then (printout t "Adulto" crlf)
+          else (if (eq ?edad anciano) then (printout t "Anciano" crlf))
+        )
+      )
+    )
+  )
+  (retract ?h)
+)
+
+
+;;; Modulo refinamiento solucion -------------------------------------
+
+(defrule refinamiento-solucion::recomienda-edad "Regla recomendadora"
   ?h <- (edad ?edad)
   =>
   (printout t crlf)
