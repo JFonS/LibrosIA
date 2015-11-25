@@ -1,4 +1,4 @@
-;;-------------------------------------------------------------------------------------------------------------
+﻿;;-------------------------------------------------------------------------------------------------------------
 ;;-------------------------------------------------------------------------------------------------------------
 ;;
 ;;                PRACTICA 2 IA: SBC
@@ -977,52 +977,76 @@
 
 ;;; Modulo asociacion heuristica -------------------------------------
 
-(defrule asociacion-heuristica::recomienda-edad "Regla recomendadora"
-  ?h <- (edad ?edad)
-  =>
-  (printout t crlf)
-  (if (eq ?edad ninyo) then (printout t "Ninyo" crlf)
-    else (if (eq ?edad adolescente) then (printout t "Adolescente" crlf)
-      else (if (eq ?edad joven) then (printout t "Joven" crlf)
-        else (if (eq ?edad adulto) then (printout t "Adulto" crlf)
-          else (if (eq ?edad anciano) then (printout t "Anciano" crlf))
-        )
-      )
-    )
-  )
-  (retract ?h)
-)
-
 (defrule asociacion-heuristica::perfil-friki "Determina si el lector tiene un perfil de friki"
-  (not (edad))
+  (declare (salience 99))
   (or (tiempo medio) (tiempo mucho))
-  (genero "comic")
-  (genero "ciencia_ficcion")
-  (genero "ficcion")
-  (genero "fantasia")
+  (or (genero "comic")
+      (genero "ciencia_ficcion")
+      (genero "ficcion")
+      (genero "fantasia"))
   =>
   (assert (perfil friki))
+)
+
+(defrule asociacion-heuristica::perfil-hipster "Determina si el lector tiene un perfil de hipster"
+  (declare (salience 99))
+  (edad joven)
+  (alternativo TRUE)
+  =>
+  (assert (perfil hipster))
+)
+
+(defrule asociacion-heuristica::perfil-jubilado "Determina si el lector tiene un perfil de jubilado"
+  (declare (salience 99))
+  (tiempo mucho)
+  (edad adulto)
+  (or (genero "salud")
+      (genero "historia")
+      (genero "oeste"))
+  (alternativo FALSE)
+  =>
+  (assert (perfil jubilado))
+)
+
+(defrule asociacion-heuristica::perfil-quinceanera "Determina si el lector tiene un perfil de quinceanera"
+  (declare (salience 99))
+  (edad joven)
+  (or (genero "romantico")
+      (genero "terror")
+      (genero "fantasia"))
+  =>
+  (assert (perfil quinceanera))
+)
+
+(defrule asociacion-heuristica::perfil-aventurero "Determina si el lector tiene un perfil de aventurero"
+  (declare (salience 99))
+  (or (edad joven) (edad ninyio))
+  (or (genero "aventura")
+      (genero "oeste")
+      (genero "policiaco"))
+  =>
+  (assert (perfil aventurero))
+)
+
+
+(defrule asociacion-heuristica::perfil-maruja "Determina si el lector tiene un perfil de maruja"
+  (declare (salience 99))
+  (edad adulto)
+  (or (genero "romantico")
+      (genero "salud")
+      (genero "narrativa"))
+  =>
+  (assert (perfil maruja))
+)
+
+
+(defrule asociacion-heuristica::final-perfiles "Regla auxiliar final para passar el focus"
+  (declare (salience -1))
+  =>
   (focus refinamiento-solucion)
 )
 
-
 ;;; Modulo refinamiento solucion -------------------------------------
-
-(defrule refinamiento-solucion::recomienda-edad "Regla recomendadora"
-  ?h <- (edad ?edad)
-  =>
-  (printout t crlf)
-  (if (eq ?edad ninyo) then (printout t "Ninyo" crlf)
-    else (if (eq ?edad adolescente) then (printout t "Adolescente" crlf)
-      else (if (eq ?edad joven) then (printout t "Joven" crlf)
-        else (if (eq ?edad adulto) then (printout t "Adulto" crlf)
-          else (if (eq ?edad anciano) then (printout t "Anciano" crlf))
-        )
-      )
-    )
-  )
-  (retract ?h)
-)
 
 (defrule refinamiento-solucion::determina-perfil ""
   ?h <- (perfil ?p)
