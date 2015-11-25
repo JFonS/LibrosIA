@@ -644,27 +644,32 @@
 
 ;;; Modulo de recopilacion de las preferencias del lector
 (defmodule preguntas-prefs 
-  (import MAIN ?ALL)
-  (import preguntas-lector deftemplate ?ALL) 
+  (import MAIN ?ALL) 
   (export ?ALL)
 )
 
 ;;; Modulo de abstraccion del problema
 (defmodule abstraccion-problema 
-  (import MAIN ?ALL) 
+  (import MAIN ?ALL)
+  (import preguntas-lector ?ALL)
+  (import preguntas-prefs ?ALL)
   (export ?ALL)
 )
 
 ;;; Modulo de asociacion heuristica
 (defmodule asociacion-heuristica 
-  (import MAIN ?ALL) 
+  (import MAIN ?ALL)
+  (import abstraccion-problema ?ALL)
   (export ?ALL)
 )
 
 ;;; Modulo de refinamiento solucion para dar las recomendaciones  de los 3 libros
 (defmodule refinamiento-solucion 
   (import MAIN ?ALL)
-   (export ?ALL)
+  (import preguntas-lector ?ALL)
+  (import preguntas-prefs ?ALL)
+  (import asociacion-heuristica ?ALL)
+  (export ?ALL)
 )
 
 
@@ -935,7 +940,7 @@
 ;;;Abstraccion tiempo
 (defrule abstraccion-problema::abstraccion-tiempo "Abstrae el tiempo"
   (Lector (tiempo_disp ?t) (frecuencia ?f))
-  (edad ?e)
+  (edad ?)
   (not (tiempo))
   =>
   (bind ?tiempo (* ?t ?f) )
@@ -949,22 +954,20 @@
 ;;;Abstraccion generos
 (defrule abstraccion-problema::abstraccion-generos "Abstrae los generos"
   (preferencias (generos-favoritos $?obj-gen))
-  (tiempo ?t)
+  (tiempo ?)
   (not (generos))
   =>
-  (bind $?generos (create$))
   (loop-for-count (?i 1 (length$ $?obj-gen)) do
     (bind ?genero (nth$ ?i $?obj-gen))
     (bind ?nombre (send ?genero get-nombre))
-    (bind $?generos(insert$ $?generos (+ (length$ $?generos) 1) ?nombre))
+    (assert (genero ?nombre))
   )
-  (assert (generos $?generos))
 )
 
 ;;;Abstraccion alternativo
 (defrule abstraccion-problema::abstraccion-alternativo "Abstrae el hecho de si al lector le gustan los libros populares"
   (preferencias (gustan-libros-populares ?g))
-  (generos ?e)
+  (genero ?)
   (not (alternativo))
   =>
   (if (eq ?g TRUE) then (assert (alternativo FALSE)) else (assert (alternativo TRUE)))
@@ -990,6 +993,18 @@
   (retract ?h)
 )
 
+(defrule asociacion-heuristica::perfil-friki "Determina si el lector tiene un perfil de friki"
+  (not (edad))
+  (or (tiempo medio) (tiempo mucho))
+  (genero "comic")
+  (genero "ciencia_ficcion")
+  (genero "ficcion")
+  (genero "fantasia")
+  =>
+  (assert (perfil friki))
+  (focus refinamiento-solucion)
+)
+
 
 ;;; Modulo refinamiento solucion -------------------------------------
 
@@ -1006,5 +1021,13 @@
       )
     )
   )
+  (retract ?h)
+)
+
+(defrule refinamiento-solucion::determina-perfil ""
+  ?h <- (perfil ?p)
+  =>
+  (printout t "Resultado: " crlf)
+  (printout t "Eres un " ?p "!" crlf)
   (retract ?h)
 )
