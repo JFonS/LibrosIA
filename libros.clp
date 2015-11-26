@@ -985,7 +985,7 @@
       (genero "ficcion")
       (genero "fantasia"))
   =>
-  (assert (perfil friki))
+  (assert (perfil "Friki"))
 )
 
 (defrule asociacion-heuristica::perfil-hipster "Determina si el lector tiene un perfil de hipster"
@@ -993,7 +993,7 @@
   (edad joven)
   (alternativo TRUE)
   =>
-  (assert (perfil hipster))
+  (assert (perfil "Hipster"))
 )
 
 (defrule asociacion-heuristica::perfil-jubilado "Determina si el lector tiene un perfil de jubilado"
@@ -1005,7 +1005,7 @@
       (genero "oeste"))
   (alternativo FALSE)
   =>
-  (assert (perfil jubilado))
+  (assert (perfil "Jubilado"))
 )
 
 (defrule asociacion-heuristica::perfil-quinceanera "Determina si el lector tiene un perfil de quinceanera"
@@ -1015,7 +1015,7 @@
       (genero "terror")
       (genero "fantasia"))
   =>
-  (assert (perfil quinceanera))
+  (assert (perfil "Quinceñera"))
 )
 
 (defrule asociacion-heuristica::perfil-aventurero "Determina si el lector tiene un perfil de aventurero"
@@ -1025,7 +1025,7 @@
       (genero "oeste")
       (genero "policiaco"))
   =>
-  (assert (perfil aventurero))
+  (assert (perfil "Aventurero"))
 )
 
 
@@ -1036,12 +1036,12 @@
       (genero "salud")
       (genero "narrativa"))
   =>
-  (assert (perfil maruja))
+  (assert (perfil "Maruja"))
 )
 
 
 (defrule asociacion-heuristica::final-perfiles "Regla auxiliar final para passar el focus"
-  (declare (salience -1))
+  (declare (salience 0))
   =>
   (focus refinamiento-solucion)
 )
@@ -1049,9 +1049,14 @@
 ;;; Modulo refinamiento solucion -------------------------------------
 
 (defrule refinamiento-solucion::determina-perfil ""
-  ?h <- (perfil ?p)
+  ?h <- (perfil ?nombre-perfil)
   =>
   (printout t "Resultado: " crlf)
-  (printout t "Eres un " ?p "!" crlf)
+  (printout t "Eres un " ?nombre-perfil "!" crlf)
+  (bind $?perfil (nth$ 1 (find-instance ((?inst PerfilLector)) (eq ?nombre-perfil (send ?inst get-nombre)) )))
+  (bind $?libros (send ?perfil get-libros_perfil))
+  (progn$ (?p $?libros)
+    (printout t "libros: " ?p " -> " (send ?p get-titulo) crlf)
+  )
   (retract ?h)
 )
