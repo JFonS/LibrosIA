@@ -1015,7 +1015,7 @@
       (genero "terror")
       (genero "fantasia"))
   =>
-  (assert (perfil "Quinceñera"))
+  (assert (perfil "Quinceañera"))
 )
 
 (defrule asociacion-heuristica::perfil-aventurero "Determina si el lector tiene un perfil de aventurero"
@@ -1040,7 +1040,7 @@
 )
 
 
-(defrule asociacion-heuristica::final-perfiles "Regla auxiliar final para passar el focus"
+(defrule asociacion-heuristica::final-perfiles "Regla auxiliar final para pasar el focus"
   (declare (salience 0))
   =>
   (focus refinamiento-solucion)
