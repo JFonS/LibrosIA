@@ -1081,10 +1081,9 @@
 ;;; Modulo refinamiento solucion -------------------------------------
 
 (defrule refinamiento-solucion::descartar-libros-leidos "Descarta los libros leidos por el senor"
-  (declare (salience 10))
+  (not (descartes))
   ?l <- (listaLibros $?listaLibros)
   (preferencias (libros-leidos $?librosLeidos))
-  (not (descartes))
   =>
   (progn$ (?libroLeido $?librosLeidos)
       (bind ?listaLibros (delete-member$ ?listaLibros ?libroLeido))
@@ -1094,11 +1093,83 @@
   (assert (listaLibros ?listaLibros))
 )
 
+(defrule refinamiento-solucion::refinar-libros-no-leidos "Refina los libros no leidos"
+  (descartes)
+  (not (refine))
+  ?lector <- (Lector (tiempo_disp ?minutosLector) (frecuencia ?diasSemanaLector))
+  ?pref <- (preferencias (autores-favoritos $?autores-favoritos) (gustan-autores-extranjeros ?autores-ext) (gustan-libros-populares ?popus))
+  ?lfact <- (listaLibros $?listaLibros)
+  =>
+  (if (> (length$ $?listaLibros) 3)  then
+    (bind ?m1 -99999)
+    (bind ?m2 -99999)
+    (bind ?m3 -99999)
+    (bind ?l1 (nth$ 1 $?listaLibros))
+    (bind ?l2 (nth$ 1 $?listaLibros))
+    (bind ?l3 (nth$ 1 $?listaLibros))
+
+    (progn$ (?l $?listaLibros)
+        (bind ?p 0)
+        (bind ?aut (send ?l get-autor))
+
+        (if (member$ ?aut ?autores-favoritos) then (bind ?p (+ ?p 20)) ) ;si autor favorito
+
+        (bind ?long (send ?l get-longitud))
+        (bind ?tiempo (* ?minutosLector ?diasSemanaLector))
+        (bind ?p (- ?p (/ ?long (* ?tiempo 4))))
+
+        (bind ?extranjero (send ?aut get-extranjero))
+        (if  (and (eq ?autores-ext TRUE) (eq ?extranjero TRUE)) then (bind ?p (+ ?p 10)))
+
+        (bind ?val (send ?l get-valoracion))
+        (if (eq ?popus TRUE) then (bind ?p (+ ?p ?val)) else (bind ?p (- ?p ?val)))
+
+        (printout t (send ?l get-titulo) " " ?p crlf)
+
+        (if (> ?p ?m1) 
+          then 
+              (bind ?m3 ?m2)
+              (bind ?l3 ?l2)
+
+              (bind ?m2 ?m1)
+              (bind ?l2 ?l1)
+
+              (bind ?m1 ?p) 
+              (bind ?l1 ?l)
+            else ( if (> ?p ?m2) then 
+                      (bind ?l3 ?l2)
+                      (bind ?m3 ?m2)
+
+                      (bind ?m2 ?p) 
+                      (bind ?l2 ?l)
+                      else ( if (> ?p ?m3) then
+                          (bind ?m3 ?p)
+                          (bind ?l3 ?l)
+                        )
+                      )
+        )
+
+    )
+    (bind ?listaLibros (create$ ?l1 ?l2 ?l3))
+    (retract ?lfact)
+    (assert (listaLibros ?listaLibros))
+  )
+  (assert (refine))
+)
+
 (defrule refinamiento-solucion::imprimir-solucion "Imprime la solucion final (los 3 libros)"
-  (declare (salience 0))
+  (descartes)
+  (refine)
+  (not (final))
   ?l <- (listaLibros $?listaLibros)
   =>
-  (progn$ (?libro $?listaLibros) (printout t "libros: " ?libro " -> " (send ?libro get-titulo) crlf) )
+
+  (printout t "Tus libros recomendados: " crlf)
+  (if (eq 0 (length$ ?listaLibros)) then (printout t "No hemos encontrado ningun libro chuli para ti." crlf))
+  (progn$ (?l $?listaLibros)
+    (printout t (send ?l get-titulo) crlf)
+  )
+  (assert (final))
 )
 
 
