@@ -990,7 +990,7 @@
 
 (defrule asociacion-heuristica::perfil-hipster "Determina si el lector tiene un perfil de hipster"
   (declare (salience 99))
-  (edad joven)
+  (or (edad adolescente) (edad joven))
   (alternativo TRUE)
   =>
   (assert (perfil "Hipster"))
@@ -999,7 +999,7 @@
 (defrule asociacion-heuristica::perfil-jubilado "Determina si el lector tiene un perfil de jubilado"
   (declare (salience 99))
   (tiempo mucho)
-  (edad adulto)
+  (edad anciano)
   (or (genero "salud")
       (genero "historia")
       (genero "oeste"))
@@ -1010,7 +1010,7 @@
 
 (defrule asociacion-heuristica::perfil-quinceanera "Determina si el lector tiene un perfil de quinceanera"
   (declare (salience 99))
-  (edad joven)
+  (edad adolescente)
   (or (genero "romantico")
       (genero "terror")
       (genero "fantasia"))
@@ -1020,7 +1020,7 @@
 
 (defrule asociacion-heuristica::perfil-aventurero "Determina si el lector tiene un perfil de aventurero"
   (declare (salience 99))
-  (or (edad joven) (edad ninyio))
+  (or (edad ninyio) (edad adolescente) (edad joven))
   (or (genero "aventura")
       (genero "oeste")
       (genero "policiaco"))
@@ -1031,7 +1031,7 @@
 
 (defrule asociacion-heuristica::perfil-maruja "Determina si el lector tiene un perfil de maruja"
   (declare (salience 99))
-  (edad adulto)
+  (or (edad adulto) (edad anciano))
   (or (genero "romantico")
       (genero "salud")
       (genero "narrativa"))
@@ -1053,8 +1053,6 @@
   ?h <- (perfil ?nombre-perfil)
   ?l <- (listaLibros $?listaLibros)
   =>
-  (printout t "Resultado: " crlf)
-  (printout t "Eres un " ?nombre-perfil "!" crlf)
   (bind $?perfil (nth$ 1 (find-instance ((?inst PerfilLector)) (eq ?nombre-perfil (send ?inst get-nombre)) )))
   (bind $?libros (send ?perfil get-libros_perfil))
   (progn$ (?libro $?libros)
@@ -1062,8 +1060,6 @@
       (bind ?listaLibros (insert$ ?listaLibros (+ (length$ ?listaLibros) 1) ?libro))
     )
   )
-
-  (progn$ (?libro $?listaLibros) (printout t "libros: " ?libro " -> " (send ?libro get-titulo) crlf) )
 
   (retract ?l)
   (assert (listaLibros ?listaLibros))
@@ -1101,31 +1097,39 @@
   ?lfact <- (listaLibros $?listaLibros)
   =>
   (if (> (length$ $?listaLibros) 3)  then
+    ; m1, m2 y m3 contienen el valor de las 3 puntuaciones maximas
     (bind ?m1 -99999)
     (bind ?m2 -99999)
     (bind ?m3 -99999)
+    ; l1, l2 y l3 contienen los libros correspondientes a las 3 puntuaciones maximas
     (bind ?l1 (nth$ 1 $?listaLibros))
     (bind ?l2 (nth$ 1 $?listaLibros))
     (bind ?l3 (nth$ 1 $?listaLibros))
 
+    ; asignamos a cada libro una puntuacion en funcion de los datos personales del lector y sus preferencias
     (progn$ (?l $?listaLibros)
         (bind ?p 0)
         (bind ?aut (send ?l get-autor))
 
-        (if (member$ ?aut ?autores-favoritos) then (bind ?p (+ ?p 20)) ) ;si autor favorito
+        ; aumentamos puntuacion si el autor es uno de los favoritos del lector
+        (if (member$ ?aut ?autores-favoritos) then (bind ?p (+ ?p 10)) )
 
+        ; aumentamos puntuacion si el lector tiene tiempo suficiente para leer un libro de esta longitud
         (bind ?long (send ?l get-longitud))
         (bind ?tiempo (* ?minutosLector ?diasSemanaLector))
         (bind ?p (- ?p (/ ?long (* ?tiempo 4))))
 
+        ; aumentamos puntuacion si el autor es extranjero y al lector le gustan los autores extranjeros
         (bind ?extranjero (send ?aut get-extranjero))
         (if  (and (eq ?autores-ext TRUE) (eq ?extranjero TRUE)) then (bind ?p (+ ?p 10)))
 
+        ; modificamos puntuacion segun la valoracion del libro si al autor le gustan los libros populares
         (bind ?val (send ?l get-valoracion))
         (if (eq ?popus TRUE) then (bind ?p (+ ?p ?val)) else (bind ?p (- ?p ?val)))
 
         (printout t (send ?l get-titulo) " " ?p crlf)
 
+        ; actualizamos las puntuaciones maximas
         (if (> ?p ?m1) 
           then 
               (bind ?m3 ?m2)
@@ -1163,11 +1167,16 @@
   (not (final))
   ?l <- (listaLibros $?listaLibros)
   =>
-
+  (printout t crlf crlf)
   (printout t "Tus libros recomendados: " crlf)
+  
   (if (eq 0 (length$ ?listaLibros)) then (printout t "No hemos encontrado ningun libro chuli para ti." crlf))
   (progn$ (?l $?listaLibros)
-    (printout t (send ?l get-titulo) crlf)
+    (printout t (send ?l get-titulo) ", " (send (send ?l get-autor) get-nombre) " [" )
+    (progn$ (?g (send ?l get-genero))
+      (printout t (send ?g get-nombre) " ")
+    )
+    (printout t "]" crlf)
   )
   (assert (final))
 )
