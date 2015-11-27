@@ -1040,23 +1040,65 @@
 )
 
 
-(defrule asociacion-heuristica::final-perfiles "Regla auxiliar final para pasar el focus"
-  (declare (salience 0))
+(defrule asociacion-heuristica::crear-lista-libros "Regla auxiliar final para crear listaLibros"
+  (declare (salience 47))
+  (not (created))
   =>
-  (focus refinamiento-solucion)
+  (assert (created))
+  (assert (listaLibros (create$)))
 )
 
-;;; Modulo refinamiento solucion -------------------------------------
-
-(defrule refinamiento-solucion::determina-perfil ""
+(defrule asociacion-heuristica::recopilacion-libros-posibles-a-partir-de-perfil "recopilacion-libros-posibles-a-partir-de-perfil"
+  (declare (salience 10))
   ?h <- (perfil ?nombre-perfil)
+  ?l <- (listaLibros $?listaLibros)
   =>
   (printout t "Resultado: " crlf)
   (printout t "Eres un " ?nombre-perfil "!" crlf)
   (bind $?perfil (nth$ 1 (find-instance ((?inst PerfilLector)) (eq ?nombre-perfil (send ?inst get-nombre)) )))
   (bind $?libros (send ?perfil get-libros_perfil))
-  (progn$ (?p $?libros)
-    (printout t "libros: " ?p " -> " (send ?p get-titulo) crlf)
+  (progn$ (?libro $?libros)
+    (if (not (member$ ?libro $?listaLibros)) then
+      (bind ?listaLibros (insert$ ?listaLibros (+ (length$ ?listaLibros) 1) ?libro))
+    )
   )
+
+  (progn$ (?libro $?listaLibros) (printout t "libros: " ?libro " -> " (send ?libro get-titulo) crlf) )
+
+  (retract ?l)
+  (assert (listaLibros ?listaLibros))
   (retract ?h)
 )
+
+(defrule asociacion-heuristica::cambia-focus "cambia-focus"
+  (declare (salience 0))
+  (not (finished))
+  =>
+  (assert (finished))
+  (focus refinamiento-solucion)
+)
+
+;;; Modulo refinamiento solucion -------------------------------------
+
+(defrule refinamiento-solucion::descartar-libros-leidos "Descarta los libros leidos por el senor"
+  (declare (salience 10))
+  ?l <- (listaLibros $?listaLibros)
+  (preferencias (libros-leidos $?librosLeidos))
+  (not (descartes))
+  =>
+  (progn$ (?libroLeido $?librosLeidos)
+      (bind ?listaLibros (delete-member$ ?listaLibros ?libroLeido))
+  )
+  (assert (descartes))
+  (retract ?l)
+  (assert (listaLibros ?listaLibros))
+)
+
+(defrule refinamiento-solucion::imprimir-solucion "Imprime la solucion final (los 3 libros)"
+  (declare (salience 0))
+  ?l <- (listaLibros $?listaLibros)
+  =>
+  (progn$ (?libro $?listaLibros) (printout t "libros: " ?libro " -> " (send ?libro get-titulo) crlf) )
+)
+
+
