@@ -740,6 +740,7 @@
 (defrule preguntas-lector::establecer-nombre "Establece el nombre del lector, es la primera pregunta"
   (not (Lector))
   =>
+  (printout t "---------------------------------" crlf)
   (bind ?nombre (pregunta-general "Como se llama? "))
   (assert (Lector (nombre ?nombre)))
 )
@@ -749,6 +750,7 @@
   ?u <- (Lector (edad ?edad))
   (Lector (edad -1))
   =>
+  (printout t "---------------------------------" crlf)
   (bind ?edad (pregunta-numerica "Que edad tiene? " 3 100))
   (modify ?u (edad ?edad))
 )
@@ -758,6 +760,7 @@
   (not (Lector (edad -1)))
   (Lector (frecuencia -1))
   =>
+  (printout t "---------------------------------" crlf)
   (bind ?frecuencia (pregunta-numerica "Cuantos dias a la semana suele leer?" 1 7))
   (modify ?u (frecuencia ?frecuencia))
 )
@@ -767,6 +770,7 @@
   (not (Lector (frecuencia -1)))
   (Lector (tiempo_disp -1))
   =>
+  (printout t "---------------------------------" crlf)
   (bind ?tiempo (pregunta-numerica "Cuanto minutos lee los dias que lee? " 1 1440))
   (modify ?u (tiempo_disp ?tiempo))
   (focus preguntas-prefs)
@@ -787,6 +791,7 @@
   ?h <- (generos-favoritos ask)
   ?pref <- (preferencias)
   =>
+  (printout t "---------------------------------" crlf)
   (bind $?obj-generos (find-all-instances ((?inst Genero)) TRUE) )
   (bind $?nom-generos (create$ ))
 
@@ -818,6 +823,7 @@
   ?pref <- (preferencias)
   (generos-favoritos TRUE)
   =>
+  (printout t "---------------------------------" crlf)
   (bind $?obj-autores (find-all-instances ((?inst Autor)) TRUE) )
   (bind $?nom-autores (create$ ))
 
@@ -830,6 +836,7 @@
   (bind $?respuestas (create$ ))
   (while (eq (length$ $?respuestas) 0) do
     (bind $?escogidos (pregunta-multi "Escoja sus autores favoritos: " $?nom-autores))
+    (printout t crlf)
     (loop-for-count (?i 1 (length$ $?escogidos)) do
       (bind ?escogido (nth$ ?i $?escogidos))
       (if (> ?escogido (length$ $?obj-autores)) then (break)) 
@@ -848,6 +855,7 @@
   ?pref <- (preferencias)
   (autores-favoritos TRUE)
   =>
+  (printout t "---------------------------------" crlf)
   (bind $?obj-libros (find-all-instances ((?inst Libro)) TRUE))
   (bind $?tit-aut-libros (create$))
 
@@ -862,6 +870,7 @@
 
   (bind $?respuestas (create$))
   (bind $?leidos (pregunta-multi "Escoja los libros que ha leido (si no ha leido ninguno, escriba '0'): " $?tit-aut-libros))
+  (printout t crlf)
   (loop-for-count (?i 1 (length$ $?leidos)) do
     (bind ?leido (nth$ ?i $?leidos))
     (if (<= ?leido (length$ $?obj-libros)) then 
@@ -880,6 +889,7 @@
   ?pref <- (preferencias)
   (libros-leidos TRUE)
   =>
+  (printout t "---------------------------------" crlf)
   (bind ?respuesta (pregunta-si-no "Le gustan los libros populares?"))
   (retract ?h)
   (assert (gustan-libros-populares TRUE))
@@ -891,10 +901,13 @@
   ?pref <- (preferencias)
   (gustan-libros-populares TRUE)
   =>
+  (printout t "---------------------------------" crlf)
   (bind ?respuesta (pregunta-si-no "Le gustan los autores extranjeros?"))
   (retract ?h)
   (assert (gustan-autores-extranjeros TRUE))
   (modify ?pref (gustan-autores-extranjeros $?respuesta))
+  (printout t "---------------------------------" crlf)
+  (printout t crlf)
   (focus abstraccion-problema)
 )
 
@@ -1132,8 +1145,8 @@
                         )
                       )
         )
-
     )
+	
     (bind ?listaLibros (create$ ?l1 ?l2 ?l3))
     (retract ?lfact)
     (assert (listaLibros ?listaLibros))
@@ -1141,11 +1154,26 @@
   (assert (refine))
 )
 
+(deffunction refinamiento-solucion::print-libro (?l)
+	  (printout t "Titulo: " (send ?l get-titulo) crlf)
+	  (printout t "Autor: "  (send (send ?l get-autor) get-nombre) crlf)
+	  (printout t "Generos: " crlf)
+			(progn$ (?g (send ?l get-genero))
+			  (printout t "         -" (send ?g get-nombre) crlf)
+			)
+	  (printout t crlf)
+	  (printout t "Dificultad de lectura: " (send ?l get-dificultad) crlf)
+	  (printout t "Valoracion de los criticos: " (send ?l get-valoracion) crlf)
+	  (printout t "Longitud: " (send ?l get-longitud) " paginas" crlf)
+)
+
 (defrule refinamiento-solucion::imprimir-solucion "Imprime la solucion final (los 3 libros)"
   (descartes)
   (refine)
   (not (final))
-  (Lector (nombre ?nombre))
+  ?lector <- (Lector (tiempo_disp ?minutosLector) (nombre ?nombre)(frecuencia ?diasSemanaLector))
+  ?pref <- (preferencias (autores-favoritos $?autores-favoritos) (gustan-autores-extranjeros ?autores-ext) (gustan-libros-populares ?popus))
+  ?lfact <- (listaLibros $?listaLibros)
   ?l <- (listaLibros $?listaLibros)
   =>
   (if (eq 0 (length$ ?listaLibros)) then 
@@ -1155,14 +1183,45 @@
 	  (printout t crlf crlf)
 	  (printout t "Hola " ?nombre ", tus libros recomendados son los siguientes: " crlf)
 	  
-	  (progn$ (?l $?listaLibros)
-		(printout t (send ?l get-titulo) ", " (send (send ?l get-autor) get-nombre) " [" )
-		(progn$ (?g (send ?l get-genero))
-		  (printout t (send ?g get-nombre) " ")
-		)
-		(printout t "]" crlf)
-	  )
+	  (printout t crlf "::::::::::::::::::::::::::::::::::::::::::::::::" crlf)
+		  (progn$ (?l $?listaLibros)
+			(printout t "---------------------------------" crlf crlf)
+			(print-libro ?l)
+			(bind ?p 0)
+			(bind ?aut (send ?l get-autor))
+
+			(printout t crlf)
+			(printout t "Nivel de recomendacion: " crlf)
+			
+			(if (member$ ?aut ?autores-favoritos) then 
+				(bind ?p (+ ?p 10))
+				(printout t "Es de un autor favorito: -> 10 puntos" crlf )				
+			)
+
+			(bind ?long (send ?l get-longitud))
+			(bind ?tiempo (* ?minutosLector ?diasSemanaLector))
+			(bind ?p (- ?p (/ ?long (* ?tiempo 4))))
+			(printout t "Factor de longitud -> " (- ?p (/ ?long (* ?tiempo 4))) " puntos" crlf)
+
+			(bind ?extranjero (send ?aut get-extranjero))
+			(if  (and (eq ?autores-ext TRUE) (eq ?extranjero TRUE)) then 
+				(bind ?p (+ ?p 10))
+				(printout t "El autor es extranjero, y al lector le gustan -> 10 puntos" crlf)
+			)
+
+			(bind ?val (send ?l get-valoracion))
+			(if (eq ?popus TRUE) then 
+				(bind ?p (+ ?p ?val))
+				(printout t "El libro es popular y al lector le gustan los libros populares -> " ?val " puntos" crlf)
+				else (bind ?p (- ?p ?val))
+			)
+
+			(printout t "Nivel de recomendacion total: " ?p " puntos" crlf)
+			(printout t "---------------------------------" crlf crlf)
+			)
+	  (printout t crlf "::::::::::::::::::::::::::::::::::::::::::::::::" crlf)
   )
+  (printout t crlf crlf)
   (assert (final))
 )
 
