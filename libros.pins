@@ -1,4 +1,4 @@
-; Tue Nov 24 13:09:36 CET 2015
+; Tue Dec 01 12:16:39 CET 2015
 ; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
@@ -54,7 +54,7 @@
 		[libros_Class10008]
 		[libros_Class9])
 	(longitud 900)
-	(titulo "La chica que soñaba con una cerilla y un bidón de gasolina")
+	(titulo "La chica que sonba con una cerilla y un bidon de gasolina")
 	(valoracion 8.0))
 
 ([libros_Class10010] of  Libro
@@ -67,7 +67,7 @@
 		[libros_Class7]
 		[libros_Class9])
 	(longitud 1200)
-	(titulo "¡Suelta tu revolver!")
+	(titulo "Suelta tu revolver")
 	(valoracion 7.0))
 
 ([libros_Class10011] of  Autor
@@ -87,7 +87,7 @@
 ([libros_Class10014] of  Autor
 
 	(lectura_facil TRUE)
-	(nombre "Mariló Montero"))
+	(nombre "Marilo Montero"))
 
 ([libros_Class10015] of  Libro
 
@@ -126,7 +126,7 @@
 		[libros_Class5]
 		[libros_Class6])
 	(longitud 1147)
-	(titulo "La traición de Roma")
+	(titulo "La traicion de Roma")
 	(valoracion 8.0))
 
 ([libros_Class10020] of  Libro
@@ -229,7 +229,7 @@
 		[libros_Class12]
 		[libros_Class3])
 	(longitud 600)
-	(titulo "Crepúsculo")
+	(titulo "Crepusculo")
 	(valoracion 9.0))
 
 ([libros_Class10035] of  Autor
