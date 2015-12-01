@@ -205,9 +205,9 @@
 		[libros_Class12]
 		[libros_Class4]
 		[libros_Class14])
-	(longitud 500)
+	(longitud 539)
 	(titulo "Harry Potter y la camara secreta")
-	(valoracion 9.0))
+	(valoracion 9.1))
 
 ([libros_Class10004] of  Autor
 
@@ -222,7 +222,7 @@
 	(genero
 		[libros_Class9]
 		[libros_Class10008])
-	(longitud 800)
+	(longitud 812)
 	(titulo "Los Hombres Que No Amaban A Las Mujeres")
 	(valoracion 8.5))
 
@@ -243,9 +243,9 @@
 	(genero
 		[libros_Class10008]
 		[libros_Class9])
-	(longitud 900)
+	(longitud 906)
 	(titulo "La chica que sonaba con una cerilla y un bidon de gasolina")
-	(valoracion 8.0))
+	(valoracion 8.4))
 
 ([libros_Class10010] of  Libro
 
@@ -256,9 +256,9 @@
 		[libros_Class12]
 		[libros_Class7]
 		[libros_Class9])
-	(longitud 1200)
+	(longitud 1201)
 	(titulo "Suelta tu revolver")
-	(valoracion 7.0))
+	(valoracion 7.2))
 
 ([libros_Class10011] of  Autor
 
@@ -270,9 +270,9 @@
 	(autor [libros_Class10014])
 	(dificultad facil)
 	(genero [libros_Class15])
-	(longitud 300)
+	(longitud 315)
 	(titulo "Saber Cuidarse")
-	(valoracion 5.0))
+	(valoracion 5.1))
 
 ([libros_Class10014] of  Autor
 
@@ -283,9 +283,9 @@
 
 	(autor [libros_Class10016])
 	(dificultad facil)
-	(longitud 250)
+	(longitud 252)
 	(titulo "The big fat surprise")
-	(valoracion 7.0))
+	(valoracion 7.3))
 
 ([libros_Class10016] of  Autor
 
@@ -300,9 +300,9 @@
 	(genero
 		[libros_Class5]
 		[libros_Class6])
-	(longitud 1220)
+	(longitud 1223)
 	(titulo "Las legiones malditas")
-	(valoracion 9.0))
+	(valoracion 5.4))
 
 ([libros_Class10018] of  Autor
 
@@ -326,9 +326,9 @@
 	(genero
 		[libros_Class12]
 		[libros_Class4])
-	(longitud 30)
+	(longitud 23)
 	(titulo "La Caperucita roja")
-	(valoracion 9.0))
+	(valoracion 8.3))
 
 ([libros_Class10021] of  Autor
 
@@ -343,9 +343,9 @@
 	(genero
 		[libros_Class12]
 		[libros_Class4])
-	(longitud 30)
+	(longitud 12)
 	(titulo "La Bella Durmiente")
-	(valoracion 9.0))
+	(valoracion 7.4))
 
 ([libros_Class10023] of  Libro
 
@@ -354,9 +354,9 @@
 	(genero
 		[libros_Class12]
 		[libros_Class4])
-	(longitud 30)
+	(longitud 56)
 	(titulo "Hansel y Gretel")
-	(valoracion 9.0))
+	(valoracion 6.0))
 
 ([libros_Class10024] of  Libro
 
@@ -367,7 +367,7 @@
 		[libros_Class6])
 	(longitud 876)
 	(titulo "The Guns of August")
-	(valoracion 9.0))
+	(valoracion 7.9))
 
 ([libros_Class10025] of  Autor
 
@@ -408,7 +408,16 @@
 		[libros_Class2]
 		[libros_Class10034]
 		[libros_Class10036])
-	(nombre "QuinceaÃ±era"))
+	(nombre "Quinceanera"))
+
+
+([libros_Class10088] of  PerfilLector
+
+	(libros_perfil
+		[libros_Class10020]
+		[libros_Class10022]
+		[libros_Class10023])
+	(nombre "Infantil"))
 
 ([libros_Class10034] of  Libro
 
@@ -834,15 +843,13 @@
   )
 
   (bind $?respuestas (create$ ))
-  (while (eq (length$ $?respuestas) 0) do
-    (bind $?escogidos (pregunta-multi "Escoja sus autores favoritos: " $?nom-autores))
-    (printout t crlf)
+  (bind $?escogidos (pregunta-multi "Escoja algunos autores que le gusten (si no le entusiasma ninguno, escriba '0'): " $?nom-autores))
+  (printout t crlf)
     (loop-for-count (?i 1 (length$ $?escogidos)) do
       (bind ?escogido (nth$ ?i $?escogidos))
       (if (> ?escogido (length$ $?obj-autores)) then (break)) 
       (bind ?curr-autor (nth$ ?escogido $?obj-autores))
       (bind $?respuestas(insert$ $?respuestas (+ (length$ $?respuestas) 1) ?curr-autor))
-    )
   )
     
   (retract ?h)
@@ -1008,12 +1015,20 @@
       (genero "terror")
       (genero "fantasia"))
   =>
-  (assert (perfil "Quinceañera"))
+  (assert (perfil "Quinceanera"))
 )
+
+(defrule asociacion-heuristica::perfil-infantil "Determina si el lector tiene un perfil infantil"
+  (declare (salience 99))
+  (edad ninyo)
+  =>
+  (assert (perfil "Infantil"))
+)
+
 
 (defrule asociacion-heuristica::perfil-aventurero "Determina si el lector tiene un perfil de aventurero"
   (declare (salience 99))
-  (or (edad ninyio) (edad adolescente) (edad joven))
+  (or (edad ninyo) (edad adolescente) (edad joven))
   (or (genero "aventura")
       (genero "oeste")
       (genero "policiaco"))
@@ -1178,7 +1193,7 @@
   =>
   (if (eq 0 (length$ ?listaLibros)) then 
     (printout t crlf crlf)
-	(printout t "Lo sentimos, " ?nombre ", no hemos encontrado ningun libro chuli para ti." crlf)
+	(printout t "Lo sentimos, " ?nombre ", no hemos encontrado ningun libro adecuado para usted." crlf)
   else
 	  (printout t crlf crlf)
 	  (printout t "Hola " ?nombre ", tus libros recomendados son los siguientes: " crlf)
