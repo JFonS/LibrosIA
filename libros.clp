@@ -244,7 +244,7 @@
 		[libros_Class10008]
 		[libros_Class9])
 	(longitud 900)
-	(titulo "La chica que sonba con una cerilla y un bidon de gasolina")
+	(titulo "La chica que sonaba con una cerilla y un bidon de gasolina")
 	(valoracion 8.0))
 
 ([libros_Class10010] of  Libro
@@ -731,7 +731,7 @@
   (printout t "=                Sistema de recomendacion de libros                =" crlf)
   (printout t "====================================================================" crlf)
   (printout t crlf)   
-  (printout t "Bienvenido al sistema asteriscoasteriscoasterisco" crlf)
+  (printout t "Bienvenido al sistema" crlf)
   (printout t "A continuacion se le formularan una serie de preguntas para poder recomendarle libros." crlf)
   (printout t crlf)
   (focus preguntas-lector)
@@ -1145,18 +1145,23 @@
   (descartes)
   (refine)
   (not (final))
+  (Lector (nombre ?nombre))
   ?l <- (listaLibros $?listaLibros)
   =>
-  (printout t crlf crlf)
-  (printout t "Tus libros recomendados: " crlf)
-  
-  (if (eq 0 (length$ ?listaLibros)) then (printout t "No hemos encontrado ningun libro chuli para ti." crlf))
-  (progn$ (?l $?listaLibros)
-    (printout t (send ?l get-titulo) ", " (send (send ?l get-autor) get-nombre) " [" )
-    (progn$ (?g (send ?l get-genero))
-      (printout t (send ?g get-nombre) " ")
-    )
-    (printout t "]" crlf)
+  (if (eq 0 (length$ ?listaLibros)) then 
+    (printout t crlf crlf)
+	(printout t "Lo sentimos, " ?nombre ", no hemos encontrado ningun libro chuli para ti." crlf)
+  else
+	  (printout t crlf crlf)
+	  (printout t "Hola " ?nombre ", tus libros recomendados son los siguientes: " crlf)
+	  
+	  (progn$ (?l $?listaLibros)
+		(printout t (send ?l get-titulo) ", " (send (send ?l get-autor) get-nombre) " [" )
+		(progn$ (?g (send ?l get-genero))
+		  (printout t (send ?g get-nombre) " ")
+		)
+		(printout t "]" crlf)
+	  )
   )
   (assert (final))
 )
