@@ -14,529 +14,543 @@
 ;;-------------------------------------------------------------------------------------------------------------
 ;;                    ONTOLOGIA
 ;;-------------------------------------------------------------------------------------------------------------
-; Tue Dec 01 12:16:39 CET 2015
+; Fri Dec 04 12:03:19 CET 2015
 ; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
 
 
 (defclass %3ACLIPS_TOP_LEVEL_SLOT_CLASS "Fake class to save top-level slot information"
-	(is-a USER)
-	(role abstract)
-	(multislot libros_perfil
-;+		(comment "Base de libros recomendados para este perfil de lector")
-		(type INSTANCE)
-;+		(allowed-classes Libro)
-		(cardinality 1 ?VARIABLE)
-		(create-accessor read-write))
-	(single-slot tiempo_disponible
-;+		(comment "Tiempo en minutos que el lector dedica a leer cada dia de la semana que lee.")
-		(type INTEGER)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot gustan_populares
-;+		(comment "Si al lector le gustan los libros populares")
-		(type SYMBOL)
-		(allowed-values FALSE TRUE)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot titulo
-;+		(comment "Titulo del libro")
-		(type STRING)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot valoracion
-;+		(comment "Nota del libro del 0 al 10")
-		(type FLOAT)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot lectura_facil
-;+		(comment "Si el autor suele escribir libros faciles de leer")
-		(type SYMBOL)
-		(allowed-values FALSE TRUE)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot extranjero
-;+		(comment "Es un autor extranjero?")
-		(type SYMBOL)
-		(allowed-values FALSE TRUE)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot longitud
-;+		(comment "Longitud del libro en paginas")
-		(type INTEGER)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot autor
-;+		(comment "Autor del libro")
-		(type INSTANCE)
-;+		(allowed-classes Autor)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(multislot genero
-;+		(comment "El genero del libro")
-		(type INSTANCE)
-;+		(allowed-classes Genero)
-		(create-accessor read-write))
-	(multislot autores_preferidos
-;+		(comment "Los autores preferidos del lector")
-		(type INSTANCE)
-;+		(allowed-classes Autor)
-		(create-accessor read-write))
-	(single-slot nombre
-;+		(comment "Nombre")
-		(type STRING)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot autores_extranjeros
-;+		(comment "Si al lector le gustan los autores extranjeros")
-		(type SYMBOL)
-		(allowed-values FALSE TRUE)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot edad
-;+		(comment "Edad del lector")
-		(type INTEGER)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot dificultad
-;+		(comment "Dificultad de lectura del libro")
-		(type SYMBOL)
-		(allowed-values facil asequible denso)
-;+		(cardinality 0 1)
-		(create-accessor read-write)))
+        (is-a USER)
+        (role abstract)
+        (multislot libros_perfil
+;+              (comment "Base de libros recomendados para este perfil de lector")
+                (type INSTANCE)
+;+              (allowed-classes Libro)
+                (cardinality 1 ?VARIABLE)
+                (create-accessor read-write))
+        (single-slot tiempo_disponible
+;+              (comment "Tiempo en minutos que el lector dedica a leer cada dia de la semana que lee.")
+                (type INTEGER)
+;+              (cardinality 0 1)
+                (create-accessor read-write))
+        (single-slot gustan_populares
+;+              (comment "Si al lector le gustan los libros populares")
+                (type SYMBOL)
+                (allowed-values FALSE TRUE)
+;+              (cardinality 0 1)
+                (create-accessor read-write))
+        (single-slot titulo
+;+              (comment "Titulo del libro")
+                (type STRING)
+;+              (cardinality 0 1)
+                (create-accessor read-write))
+        (single-slot valoracion
+;+              (comment "Nota del libro del 0 al 10")
+                (type FLOAT)
+;+              (cardinality 0 1)
+                (create-accessor read-write))
+        (single-slot lectura_facil
+;+              (comment "Si el autor suele escribir libros faciles de leer")
+                (type SYMBOL)
+                (allowed-values FALSE TRUE)
+;+              (cardinality 0 1)
+                (create-accessor read-write))
+        (single-slot extranjero
+;+              (comment "Es un autor extranjero?")
+                (type SYMBOL)
+                (allowed-values FALSE TRUE)
+;+              (cardinality 0 1)
+                (create-accessor read-write))
+        (single-slot longitud
+;+              (comment "Longitud del libro en paginas")
+                (type INTEGER)
+;+              (cardinality 0 1)
+                (create-accessor read-write))
+        (single-slot autor
+;+              (comment "Autor del libro")
+                (type INSTANCE)
+;+              (allowed-classes Autor)
+;+              (cardinality 0 1)
+                (create-accessor read-write))
+        (multislot genero
+;+              (comment "El genero del libro")
+                (type INSTANCE)
+;+              (allowed-classes Genero)
+                (create-accessor read-write))
+        (multislot autores_preferidos
+;+              (comment "Los autores preferidos del lector")
+                (type INSTANCE)
+;+              (allowed-classes Autor)
+                (create-accessor read-write))
+        (single-slot nombre
+;+              (comment "Nombre")
+                (type STRING)
+;+              (cardinality 0 1)
+                (create-accessor read-write))
+        (single-slot autores_extranjeros
+;+              (comment "Si al lector le gustan los autores extranjeros")
+                (type SYMBOL)
+                (allowed-values FALSE TRUE)
+;+              (cardinality 0 1)
+                (create-accessor read-write))
+        (single-slot edad
+;+              (comment "Edad del lector")
+                (type INTEGER)
+;+              (cardinality 0 1)
+                (create-accessor read-write))
+        (single-slot dificultad
+;+              (comment "Dificultad de lectura del libro")
+                (type SYMBOL)
+                (allowed-values facil asequible denso)
+;+              (cardinality 0 1)
+                (create-accessor read-write)))
 
 (defclass Libro
-	(is-a USER)
-	(role concrete)
-	(single-slot longitud
-;+		(comment "Longitud del libro en paginas")
-		(type INTEGER)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot valoracion
-;+		(comment "Nota del libro del 0 al 10")
-		(type FLOAT)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot autor
-;+		(comment "Autor del libro")
-		(type INSTANCE)
-;+		(allowed-classes Autor)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot dificultad
-;+		(comment "Dificultad de lectura del libro")
-		(type SYMBOL)
-		(allowed-values facil asequible denso)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot titulo
-;+		(comment "Titulo del libro")
-		(type STRING)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(multislot genero
-;+		(comment "El genero del libro")
-		(type INSTANCE)
-;+		(allowed-classes Genero)
-		(create-accessor read-write)))
+        (is-a USER)
+        (role concrete)
+        (single-slot longitud
+;+              (comment "Longitud del libro en paginas")
+                (type INTEGER)
+;+              (cardinality 0 1)
+                (create-accessor read-write))
+        (single-slot valoracion
+;+              (comment "Nota del libro del 0 al 10")
+                (type FLOAT)
+;+              (cardinality 0 1)
+                (create-accessor read-write))
+        (single-slot dificultad
+;+              (comment "Dificultad de lectura del libro")
+                (type SYMBOL)
+                (allowed-values facil asequible denso)
+;+              (cardinality 0 1)
+                (create-accessor read-write))
+        (single-slot autor
+;+              (comment "Autor del libro")
+                (type INSTANCE)
+;+              (allowed-classes Autor)
+;+              (cardinality 0 1)
+                (create-accessor read-write))
+        (single-slot titulo
+;+              (comment "Titulo del libro")
+                (type STRING)
+;+              (cardinality 0 1)
+                (create-accessor read-write))
+        (multislot genero
+;+              (comment "El genero del libro")
+                (type INSTANCE)
+;+              (allowed-classes Genero)
+                (create-accessor read-write)))
 
 (defclass Genero
-	(is-a USER)
-	(role concrete)
-	(single-slot nombre
-;+		(comment "Nombre")
-		(type STRING)
-;+		(cardinality 0 1)
-		(create-accessor read-write)))
+        (is-a USER)
+        (role concrete)
+        (single-slot nombre
+;+              (comment "Nombre")
+                (type STRING)
+;+              (cardinality 0 1)
+                (create-accessor read-write)))
 
 (defclass Autor
-	(is-a USER)
-	(role concrete)
-	(single-slot extranjero
-;+		(comment "Es un autor extranjero?")
-		(type SYMBOL)
-		(allowed-values FALSE TRUE)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot nombre
-;+		(comment "Nombre")
-		(type STRING)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot lectura_facil
-;+		(comment "Si el autor suele escribir libros faciles de leer")
-		(type SYMBOL)
-		(allowed-values FALSE TRUE)
-;+		(cardinality 0 1)
-		(create-accessor read-write)))
+        (is-a USER)
+        (role concrete)
+        (single-slot extranjero
+;+              (comment "Es un autor extranjero?")
+                (type SYMBOL)
+                (allowed-values FALSE TRUE)
+;+              (cardinality 0 1)
+                (create-accessor read-write))
+        (single-slot nombre
+;+              (comment "Nombre")
+                (type STRING)
+;+              (cardinality 0 1)
+                (create-accessor read-write))
+        (single-slot lectura_facil
+;+              (comment "Si el autor suele escribir libros faciles de leer")
+                (type SYMBOL)
+                (allowed-values FALSE TRUE)
+;+              (cardinality 0 1)
+                (create-accessor read-write)))
 
 (defclass PerfilLector "Perfil de lector"
-	(is-a USER)
-	(role concrete)
-	(single-slot nombre
-;+		(comment "Nombre")
-		(type STRING)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(multislot libros_perfil
-;+		(comment "Base de libros recomendados para este perfil de lector")
-		(type INSTANCE)
-;+		(allowed-classes Libro)
-		(cardinality 1 ?VARIABLE)
-		(create-accessor read-write)))
+        (is-a USER)
+        (role concrete)
+        (single-slot nombre
+;+              (comment "Nombre")
+                (type STRING)
+;+              (cardinality 0 1)
+                (create-accessor read-write))
+        (multislot libros_perfil
+;+              (comment "Base de libros recomendados para este perfil de lector")
+                (type INSTANCE)
+;+              (allowed-classes Libro)
+                (cardinality 1 ?VARIABLE)
+                (create-accessor read-write)))
 
 ;;-------------------------------------------------------------------------------------------------------------
 ;;                    INSTANCIAS
 ;;-------------------------------------------------------------------------------------------------------------
 
 (definstances instances
+; Fri Dec 04 12:03:19 CET 2015
+; 
+;+ (version "3.5")
+;+ (build "Build 663")
+
+([libros_Class0] of  Libro
+
+        (autor [libros_Class10002])
+        (dificultad asequible)
+        (genero
+                [libros_Class3]
+                [libros_Class12])
+        (longitud 369)
+        (titulo "El marciano")
+        (valoracion 9.0))
 
 ([libros_Class10] of  Genero
 
-	(nombre "romantico"))
+        (nombre "romantico"))
+
+([libros_Class10002] of  Autor
+
+        (extranjero TRUE)
+        (lectura_facil TRUE)
+        (nombre "Andy Weir"))
 
 ([libros_Class10003] of  Libro
 
-	(autor [libros_Class10004])
-	(dificultad facil)
-	(genero
-		[libros_Class12]
-		[libros_Class4]
-		[libros_Class14])
-	(longitud 539)
-	(titulo "Harry Potter y la camara secreta")
-	(valoracion 9.1))
+        (autor [libros_Class10004])
+        (dificultad facil)
+        (genero
+                [libros_Class12]
+                [libros_Class4]
+                [libros_Class14])
+        (longitud 500)
+        (titulo "Harry Potter y la camara secreta")
+        (valoracion 9.0))
 
 ([libros_Class10004] of  Autor
 
-	(extranjero TRUE)
-	(lectura_facil TRUE)
-	(nombre "J. K. Rowling"))
+        (extranjero TRUE)
+        (lectura_facil TRUE)
+        (nombre "J. K. Rowling"))
 
 ([libros_Class10006] of  Libro
 
-	(autor [libros_Class10007])
-	(dificultad asequible)
-	(genero
-		[libros_Class9]
-		[libros_Class10008])
-	(longitud 812)
-	(titulo "Los Hombres Que No Amaban A Las Mujeres")
-	(valoracion 8.5))
+        (autor [libros_Class10007])
+        (dificultad asequible)
+        (genero
+                [libros_Class9]
+                [libros_Class10008])
+        (longitud 800)
+        (titulo "Los Hombres Que No Amaban A Las Mujeres")
+        (valoracion 8.5))
 
 ([libros_Class10007] of  Autor
 
-	(extranjero TRUE)
-	(lectura_facil FALSE)
-	(nombre "Stieg Larsson"))
+        (extranjero TRUE)
+        (lectura_facil FALSE)
+        (nombre "Stieg Larsson"))
 
 ([libros_Class10008] of  Genero
 
-	(nombre "accion"))
+        (nombre "accion"))
 
 ([libros_Class10009] of  Libro
 
-	(autor [libros_Class10007])
-	(dificultad asequible)
-	(genero
-		[libros_Class10008]
-		[libros_Class9])
-	(longitud 906)
-	(titulo "La chica que sonaba con una cerilla y un bidon de gasolina")
-	(valoracion 8.4))
+        (autor [libros_Class10007])
+        (dificultad asequible)
+        (genero
+                [libros_Class10008]
+                [libros_Class9])
+        (longitud 900)
+        (titulo "La chica que sonba con una cerilla y un bidon de gasolina")
+        (valoracion 8.0))
 
 ([libros_Class10010] of  Libro
 
-	(autor [libros_Class10011])
-	(dificultad denso)
-	(genero
-		[libros_Class10008]
-		[libros_Class12]
-		[libros_Class7]
-		[libros_Class9])
-	(longitud 1201)
-	(titulo "Suelta tu revolver")
-	(valoracion 7.2))
+        (autor [libros_Class10011])
+        (dificultad denso)
+        (genero
+                [libros_Class10008]
+                [libros_Class12]
+                [libros_Class7]
+                [libros_Class9])
+        (longitud 1200)
+        (titulo "Suelta tu revolver")
+        (valoracion 7.0))
 
 ([libros_Class10011] of  Autor
 
-	(extranjero TRUE)
-	(nombre "Silver Kane"))
+        (extranjero TRUE)
+        (nombre "Silver Kane"))
 
 ([libros_Class10013] of  Libro
 
-	(autor [libros_Class10014])
-	(dificultad facil)
-	(genero [libros_Class15])
-	(longitud 315)
-	(titulo "Saber Cuidarse")
-	(valoracion 5.1))
+        (autor [libros_Class10014])
+        (dificultad facil)
+        (genero [libros_Class15])
+        (longitud 300)
+        (titulo "Saber Cuidarse")
+        (valoracion 5.0))
 
 ([libros_Class10014] of  Autor
 
-	(lectura_facil TRUE)
-	(nombre "Marilo Montero"))
+        (lectura_facil TRUE)
+        (nombre "Marilo Montero"))
 
 ([libros_Class10015] of  Libro
 
-	(autor [libros_Class10016])
-	(dificultad facil)
-	(longitud 252)
-	(titulo "The big fat surprise")
-	(valoracion 7.3))
+        (autor [libros_Class10016])
+        (dificultad facil)
+        (longitud 250)
+        (titulo "The big fat surprise")
+        (valoracion 7.0))
 
 ([libros_Class10016] of  Autor
 
-	(extranjero TRUE)
-	(lectura_facil TRUE)
-	(nombre "Nina Teicholz"))
+        (extranjero TRUE)
+        (lectura_facil TRUE)
+        (nombre "Nina Teicholz"))
 
 ([libros_Class10017] of  Libro
 
-	(autor [libros_Class10018])
-	(dificultad denso)
-	(genero
-		[libros_Class5]
-		[libros_Class6])
-	(longitud 1223)
-	(titulo "Las legiones malditas")
-	(valoracion 5.4))
+        (autor [libros_Class10018])
+        (dificultad denso)
+        (genero
+                [libros_Class5]
+                [libros_Class6])
+        (longitud 1220)
+        (titulo "Las legiones malditas")
+        (valoracion 9.0))
 
 ([libros_Class10018] of  Autor
 
-	(nombre "Santiago Posteguillo"))
+        (nombre "Santiago Posteguillo"))
 
 ([libros_Class10019] of  Libro
 
-	(autor [libros_Class10018])
-	(dificultad denso)
-	(genero
-		[libros_Class5]
-		[libros_Class6])
-	(longitud 1147)
-	(titulo "La traicion de Roma")
-	(valoracion 8.0))
+        (autor [libros_Class10018])
+        (dificultad denso)
+        (genero
+                [libros_Class5]
+                [libros_Class6])
+        (longitud 1147)
+        (titulo "La traicion de Roma")
+        (valoracion 8.0))
 
 ([libros_Class10020] of  Libro
 
-	(autor [libros_Class10021])
-	(dificultad facil)
-	(genero
-		[libros_Class12]
-		[libros_Class4])
-	(longitud 23)
-	(titulo "La Caperucita roja")
-	(valoracion 8.3))
+        (autor [libros_Class10021])
+        (dificultad facil)
+        (genero
+                [libros_Class12]
+                [libros_Class4])
+        (longitud 30)
+        (titulo "La Caperucita roja")
+        (valoracion 9.0))
 
 ([libros_Class10021] of  Autor
 
-	(extranjero TRUE)
-	(lectura_facil TRUE)
-	(nombre "Hermanos Grimm"))
+        (extranjero TRUE)
+        (lectura_facil TRUE)
+        (nombre "Hermanos Grimm"))
 
 ([libros_Class10022] of  Libro
 
-	(autor [libros_Class10021])
-	(dificultad facil)
-	(genero
-		[libros_Class12]
-		[libros_Class4])
-	(longitud 12)
-	(titulo "La Bella Durmiente")
-	(valoracion 7.4))
+        (autor [libros_Class10021])
+        (dificultad facil)
+        (genero
+                [libros_Class12]
+                [libros_Class4])
+        (longitud 30)
+        (titulo "La Bella Durmiente")
+        (valoracion 9.0))
 
 ([libros_Class10023] of  Libro
 
-	(autor [libros_Class10021])
-	(dificultad facil)
-	(genero
-		[libros_Class12]
-		[libros_Class4])
-	(longitud 56)
-	(titulo "Hansel y Gretel")
-	(valoracion 6.0))
+        (autor [libros_Class10021])
+        (dificultad facil)
+        (genero
+                [libros_Class12]
+                [libros_Class4])
+        (longitud 30)
+        (titulo "Hansel y Gretel")
+        (valoracion 9.0))
 
 ([libros_Class10024] of  Libro
 
-	(autor [libros_Class10025])
-	(dificultad asequible)
-	(genero
-		[libros_Class5]
-		[libros_Class6])
-	(longitud 876)
-	(titulo "The Guns of August")
-	(valoracion 7.9))
+        (autor [libros_Class10025])
+        (dificultad asequible)
+        (genero
+                [libros_Class5]
+                [libros_Class6])
+        (longitud 876)
+        (titulo "The Guns of August")
+        (valoracion 9.0))
 
 ([libros_Class10025] of  Autor
 
-	(extranjero TRUE)
-	(nombre "Barbara W. Tuchman"))
+        (extranjero TRUE)
+        (nombre "Barbara W. Tuchman"))
 
 ([libros_Class10030] of  PerfilLector
 
-	(libros_perfil
-		[libros_Class10003]
-		[libros_Class2]
-		[libros_Class16])
-	(nombre "Friki"))
+        (libros_perfil
+                [libros_Class10003]
+                [libros_Class2]
+                [libros_Class16]
+                [libros_Class0])
+        (nombre "Friki"))
 
 ([libros_Class10031] of  PerfilLector
 
-	(libros_perfil
-		[libros_Class16]
-		[libros_Class10009]
-		[libros_Class10006])
-	(nombre "Hipster"))
+        (libros_perfil
+                [libros_Class16]
+                [libros_Class10009]
+                [libros_Class10006])
+        (nombre "Hipster"))
 
 ([libros_Class10032] of  PerfilLector
 
-	(libros_perfil
-		[libros_Class10019]
-		[libros_Class10017]
-		[libros_Class10013]
-		[libros_Class10015]
-		[libros_Class10024]
-		[libros_Class10010])
-	(nombre "Jubilado"))
+        (libros_perfil
+                [libros_Class10019]
+                [libros_Class10017]
+                [libros_Class10013]
+                [libros_Class10015]
+                [libros_Class10024]
+                [libros_Class10010])
+        (nombre "Jubilado"))
 
 ([libros_Class10033] of  PerfilLector
 
-	(libros_perfil
-		[libros_Class10003]
-		[libros_Class2]
-		[libros_Class10034]
-		[libros_Class10036])
-	(nombre "Quinceanera"))
-
-
-([libros_Class10088] of  PerfilLector
-
-	(libros_perfil
-		[libros_Class10020]
-		[libros_Class10022]
-		[libros_Class10023])
-	(nombre "Infantil"))
+        (libros_perfil
+                [libros_Class10003]
+                [libros_Class2]
+                [libros_Class10034]
+                [libros_Class10036])
+        (nombre "Quinceañera"))
 
 ([libros_Class10034] of  Libro
 
-	(autor [libros_Class10035])
-	(dificultad facil)
-	(genero
-		[libros_Class10008]
-		[libros_Class12]
-		[libros_Class3])
-	(longitud 600)
-	(titulo "Crepusculo")
-	(valoracion 9.0))
+        (autor [libros_Class10035])
+        (dificultad facil)
+        (genero
+                [libros_Class10008]
+                [libros_Class12]
+                [libros_Class3])
+        (longitud 600)
+        (titulo "Crepusculo")
+        (valoracion 9.0))
 
 ([libros_Class10035] of  Autor
 
-	(extranjero TRUE)
-	(lectura_facil FALSE)
-	(nombre "Stephenie Meyer"))
+        (extranjero TRUE)
+        (lectura_facil FALSE)
+        (nombre "Stephenie Meyer"))
 
 ([libros_Class10036] of  Libro
 
-	(autor [libros_Class10035])
-	(dificultad facil)
-	(genero
-		[libros_Class10008]
-		[libros_Class12]
-		[libros_Class3])
-	(longitud 650)
-	(titulo "Eclipse")
-	(valoracion 8.0))
+        (autor [libros_Class10035])
+        (dificultad facil)
+        (genero
+                [libros_Class10008]
+                [libros_Class12]
+                [libros_Class3])
+        (longitud 650)
+        (titulo "Eclipse")
+        (valoracion 8.0))
 
 ([libros_Class10037] of  PerfilLector
 
-	(libros_perfil
-		[libros_Class10003]
-		[libros_Class2]
-		[libros_Class10009]
-		[libros_Class10006]
-		[libros_Class16])
-	(nombre "Aventurero"))
+        (libros_perfil
+                [libros_Class10003]
+                [libros_Class2]
+                [libros_Class10009]
+                [libros_Class10006]
+                [libros_Class16])
+        (nombre "Aventurero"))
 
 ([libros_Class10038] of  PerfilLector
 
-	(libros_perfil
-		[libros_Class10020]
-		[libros_Class10006]
-		[libros_Class10013]
-		[libros_Class10015])
-	(nombre "Maruja"))
+        (libros_perfil
+                [libros_Class10020]
+                [libros_Class10006]
+                [libros_Class10013]
+                [libros_Class10015])
+        (nombre "Maruja"))
 
 ([libros_Class11] of  Genero
 
-	(nombre "terror"))
+        (nombre "terror"))
 
 ([libros_Class12] of  Genero
 
-	(nombre "aventura"))
+        (nombre "aventura"))
 
 ([libros_Class13] of  Genero
 
-	(nombre "comic"))
+        (nombre "comic"))
 
 ([libros_Class14] of  Genero
 
-	(nombre "ficcion"))
+        (nombre "ficcion"))
 
 ([libros_Class15] of  Genero
 
-	(nombre "salud"))
+        (nombre "salud"))
 
 ([libros_Class16] of  Libro
 
-	(autor [libros_Class17])
-	(dificultad facil)
-	(genero [libros_Class3])
-	(longitud 464)
-	(titulo "Ready Player One")
-	(valoracion 9.5))
+        (autor [libros_Class17])
+        (dificultad facil)
+        (genero [libros_Class3])
+        (longitud 464)
+        (titulo "Ready Player One")
+        (valoracion 9.5))
 
 ([libros_Class17] of  Autor
 
-	(lectura_facil TRUE)
-	(nombre "Ernest Cline"))
+        (lectura_facil TRUE)
+        (nombre "Ernest Cline"))
 
 ([libros_Class2] of  Libro
 
-	(autor [libros_Class10004])
-	(dificultad facil)
-	(genero
-		[libros_Class12]
-		[libros_Class4]
-		[libros_Class14])
-	(longitud 500)
-	(titulo "Harry Potter y la piedra filosofal")
-	(valoracion 9.0))
+        (autor [libros_Class10004])
+        (dificultad facil)
+        (genero
+                [libros_Class12]
+                [libros_Class4]
+                [libros_Class14])
+        (longitud 500)
+        (titulo "Harry Potter y la piedra filosofal")
+        (valoracion 9.0))
 
 ([libros_Class3] of  Genero
 
-	(nombre "ciencia_ficcion"))
+        (nombre "ciencia_ficcion"))
 
 ([libros_Class4] of  Genero
 
-	(nombre "fantasia"))
+        (nombre "fantasia"))
 
 ([libros_Class5] of  Genero
 
-	(nombre "historia"))
+        (nombre "historia"))
 
 ([libros_Class6] of  Genero
 
-	(nombre "narrativa"))
+        (nombre "narrativa"))
 
 ([libros_Class7] of  Genero
 
-	(nombre "oeste"))
+        (nombre "oeste"))
 
 ([libros_Class9] of  Genero
 
-	(nombre "policiaco"))
+        (nombre "policiaco"))
+
 
 )
 
@@ -686,31 +700,21 @@
 
 ;;;Template para los datos de nuestro lector
 (deftemplate MAIN::Lector
-	(slot nombre 			       ;;;nombre lector
+	(slot nombre 			        ;;;nombre lector
 		(type STRING)
 	)
-  (slot edad               ;;;edad lector
+  (slot edad                                    ;;;edad lector
     (type INTEGER)
     (default -1)
   )                               
-	(slot tiempo_disp	       ;;;minutos por dia
+	(slot tiempo_disp	                ;;;minutos por dia
 		(type INTEGER)
 		(default -1)
 	)  
-  (slot frecuencia          ;;;dias que el lector lee a la semana
+  (slot frecuencia                              ;;;dias que el lector lee a la semana
     (type INTEGER) 
     (default -1)
-  )              
-	(slot momento 	         ;;;momento del dia en el que el lector lee
-		(type STRING) 
-		(allowed-strings "manyana" "tarde" "noche" "desconocido") 
-		(default "desconocido")
-	)
-	(slot lugar 			        ;;;lugar en el que el lector suele leer
-		(type STRING) 
-		(allowed-strings "transporte" "cama" "escritorio" "banyo" "desconocido") 
-		(default "desconocido")
-	)														
+  )              														
 )
 
 ;;; Template para las preferencias del lector
@@ -1007,7 +1011,7 @@
   (alternativo FALSE)
   =>
   (assert (perfil "Jubilado"))
-)
+)       
 
 (defrule asociacion-heuristica::perfil-quinceanera "Determina si el lector tiene un perfil de quinceanera"
   (declare (salience 99))
