@@ -438,7 +438,7 @@
                 [libros_Class2]
                 [libros_Class10034]
                 [libros_Class10036])
-        (nombre "Quinceañera"))
+        (nombre "Quinceanera"))
 
 ([libros_Class10034] of  Libro
 
@@ -1073,7 +1073,7 @@
   ?h <- (perfil ?nombre-perfil)
   ?l <- (listaLibros $?listaLibros)
   =>
-  (bind $?perfil (nth$ 1 (find-instance ((?inst PerfilLector)) (eq ?nombre-perfil (send ?inst get-nombre)) )))
+  (bind ?perfil (nth$ 1 (find-instance ((?inst PerfilLector)) (eq ?nombre-perfil (send ?inst get-nombre)) )))
   (bind $?libros (send ?perfil get-libros_perfil))
   (progn$ (?libro $?libros)
     (if (not (member$ ?libro $?listaLibros)) then
@@ -1094,7 +1094,7 @@
   =>
 
   (printout t "Lo sentimos, " ?nombre ", no hemos encontrado ningun libro adecuado para usted en la primera fase de seleccion." crlf)
-  (printout t "Intentaremos encontrar alguno que le pueda gustar en una fase de seleccion mas general..." crlf crlf)
+  (printout t "Intentaremos encontrar alguno que le pueda gustar en una fase de seleccion mas general, pero el resultado puede ser menos preciso" crlf crlf)
 
   (retract ?l)
   (assert (listaLibros (find-all-instances ((?inst Libro)) TRUE)))
@@ -1153,7 +1153,7 @@
         (bind ?long (send ?l get-longitud))
         (bind ?tiempo (* ?minutosLector ?diasSemanaLector))
         (bind ?factorLongitud (/ ?long (* ?tiempo 4)))
-        (if (< ?factorLongitud 1.0) then (bind ?p (- ?p 5)))
+        (if (> ?factorLongitud 1.0) then (bind ?p (- ?p 5)))
 
         ; aumentamos puntuacion si el autor es extranjero y al lector le gustan los autores extranjeros
         (bind ?extranjero (send ?aut get-extranjero))
@@ -1241,12 +1241,12 @@
 
 			(bind ?long (send ?l get-longitud))
 			(bind ?tiempo (* ?minutosLector ?diasSemanaLector))
-                        (bind ?factorLongitud (/ ?long (* ?tiempo 4)))
-                        (if (< ?factorLongitud 1.0) then 
-                            (bind ?p (- ?p 5)))
-                            (printout t "Factor de longitud (el usuario no tendra suficiente tiempo para leer este libro) -> -5 puntos" crlf)
-                        )
-                            (printout t "Factor de longitud " ?factorLongitud crlf)
+			(bind ?factorLongitud (/ ?long (* ?tiempo 4)))
+			(if (> ?factorLongitud 1.0) then 
+						(bind ?p (- ?p 5))
+						(printout t "Factor de longitud (el usuario no tendra suficiente tiempo para leer este libro) -> -5 puntos" crlf)
+                        (printout t "Factor de longitud " ?factorLongitud crlf)
+			)
 
 			(bind ?extranjero (send ?aut get-extranjero))
 			(if  (and (eq ?autores-ext TRUE) (eq ?extranjero TRUE)) then 
