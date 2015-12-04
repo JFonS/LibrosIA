@@ -979,6 +979,7 @@
 
 (defrule asociacion-heuristica::perfil-friki "Determina si el lector tiene un perfil de friki"
   (declare (salience 99))
+  (not (edad ninyo))
   (or (tiempo medio) (tiempo mucho))
   (or (genero "comic")
       (genero "ciencia_ficcion")
@@ -1028,7 +1029,7 @@
 
 (defrule asociacion-heuristica::perfil-aventurero "Determina si el lector tiene un perfil de aventurero"
   (declare (salience 99))
-  (or (edad ninyo) (edad adolescente) (edad joven))
+  (or (edad adolescente) (edad joven))
   (or (genero "aventura")
       (genero "oeste")
       (genero "policiaco"))
@@ -1092,6 +1093,7 @@
   (progn$ (?libroLeido $?librosLeidos)
       (bind ?listaLibros (delete-member$ ?listaLibros ?libroLeido))
   )
+
   (assert (descartes))
   (retract ?l)
   (assert (listaLibros ?listaLibros))
@@ -1129,7 +1131,8 @@
 
         ; aumentamos puntuacion si el autor es extranjero y al lector le gustan los autores extranjeros
         (bind ?extranjero (send ?aut get-extranjero))
-        (if  (and (eq ?autores-ext TRUE) (eq ?extranjero TRUE)) then (bind ?p (+ ?p 10)))
+        (if  (and (eq ?autores-ext TRUE) (eq ?extranjero TRUE)) then (bind ?p (+ ?p 10))
+         else (if (and (eq ?autores-ext FALSE) (eq ?extranjero TRUE))  then (bind ?p (- ?p 10))) )
 
         ; modificamos puntuacion segun la valoracion del libro si al autor le gustan los libros populares
         (bind ?val (send ?l get-valoracion))
@@ -1210,7 +1213,7 @@
 			
 			(if (member$ ?aut ?autores-favoritos) then 
 				(bind ?p (+ ?p 10))
-				(printout t "Es de un autor favorito: -> 10 puntos" crlf )				
+				(printout t "Es de un autor favorito: -> 10 puntos" crlf )	
 			)
 
 			(bind ?long (send ?l get-longitud))
@@ -1222,13 +1225,19 @@
 			(if  (and (eq ?autores-ext TRUE) (eq ?extranjero TRUE)) then 
 				(bind ?p (+ ?p 10))
 				(printout t "El autor es extranjero, y al lector le gustan -> 10 puntos" crlf)
+                         else (if (and (eq ?autores-ext FALSE) (eq ?extranjero TRUE)) then 
+                                (bind ?p (- ?p 10))
+                                (printout t "El autor es extranjero, y al lector NO le gustan -> -10 puntos" crlf)
+                              )
 			)
 
 			(bind ?val (send ?l get-valoracion))
 			(if (eq ?popus TRUE) then 
 				(bind ?p (+ ?p ?val))
 				(printout t "El libro es popular y al lector le gustan los libros populares -> " ?val " puntos" crlf)
-				else (bind ?p (- ?p ?val))
+				else
+                                (printout t "El libro es popular y al lector NO le gustan los libros populares -> " ?val " puntos" crlf ) 
+                                (bind ?p (- ?p 10))
 			)
 
 			(printout t "Nivel de recomendacion total: " ?p " puntos" crlf)
