@@ -228,7 +228,7 @@
                 [libros_Class14])
         (longitud 500)
         (titulo "Harry Potter y la camara secreta")
-        (valoracion 9.0))
+        (valoracion 9.2))
 
 ([libros_Class10004] of  Autor
 
@@ -266,7 +266,7 @@
                 [libros_Class9])
         (longitud 900)
         (titulo "La chica que sonba con una cerilla y un bidon de gasolina")
-        (valoracion 8.0))
+        (valoracion 8.8))
 
 ([libros_Class10010] of  Libro
 
@@ -279,7 +279,7 @@
                 [libros_Class9])
         (longitud 1200)
         (titulo "Suelta tu revolver")
-        (valoracion 7.0))
+        (valoracion 7.6))
 
 ([libros_Class10011] of  Autor
 
@@ -293,7 +293,7 @@
         (genero [libros_Class15])
         (longitud 300)
         (titulo "Saber Cuidarse")
-        (valoracion 5.0))
+        (valoracion 5.1))
 
 ([libros_Class10014] of  Autor
 
@@ -306,7 +306,7 @@
         (dificultad facil)
         (longitud 250)
         (titulo "The big fat surprise")
-        (valoracion 7.0))
+        (valoracion 7.7))
 
 ([libros_Class10016] of  Autor
 
@@ -323,7 +323,7 @@
                 [libros_Class6])
         (longitud 1220)
         (titulo "Las legiones malditas")
-        (valoracion 9.0))
+        (valoracion 8.9))
 
 ([libros_Class10018] of  Autor
 
@@ -338,7 +338,7 @@
                 [libros_Class6])
         (longitud 1147)
         (titulo "La traicion de Roma")
-        (valoracion 8.0))
+        (valoracion 8.1))
 
 ([libros_Class10020] of  Libro
 
@@ -347,9 +347,9 @@
         (genero
                 [libros_Class12]
                 [libros_Class4])
-        (longitud 30)
+        (longitud 22)
         (titulo "La Caperucita roja")
-        (valoracion 9.0))
+        (valoracion 7.4))
 
 ([libros_Class10021] of  Autor
 
@@ -364,9 +364,9 @@
         (genero
                 [libros_Class12]
                 [libros_Class4])
-        (longitud 30)
+        (longitud 40)
         (titulo "La Bella Durmiente")
-        (valoracion 9.0))
+        (valoracion 5.6))
 
 ([libros_Class10023] of  Libro
 
@@ -375,9 +375,9 @@
         (genero
                 [libros_Class12]
                 [libros_Class4])
-        (longitud 30)
+        (longitud 17)
         (titulo "Hansel y Gretel")
-        (valoracion 9.0))
+        (valoracion 8.1))
 
 ([libros_Class10024] of  Libro
 
@@ -388,7 +388,7 @@
                 [libros_Class6])
         (longitud 876)
         (titulo "The Guns of August")
-        (valoracion 9.0))
+        (valoracion 7.7))
 
 ([libros_Class10025] of  Autor
 
@@ -411,6 +411,14 @@
                 [libros_Class10009]
                 [libros_Class10006])
         (nombre "Hipster"))
+
+([libros_Class10099] of  PerfilLector
+
+        (libros_perfil
+                [libros_Class10020]
+                [libros_Class10022]
+                [libros_Class10023])
+        (nombre "Infantil"))
 
 ([libros_Class10032] of  PerfilLector
 
@@ -442,7 +450,7 @@
                 [libros_Class3])
         (longitud 600)
         (titulo "Crepusculo")
-        (valoracion 9.0))
+        (valoracion 9.3))
 
 ([libros_Class10035] of  Autor
 
@@ -460,7 +468,7 @@
                 [libros_Class3])
         (longitud 650)
         (titulo "Eclipse")
-        (valoracion 8.0))
+        (valoracion 8.1))
 
 ([libros_Class10037] of  PerfilLector
 
@@ -525,7 +533,7 @@
                 [libros_Class14])
         (longitud 500)
         (titulo "Harry Potter y la piedra filosofal")
-        (valoracion 9.0))
+        (valoracion 8.4))
 
 ([libros_Class3] of  Genero
 
@@ -550,7 +558,6 @@
 ([libros_Class9] of  Genero
 
         (nombre "policiaco"))
-
 
 )
 
@@ -744,7 +751,7 @@
   (printout t "=                Sistema de recomendacion de libros                =" crlf)
   (printout t "====================================================================" crlf)
   (printout t crlf)   
-  (printout t "Bienvenido al sistema" crlf)
+  (printout t "Bienvenido al sistema Asterism" crlf)
   (printout t "A continuacion se le formularan una serie de preguntas para poder recomendarle libros." crlf)
   (printout t crlf)
   (focus preguntas-lector)
@@ -1079,6 +1086,20 @@
   (retract ?h)
 )
 
+(defrule asociacion-heuristica::recopilacion-todos-los-libros "recopilacion-todos-los-libros"
+  (declare (salience 9))
+  ?l <- (listaLibros $?listaLibros)
+  (test (eq 0 (length$ ?listaLibros)))
+  (Lector (nombre ?nombre))
+  =>
+
+  (printout t "Lo sentimos, " ?nombre ", no hemos encontrado ningun libro adecuado para usted en la primera fase de seleccion." crlf)
+  (printout t "Intentaremos encontrar alguno que le pueda gustar en una fase de seleccion mas general..." crlf crlf)
+
+  (retract ?l)
+  (assert (listaLibros (find-all-instances ((?inst Libro)) TRUE)))
+)
+
 (defrule asociacion-heuristica::cambia-focus "cambia-focus"
   (declare (salience 0))
   (not (finished))
@@ -1089,7 +1110,7 @@
 
 ;;; Modulo refinamiento solucion -------------------------------------
 
-(defrule refinamiento-solucion::descartar-libros-leidos "Descarta los libros leidos por el senor"
+(defrule refinamiento-solucion::descartar-libros-leidos "Descarta los libros leidos"
   (not (descartes))
   ?l <- (listaLibros $?listaLibros)
   (preferencias (libros-leidos $?librosLeidos))
@@ -1131,7 +1152,8 @@
         ; aumentamos puntuacion si el lector tiene tiempo suficiente para leer un libro de esta longitud
         (bind ?long (send ?l get-longitud))
         (bind ?tiempo (* ?minutosLector ?diasSemanaLector))
-        (bind ?p (- ?p (/ ?long (* ?tiempo 4))))
+        (bind ?factorLongitud (/ ?long (* ?tiempo 4)))
+        (if (< ?factorLongitud 1.0) then (bind ?p (- ?p 5)))
 
         ; aumentamos puntuacion si el autor es extranjero y al lector le gustan los autores extranjeros
         (bind ?extranjero (send ?aut get-extranjero))
@@ -1140,9 +1162,7 @@
 
         ; modificamos puntuacion segun la valoracion del libro si al autor le gustan los libros populares
         (bind ?val (send ?l get-valoracion))
-        (if (eq ?popus TRUE) then (bind ?p (+ ?p ?val)) else (bind ?p (- ?p ?val)))
-
-        (printout t (send ?l get-titulo) " " ?p crlf)
+        (if (eq ?popus TRUE) then (bind ?p (+ ?p (/ ?val 2))) else (bind ?p (- ?p (/ ?val 2))))
 
         ; actualizamos las puntuaciones maximas
         (if (> ?p ?m1) 
@@ -1168,13 +1188,12 @@
                       )
         )
     )
-	
     (bind ?listaLibros (create$ ?l1 ?l2 ?l3))
     (retract ?lfact)
     (assert (listaLibros ?listaLibros))
   )
   (assert (refine))
-)
+ )
 
 (deffunction refinamiento-solucion::print-libro (?l)
 	  (printout t "Titulo: " (send ?l get-titulo) crlf)
@@ -1199,8 +1218,8 @@
   ?l <- (listaLibros $?listaLibros)
   =>
   (if (eq 0 (length$ ?listaLibros)) then 
-    (printout t crlf crlf)
-	(printout t "Lo sentimos, " ?nombre ", no hemos encontrado ningun libro adecuado para usted." crlf)
+          (printout t crlf crlf)
+	  (printout t "Lo sentimos, " ?nombre ", no hemos encontrado ningun libro adecuado para usted." crlf)
   else
 	  (printout t crlf crlf)
 	  (printout t "Hola " ?nombre ", tus libros recomendados son los siguientes: " crlf)
@@ -1222,8 +1241,12 @@
 
 			(bind ?long (send ?l get-longitud))
 			(bind ?tiempo (* ?minutosLector ?diasSemanaLector))
-			(bind ?p (- ?p (/ ?long (* ?tiempo 4))))
-			(printout t "Factor de longitud -> " (- ?p (/ ?long (* ?tiempo 4))) " puntos" crlf)
+                        (bind ?factorLongitud (/ ?long (* ?tiempo 4)))
+                        (if (< ?factorLongitud 1.0) then 
+                            (bind ?p (- ?p 5)))
+                            (printout t "Factor de longitud (el usuario no tendra suficiente tiempo para leer este libro) -> -5 puntos" crlf)
+                        )
+                            (printout t "Factor de longitud " ?factorLongitud crlf)
 
 			(bind ?extranjero (send ?aut get-extranjero))
 			(if  (and (eq ?autores-ext TRUE) (eq ?extranjero TRUE)) then 
@@ -1237,16 +1260,16 @@
 
 			(bind ?val (send ?l get-valoracion))
 			(if (eq ?popus TRUE) then 
-				(bind ?p (+ ?p ?val))
-				(printout t "El libro es popular y al lector le gustan los libros populares -> " ?val " puntos" crlf)
+				(bind ?p (+ ?p (/ ?val 2)))
+				(printout t "El libro es popular y al lector le gustan los libros populares -> " (/ ?val 2) " puntos" crlf)
 				else
-                                (printout t "El libro es popular y al lector NO le gustan los libros populares -> " ?val " puntos" crlf ) 
-                                (bind ?p (- ?p 10))
+                                (printout t "El libro es popular y al lector NO le gustan los libros populares -> -" (/ ?val 2) " puntos" crlf ) 
+                                (bind ?p (- ?p (/ ?val 2)))
 			)
 
 			(printout t "Nivel de recomendacion total: " ?p " puntos" crlf)
 			(printout t "---------------------------------" crlf crlf)
-			)
+		   )
 	  (printout t crlf "::::::::::::::::::::::::::::::::::::::::::::::::" crlf)
   )
   (printout t crlf crlf)
