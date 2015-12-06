@@ -1,37 +1,20 @@
-; Fri Dec 04 15:26:13 CET 2015
+; Sun Dec 06 19:34:53 CET 2015
 ; 
-;+ (version "3.5")
-;+ (build "Build 663")
+;+ (version "3.4.8")
+;+ (build "Build 629")
 
 
 (defclass %3ACLIPS_TOP_LEVEL_SLOT_CLASS "Fake class to save top-level slot information"
 	(is-a USER)
 	(role abstract)
-	(multislot libros_perfil
-;+		(comment "Base de libros recomendados para este perfil de lector")
-		(type INSTANCE)
-;+		(allowed-classes Libro)
-		(cardinality 1 ?VARIABLE)
-		(create-accessor read-write))
-	(single-slot tiempo_disponible
-;+		(comment "Tiempo en minutos que el lector dedica a leer cada dia de la semana que lee.")
+	(single-slot edad
+;+		(comment "Edad del lector")
 		(type INTEGER)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot gustan_populares
-;+		(comment "Si al lector le gustan los libros populares")
-		(type SYMBOL)
-		(allowed-values FALSE TRUE)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot titulo
 ;+		(comment "Titulo del libro")
 		(type STRING)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot valoracion
-;+		(comment "Nota del libro del 0 al 10")
-		(type FLOAT)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot lectura_facil
@@ -46,15 +29,20 @@
 		(allowed-values FALSE TRUE)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot longitud
-;+		(comment "Longitud del libro en paginas")
-		(type INTEGER)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot autor
-;+		(comment "Autor del libro")
+	(multislot autores_preferidos
+;+		(comment "Los autores preferidos del lector")
 		(type INSTANCE)
 ;+		(allowed-classes Autor)
+		(create-accessor read-write))
+	(single-slot valoracion
+;+		(comment "Nota del libro del 0 al 10")
+		(type FLOAT)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot dificultad
+;+		(comment "Dificultad de lectura del libro")
+		(type SYMBOL)
+		(allowed-values facil asequible denso)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(multislot genero
@@ -62,14 +50,10 @@
 		(type INSTANCE)
 ;+		(allowed-classes Genero)
 		(create-accessor read-write))
-	(multislot autores_preferidos
-;+		(comment "Los autores preferidos del lector")
+	(single-slot autor
+;+		(comment "Autor del libro")
 		(type INSTANCE)
 ;+		(allowed-classes Autor)
-		(create-accessor read-write))
-	(single-slot nombre
-;+		(comment "Nombre")
-		(type STRING)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot autores_extranjeros
@@ -78,21 +62,48 @@
 		(allowed-values FALSE TRUE)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot edad
-;+		(comment "Edad del lector")
+	(single-slot longitud
+;+		(comment "Longitud del libro en paginas")
 		(type INTEGER)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot dificultad
-;+		(comment "Dificultad de lectura del libro")
+	(multislot libros_perfil
+;+		(comment "Base de libros recomendados para este perfil de lector")
+		(type INSTANCE)
+;+		(allowed-classes Libro)
+		(cardinality 1 ?VARIABLE)
+		(create-accessor read-write))
+	(single-slot gustan_populares
+;+		(comment "Si al lector le gustan los libros populares")
 		(type SYMBOL)
-		(allowed-values facil asequible denso)
+		(allowed-values FALSE TRUE)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot tiempo_disponible
+;+		(comment "Tiempo en minutos que el lector dedica a leer cada dia de la semana que lee.")
+		(type INTEGER)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot nombre
+;+		(comment "Nombre")
+		(type STRING)
 ;+		(cardinality 0 1)
 		(create-accessor read-write)))
 
 (defclass Libro
 	(is-a USER)
 	(role concrete)
+	(single-slot autor
+;+		(comment "Autor del libro")
+		(type INSTANCE)
+;+		(allowed-classes Autor)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot titulo
+;+		(comment "Titulo del libro")
+		(type STRING)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
 	(single-slot longitud
 ;+		(comment "Longitud del libro en paginas")
 		(type INTEGER)
@@ -103,21 +114,10 @@
 		(type FLOAT)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot autor
-;+		(comment "Autor del libro")
-		(type INSTANCE)
-;+		(allowed-classes Autor)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
 	(single-slot dificultad
 ;+		(comment "Dificultad de lectura del libro")
 		(type SYMBOL)
 		(allowed-values facil asequible denso)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot titulo
-;+		(comment "Titulo del libro")
-		(type STRING)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(multislot genero
@@ -144,15 +144,15 @@
 		(allowed-values FALSE TRUE)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot nombre
-;+		(comment "Nombre")
-		(type STRING)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
 	(single-slot lectura_facil
 ;+		(comment "Si el autor suele escribir libros faciles de leer")
 		(type SYMBOL)
 		(allowed-values FALSE TRUE)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot nombre
+;+		(comment "Nombre")
+		(type STRING)
 ;+		(cardinality 0 1)
 		(create-accessor read-write)))
 

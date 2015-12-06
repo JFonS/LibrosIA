@@ -14,40 +14,23 @@
 ;;-------------------------------------------------------------------------------------------------------------
 ;;                    ONTOLOGIA
 ;;-------------------------------------------------------------------------------------------------------------
-; Tue Dec 01 12:16:39 CET 2015
+; Sun Dec 06 19:34:53 CET 2015
 ; 
-;+ (version "3.5")
-;+ (build "Build 663")
+;+ (version "3.4.8")
+;+ (build "Build 629")
 
 
 (defclass %3ACLIPS_TOP_LEVEL_SLOT_CLASS "Fake class to save top-level slot information"
 	(is-a USER)
 	(role abstract)
-	(multislot libros_perfil
-;+		(comment "Base de libros recomendados para este perfil de lector")
-		(type INSTANCE)
-;+		(allowed-classes Libro)
-		(cardinality 1 ?VARIABLE)
-		(create-accessor read-write))
-	(single-slot tiempo_disponible
-;+		(comment "Tiempo en minutos que el lector dedica a leer cada dia de la semana que lee.")
+	(single-slot edad
+;+		(comment "Edad del lector")
 		(type INTEGER)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot gustan_populares
-;+		(comment "Si al lector le gustan los libros populares")
-		(type SYMBOL)
-		(allowed-values FALSE TRUE)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot titulo
 ;+		(comment "Titulo del libro")
 		(type STRING)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot valoracion
-;+		(comment "Nota del libro del 0 al 10")
-		(type FLOAT)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot lectura_facil
@@ -62,15 +45,20 @@
 		(allowed-values FALSE TRUE)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot longitud
-;+		(comment "Longitud del libro en paginas")
-		(type INTEGER)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot autor
-;+		(comment "Autor del libro")
+	(multislot autores_preferidos
+;+		(comment "Los autores preferidos del lector")
 		(type INSTANCE)
 ;+		(allowed-classes Autor)
+		(create-accessor read-write))
+	(single-slot valoracion
+;+		(comment "Nota del libro del 0 al 10")
+		(type FLOAT)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot dificultad
+;+		(comment "Dificultad de lectura del libro")
+		(type SYMBOL)
+		(allowed-values facil asequible denso)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(multislot genero
@@ -78,14 +66,10 @@
 		(type INSTANCE)
 ;+		(allowed-classes Genero)
 		(create-accessor read-write))
-	(multislot autores_preferidos
-;+		(comment "Los autores preferidos del lector")
+	(single-slot autor
+;+		(comment "Autor del libro")
 		(type INSTANCE)
 ;+		(allowed-classes Autor)
-		(create-accessor read-write))
-	(single-slot nombre
-;+		(comment "Nombre")
-		(type STRING)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot autores_extranjeros
@@ -94,21 +78,48 @@
 		(allowed-values FALSE TRUE)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot edad
-;+		(comment "Edad del lector")
+	(single-slot longitud
+;+		(comment "Longitud del libro en paginas")
 		(type INTEGER)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot dificultad
-;+		(comment "Dificultad de lectura del libro")
+	(multislot libros_perfil
+;+		(comment "Base de libros recomendados para este perfil de lector")
+		(type INSTANCE)
+;+		(allowed-classes Libro)
+		(cardinality 1 ?VARIABLE)
+		(create-accessor read-write))
+	(single-slot gustan_populares
+;+		(comment "Si al lector le gustan los libros populares")
 		(type SYMBOL)
-		(allowed-values facil asequible denso)
+		(allowed-values FALSE TRUE)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot tiempo_disponible
+;+		(comment "Tiempo en minutos que el lector dedica a leer cada dia de la semana que lee.")
+		(type INTEGER)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot nombre
+;+		(comment "Nombre")
+		(type STRING)
 ;+		(cardinality 0 1)
 		(create-accessor read-write)))
 
 (defclass Libro
 	(is-a USER)
 	(role concrete)
+	(single-slot autor
+;+		(comment "Autor del libro")
+		(type INSTANCE)
+;+		(allowed-classes Autor)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot titulo
+;+		(comment "Titulo del libro")
+		(type STRING)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
 	(single-slot longitud
 ;+		(comment "Longitud del libro en paginas")
 		(type INTEGER)
@@ -119,21 +130,10 @@
 		(type FLOAT)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot autor
-;+		(comment "Autor del libro")
-		(type INSTANCE)
-;+		(allowed-classes Autor)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
 	(single-slot dificultad
 ;+		(comment "Dificultad de lectura del libro")
 		(type SYMBOL)
 		(allowed-values facil asequible denso)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot titulo
-;+		(comment "Titulo del libro")
-		(type STRING)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(multislot genero
@@ -160,15 +160,15 @@
 		(allowed-values FALSE TRUE)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot nombre
-;+		(comment "Nombre")
-		(type STRING)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
 	(single-slot lectura_facil
 ;+		(comment "Si el autor suele escribir libros faciles de leer")
 		(type SYMBOL)
 		(allowed-values FALSE TRUE)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot nombre
+;+		(comment "Nombre")
+		(type STRING)
 ;+		(cardinality 0 1)
 		(create-accessor read-write)))
 
@@ -193,9 +193,31 @@
 
 (definstances instances
 
+; Sun Dec 06 19:34:53 CET 2015
+; 
+;+ (version "3.4.8")
+;+ (build "Build 629")
+
+([libros_Class0] of  Libro
+
+	(autor [libros_Class10002])
+	(dificultad asequible)
+	(genero
+		[libros_Class3]
+		[libros_Class12])
+	(longitud 369)
+	(titulo "El marciano")
+	(valoracion 9.3))
+
 ([libros_Class10] of  Genero
 
 	(nombre "romantico"))
+
+([libros_Class10002] of  Autor
+
+	(extranjero TRUE)
+	(lectura_facil TRUE)
+	(nombre "Andy Weir"))
 
 ([libros_Class10003] of  Libro
 
@@ -306,8 +328,6 @@
 
 ([libros_Class10018] of  Autor
 
-	(extranjero FALSE)
-	(lectura_facil FALSE)
 	(nombre "Santiago Posteguillo"))
 
 ([libros_Class10019] of  Libro
@@ -381,7 +401,8 @@
 	(libros_perfil
 		[libros_Class10003]
 		[libros_Class2]
-		[libros_Class16])
+		[libros_Class16]
+		[libros_Class0])
 	(nombre "Friki"))
 
 ([libros_Class10031] of  PerfilLector
@@ -411,15 +432,6 @@
 		[libros_Class10034]
 		[libros_Class10036])
 	(nombre "Quinceanera"))
-
-
-([libros_Class10088] of  PerfilLector
-
-	(libros_perfil
-		[libros_Class10020]
-		[libros_Class10022]
-		[libros_Class10023])
-	(nombre "Infantil"))
 
 ([libros_Class10034] of  Libro
 
@@ -470,7 +482,6 @@
 		[libros_Class10015])
 	(nombre "Maruja"))
 
-
 ([libros_Class10039] of  PerfilLector
 
 	(libros_perfil
@@ -510,6 +521,7 @@
 
 ([libros_Class17] of  Autor
 
+	(extranjero TRUE)
 	(lectura_facil TRUE)
 	(nombre "Ernest Cline"))
 
@@ -793,7 +805,7 @@
   (Lector (tiempo_disp -1))
   =>
   (printout t "---------------------------------" crlf)
-  (bind ?tiempo (pregunta-numerica "Cuanto minutos lee los dias que lee? " 1 1440))
+  (bind ?tiempo (pregunta-numerica "Cuantos minutos lee los dias que lee? " 1 1440))
   (modify ?u (tiempo_disp ?tiempo))
   (focus preguntas-prefs)
 )
@@ -889,7 +901,7 @@
   )
 
   (bind $?respuestas (create$))
-  (bind $?leidos (pregunta-multi "Escoja los libros que ha leido (si no ha leido ninguno, escriba '0'): " $?tit-aut-libros))
+  (bind $?leidos (pregunta-multi "Escoja los libros que ya ha leido (si no ha leido ninguno, escriba '0'): " $?tit-aut-libros))
   (printout t crlf)
   (loop-for-count (?i 1 (length$ $?leidos)) do
     (bind ?leido (nth$ ?i $?leidos))
@@ -1097,14 +1109,13 @@
 )
 
 (defrule asociacion-heuristica::recopilacion-todos-los-libros "recopilacion-todos-los-libros"
-  (declare (salience 9))
+  (declare (salience 10))
   ?l <- (listaLibros $?listaLibros)
   (test (eq 0 (length$ ?listaLibros)))
   (Lector (nombre ?nombre))
   =>
-
-  (printout t "Lo sentimos, " ?nombre ", no hemos encontrado ningun libro adecuado para usted en la primera fase de seleccion." crlf)
-  (printout t "Intentaremos encontrar alguno que le pueda gustar en una fase de seleccion mas general, pero el resultado puede ser menos preciso" crlf crlf)
+  (printout t "Lo sentimos, " ?nombre ", pero no hemos encontrado ningun libro adecuado para usted en la primera fase de seleccion." crlf)
+  (printout t "Intentaremos encontrar alguno que le pueda gustar en una fase de seleccion mas general, pero el resultado puede ser menos preciso." crlf)
 
   (retract ?l)
   (assert (listaLibros (find-all-instances ((?inst Libro)) TRUE)))
@@ -1232,7 +1243,7 @@
 	  (printout t "Lo sentimos, " ?nombre ", no hemos encontrado ningun libro adecuado para usted." crlf)
   else
 	  (printout t crlf crlf)
-	  (printout t "Hola " ?nombre ", tus libros recomendados son los siguientes: " crlf)
+	  (printout t "Hola " ?nombre ", sus libros recomendados son los siguientes: " crlf)
 	  
 	  (printout t crlf "::::::::::::::::::::::::::::::::::::::::::::::::" crlf)
 		  (progn$ (?l $?listaLibros)
