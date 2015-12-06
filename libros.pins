@@ -1,4 +1,4 @@
-; Sun Dec 06 19:34:53 CET 2015
+; Sun Dec 06 20:08:50 CET 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -17,6 +17,14 @@
 ([libros_Class10] of  Genero
 
 	(nombre "romantico"))
+
+([libros_Class10000] of  PerfilLector
+
+	(libros_perfil
+		[libros_Class10024]
+		[libros_Class10017]
+		[libros_Class10019])
+	(nombre "Historiador"))
 
 ([libros_Class10002] of  Autor
 
@@ -236,7 +244,7 @@
 		[libros_Class2]
 		[libros_Class10034]
 		[libros_Class10036])
-	(nombre "Quinceañera"))
+	(nombre "Quinceanera"))
 
 ([libros_Class10034] of  Libro
 
